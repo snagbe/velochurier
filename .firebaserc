@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "velochurier-f8254": {
+      "hosting": {
+        "velochurier": [
+          "velochurier-f8254"
+        ]
+      }
+    }
+  }
+}
