@@ -1,6 +1,8 @@
 <div class="container">
   <h1>Auslieferungen</h1>
   <div class="row">
-    <div class="addresses" *ngFor="let address of addresses">{{address.street}}, {{address.zip}} {{address.city}}</div>
+    <div class="addresses" *ngFor="let address of addresses">
+      <img src="assets/box.png" style="width: 2rem">
+      {{address.street}}, {{address.zip}} {{address.city}}
+    </div>
   </div>
-</div>
