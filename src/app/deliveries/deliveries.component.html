@@ -1,2 +1,6 @@
-<p>deliveries works!</p>
-<div *ngFor="let address of addresses">{{address.city}}</div>
+<div class="container">
+  <h1>Auslieferungen</h1>
+  <div class="row">
+    <div class="addresses" *ngFor="let address of addresses">{{address.street}}, {{address.zip}} {{address.city}}</div>
+  </div>
+</div>
