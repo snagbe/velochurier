@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
+import {environment} from "../environments/environment";
+import {AngularFireModule} from "@angular/fire/compat";
 
 @NgModule({
   declarations: [
@@ -10,7 +12,8 @@ import { DeliveriesComponent } from './deliveries/deliveries.component';
     DeliveriesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
