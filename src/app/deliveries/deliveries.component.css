@@ -1,11 +1,20 @@
-.addresses{
-  padding-left: 2rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(24, 24, 24, 0.61);
+.container{
+  font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
+  font-size: 13px;
 }
 
+.addresses{
+  display: flex;
+  align-items: center;
 
-.container{
-  font-family: "SFCompactText-Medium", Arial;
+  border-bottom: 1px solid rgba(24, 24, 24, 0.61);
+
+  padding-left: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+img {
+  width: 1.5rem;
+  padding-right: 0.75rem;
 }
