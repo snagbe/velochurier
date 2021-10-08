@@ -3,6 +3,11 @@
   font-size: 13px;
 }
 
+.filter-button{
+  background-color: white;
+  border-radius: 5px;
+}
+
 .addresses{
   display: flex;
   align-items: center;
