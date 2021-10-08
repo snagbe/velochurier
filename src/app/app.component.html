@@ -1,1 +1,3 @@
-<app-deliveries></app-deliveries>
+<app-deliveries *ngIf="loadedFeature === 'deliveries'"></app-deliveries>
+<app-add-order *ngIf="loadedFeature === 'order'"></app-add-order>
+<app-navbar (featureSelected)="onNavigate($event)"></app-navbar>
