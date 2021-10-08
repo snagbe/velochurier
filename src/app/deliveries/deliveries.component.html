@@ -1,8 +1,8 @@
 <div class="container">
-  <button class="filter-button"><img src="assets/sort_24dp-x1.png"/></button>
+  <button class="filter-button"><img class="filter-img" src="assets/sort_24dp-x1.png"/></button>
   <h1>Auslieferungen</h1>
     <div class="addresses" *ngFor="let address of addresses">
-      <img src="assets/box.png"/>
+      <img  class="box-img"  src="assets/box.png"/>
         {{address.street}}, {{address.zip}} {{address.city}}
     </div>
 </div>

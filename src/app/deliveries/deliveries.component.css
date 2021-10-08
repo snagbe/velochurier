@@ -1,11 +1,17 @@
 .container{
   font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .filter-button{
-  background-color: white;
-  border-radius: 5px;
+  background-color: transparent;
+  border: #5f6965;
+  border-radius: 2px;
+}
+
+.filter-img{
+  width: 4rem;
+  padding-right: 0.75rem;
 }
 
 .addresses{
@@ -19,7 +25,7 @@
   padding-bottom: 1rem;
 }
 
-img {
-  width: 1.5rem;
+.box-img {
+  width: 3.2rem;
   padding-right: 0.75rem;
 }
