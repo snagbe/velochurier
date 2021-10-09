@@ -3,13 +3,13 @@
   font-size: 14px;
 }
 
-.filter-button{
+.sort-button{
   background-color: transparent;
   border: #5f6965;
   border-radius: 2px;
 }
 
-.filter-img{
+.sort-img{
   width: 4rem;
   padding-right: 0.75rem;
 }
