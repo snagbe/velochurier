@@ -2,38 +2,91 @@
   <div class="col-xs-12">
     <form>
       <h1>Auftrag erfassen</h1>
+
       <h2>Auftraggeber</h2>
-      <div>
-        <div class="col-sm-10 form-group">
-          <input type="text" id="company" class="form-control" placeholder="Firma" #companyInput>
+      <div class="input-container">
+        <div class="input-100 form-group">
+          <input type="text" class="form-control" placeholder="Firma" #clientCompanyInput>
         </div>
-        <div class="col-sm-5 form-group">
-          <input type="text" id="surname" class="form-control" placeholder="Vorname" #surnameInput>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Vorname" #clientSurnameInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Name" #clientNameInput>
+          </div>
         </div>
-        <div class="col-sm-5 form-group">
-          <input type="text" id="name" class="form-control" placeholder="Name" #nameInput>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Strasse" #clientStreetInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Nummer" #clientNumberInput>
+          </div>
         </div>
-        <div class="col-sm-5 form-group">
-          <input type="text" id="street" class="form-control" placeholder="Strasse" #streetInput>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="PLZ" #clientZipInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Ort" #clientCityInput>
+          </div>
         </div>
-        <div class="col-sm-5 form-group">
-          <input type="text" id="number" class="form-control" placeholder="Nummer" #numberInput>
-        </div>
-        <div class="col-sm-5 form-group">
-          <input type="text" id="zip" class="form-control" placeholder="PLZ" #zipInput>
-        </div>
-        <div class="col-sm-5 form-group">
-          <input type="text" id="city" class="form-control" placeholder="Ort" #cityInput>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 flex-center">
+          <button class="btn btn-success" type="submit" style="margin-right: 5px;" (click)="saveClient()">Save</button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <button class="btn btn-primary" type="button">Add Order</button>
-          <button class="btn btn-success" type="submit" (click)="saveCustomer()">Save</button>
-          <button class="btn btn-danger" type="button" (click)="delete()">Delete</button>
+      <h2>Empfänger</h2>
+      <div class="input-container">
+        <div class="input-100 form-group">
+          <input type="text" class="form-control" placeholder="Firma" #receiverCompanyInput>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Vorname" #receiverSurnameInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Name" #receiverNameInput>
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Strasse" #receiverStreetInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Nummer" #receiverNumberInput>
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="PLZ" #receiverZipInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Ort" #receiverCityInput>
+          </div>
         </div>
       </div>
+
+      <h2>Auftrag</h2>
+      <div class="input-container">
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')" class="form-control" placeholder="Abholdatum" #pickupDateInput>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Artikel" #articleInput>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 flex-center">
+          <button class="btn btn-primary" type="button" (click)="saveOrder()">Add Order</button>
+        </div>
+      </div>
+
     </form>
   </div>
 </div>
