@@ -22,9 +22,9 @@ export class DeliveriesComponent implements OnInit {
 
   }
 
-  setSort() {
+  setSort(city: string) {
     this.sortedAddresses = [];
-    this.db.database.ref('address').orderByChild('street')
+    this.db.database.ref('address').orderByChild(city)
       .on('child_added',
         snap => {
       const data = snap.val();
