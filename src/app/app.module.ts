@@ -11,6 +11,10 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//Angular Material
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,9 @@ import {AngularFireAuthModule} from '@angular/fire/compat/auth';
     AngularFireAuthModule,
     AngularFireStorageModule,
     FormsModule,
+
+    BrowserAnimationsModule,
+    MatBottomSheetModule
   ],
   providers: [],
   bootstrap: [AppComponent]
