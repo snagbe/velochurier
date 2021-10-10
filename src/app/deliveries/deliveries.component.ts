@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Address} from "./deliveries";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {map} from "rxjs/operators";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
 
 @Component({
   selector: 'app-deliveries',
@@ -14,12 +15,22 @@ export class DeliveriesComponent implements OnInit {
   sortedAddresses:any[] = [];
   address: String;
 
-  constructor(private db: AngularFireDatabase) {
+  @ViewChild('templateBottomSheet') TemplateBottomSheet: TemplateRef<any>;
+
+  constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet) {
   }
 
   ngOnInit(): void {
     this.getAdresses().subscribe(value => this.addresses = value);
 
+  }
+
+  openTemplateSheetMenu() {
+    this.bottomSheet.open(this.TemplateBottomSheet);
+  }
+
+  closeTemplateSheetMenu() {
+    this.bottomSheet.dismiss();
   }
 
   setSort(city: string) {

@@ -1,8 +1,38 @@
 <div class="container">
-  <button class="sort-button" (click)="setSort('street')"><img class="sort-img" src="assets/sort_24dp-x1.png"/></button>
+  <button class="sort-button" (click)="openTemplateSheetMenu()"><img class="sort-img" src="assets/sort_24dp-x1.png"/>
+  </button>
+  <ng-template class="bottom-sheet-container" #templateBottomSheet>
+    <table style="width:100%">
+      <tr>
+        <td>
+          <p class="bottom-sheet-element" >Sortieren nach</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="setSort('street')">Strasse</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="setSort('plz')">Postleitzahl</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="setSort('city')">Ort</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="closeTemplateSheetMenu()">Cancel</button>
+        </td>
+      </tr>
+    </table>
+  </ng-template>
   <h1>Auslieferungen</h1>
-    <div class="addresses" *ngFor="let address of addresses">
-      <img  class="box-img"  src="assets/box.png"/>
-        {{address.street}}, {{address.zip}} {{address.city}}
-    </div>
+  <div class="addresses" *ngFor="let address of addresses">
+    <img class="box-img" src="assets/box.png"/>
+    {{address.street}}, {{address.zip}} {{address.city}}
+  </div>
 </div>
