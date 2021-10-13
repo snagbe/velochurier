@@ -19,6 +19,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatOptionModule} from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -37,9 +38,12 @@ import {MatOptionModule} from "@angular/material/core";
     FormsModule,
 
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+
+    // Material Imports
+    MatInputModule,
     MatBottomSheetModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
     MatAutocompleteModule,
     MatOptionModule
   ],
