@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>Kunden</h1>
+  <div class="addresses" *ngFor="let address of addresses">
+    <button class="customer-button" (click)="openAddOrder()"><img class="customer-journey-img"
+                                                                  src="assets/customer-journey.png"/></button>
+    {{address.street}}, {{address.zip}} {{address.city}}
+  </div>
+  <div class="test" *ngIf="addOrder">
+    <app-add-order></app-add-order>
+  </div>
+</div>
