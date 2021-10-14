@@ -20,6 +20,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
+import { CustomersComponent } from './customers/customers.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {MatInputModule} from "@angular/material/input";
     DeliveriesComponent,
     AddOrderComponent,
     NavbarComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
