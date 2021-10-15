@@ -20,6 +20,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import { CustomersComponent } from './customers/customers.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CustomersComponent } from './customers/customers.component';
     MatBottomSheetModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
