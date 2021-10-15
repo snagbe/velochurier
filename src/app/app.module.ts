@@ -15,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Angular Material
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatOptionModule} from "@angular/material/core";
@@ -28,7 +27,6 @@ import { CustomersComponent } from './customers/customers.component';
     DeliveriesComponent,
     AddOrderComponent,
     NavbarComponent,
-    AutocompleteComponent,
     CustomersComponent
   ],
   imports: [
