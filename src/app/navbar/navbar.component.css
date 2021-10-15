@@ -27,17 +27,14 @@
   transform: scale(1.5);
 }
 
-.side-icon:focus {
-  color: #3030a6;
-}
-
 p {
   color: #030202B7;
   font-size: 7pt;
 }
 
-p:focus {
-  color: #3030a6;
+side-a:focus + .side-icon + p{
+  background-color: #5f6965;
+  color: #3030a6 !important;
 }
 
 .add-icon-background {
