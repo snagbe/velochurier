@@ -1,12 +1,13 @@
 <form class="example-form">
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Number</mat-label>
+    <mat-label>Auftraggeber</mat-label>
     <input type="text"
-           placeholder="Pick one"
-           aria-label="Number"
+           placeholder="Auftraggeber"
+           aria-label="Auftraggeber"
            matInput
            [formControl]="myControl"
-           [matAutocomplete]="auto">
+           [matAutocomplete]="auto"
+           (blur)="prefillAddress($event.target.value)">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}

@@ -5,6 +5,9 @@
 
       <h2>Auftraggeber</h2>
       <div class="input-container">
+
+        <app-autocomplete></app-autocomplete>
+
         <div class="input-100 form-group">
           <input type="text" class="form-control" placeholder="Firma" #clientCompanyInput>
         </div>
@@ -86,10 +89,6 @@
         <div class="col-xs-12 flex-center">
           <button class="btn btn-primary" type="button" (click)="saveOrder()">Add Order</button>
         </div>
-      </div>
-
-      <div class="input-100 form-group">
-        <app-autocomplete></app-autocomplete>
       </div>
 
     </form>
