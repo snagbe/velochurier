@@ -15,11 +15,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Angular Material
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
+import { CustomersComponent } from './customers/customers.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import {MatInputModule} from "@angular/material/input";
     DeliveriesComponent,
     AddOrderComponent,
     NavbarComponent,
-    AutocompleteComponent
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +46,8 @@ import {MatInputModule} from "@angular/material/input";
     MatBottomSheetModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

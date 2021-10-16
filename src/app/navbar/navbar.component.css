@@ -1,0 +1,57 @@
+.navbar-element {
+  border-top: 1.5px solid #9891917C;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-icon-container, .add-icon-container {
+  margin-right: 9pt;
+  margin-left: 9pt;
+
+}
+
+.side-a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.side-icon {
+  color: black;
+  transform: scale(1.5);
+}
+
+p {
+  color: #030202B7;
+  font-size: 7pt;
+}
+
+.side-a:focus > .side-icon, .side-a:focus > p {
+  color: #3030a6;
+}
+
+.side-a:focus {
+  text-decoration: none;
+}
+
+.add-icon-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #233871;
+  border-radius: 3pt;
+  width: 40pt;
+  height: 30pt;
+}
+
+.add-icon {
+  color: white;
+  transform: scale(1.5);
+}

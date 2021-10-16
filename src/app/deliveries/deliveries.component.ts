@@ -1,8 +1,8 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Address} from "./deliveries";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {map} from "rxjs/operators";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {DeliveriesService} from "./deliveries.service";
 
 @Component({
   selector: 'app-deliveries',
@@ -17,12 +17,11 @@ export class DeliveriesComponent implements OnInit {
 
   @ViewChild('templateBottomSheet') TemplateBottomSheet: TemplateRef<any>;
 
-  constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet) {
+  constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet, private deliveriesService: DeliveriesService) {
   }
 
   ngOnInit(): void {
-    this.getAdresses().subscribe(value => this.addresses = value);
-
+    this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
   }
 
   openTemplateSheetMenu() {
@@ -45,20 +44,6 @@ export class DeliveriesComponent implements OnInit {
     this.addresses = this.sortedAddresses;
   }
 
-public getAdresses()
-{
-  return this.db.list('address')
-    .snapshotChanges()
-    .pipe(map(items => {
-      return items.map(a => {
-        const data = a.payload.val();
-        const key = a.payload.key;
-        // @ts-ignore
-        const address: Address = {id: key, city: data.city, street: data.street, zip: data.zip};
-        return address;
-      });
-    }));
-}
 
 
 }
