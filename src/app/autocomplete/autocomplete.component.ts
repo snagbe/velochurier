@@ -16,8 +16,7 @@ export class AutocompleteComponent implements OnInit {
   sortedAddresses: any[] = [];
   filteredOptions: Observable<string[]>;
 
-  address: Address;
-  clientAddress: any[] = [];
+  clientAddress: Address[];
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -50,19 +49,17 @@ export class AutocompleteComponent implements OnInit {
     this.options = this.sortedAddresses;
   }
 
-  prefillAddress(value) {
+  prefillAddress(clientKey) {
+    clientKey = 'Influr';
     this.clientAddress = [];
-    this.db.database.ref('address/' + value)
+    this.db.database.ref('address/' + clientKey)
       .on('value',
         snap => {
           const data = snap.val();
           if (data) {
-            this.clientAddress.push(snap.key, data.company, data.surname, data.name);
-            console.log("Firma "+snap.key);
+            this.clientAddress.push({id: clientKey, city: data.city, company: data.company, street: data.street, zip: data.zip});
           }
+          console.log(this.clientAddress);
         });
-    this.address = this.clientAddress;
-    //console.log(this.address);
   }
-
 }

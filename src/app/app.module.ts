@@ -21,15 +21,17 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import { CustomersComponent } from './customers/customers.component';
 import {MatIconModule} from '@angular/material/icon';
+import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DeliveriesComponent,
-    AddOrderComponent,
-    NavbarComponent,
-    CustomersComponent
-  ],
+    declarations: [
+        AppComponent,
+        DeliveriesComponent,
+        AddOrderComponent,
+        NavbarComponent,
+        CustomersComponent,
+        AutocompleteComponent
+    ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
