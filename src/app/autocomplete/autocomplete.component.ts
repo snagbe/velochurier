@@ -3,6 +3,7 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
+import {Address} from "../deliveries/deliveries";
 
 @Component({
   selector: 'app-autocomplete',
@@ -12,8 +13,11 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 export class AutocompleteComponent implements OnInit {
   myControl = new FormControl();
   options: string[] = [];
-  sortedAddresses:any[] = [];
+  sortedAddresses: any[] = [];
   filteredOptions: Observable<string[]>;
+
+  address: Address;
+  clientAddress: any[] = [];
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -47,16 +51,18 @@ export class AutocompleteComponent implements OnInit {
   }
 
   prefillAddress(value) {
-    const address = [];
+    this.clientAddress = [];
     this.db.database.ref('address/' + value)
       .on('value',
         snap => {
           const data = snap.val();
           if (data) {
-            address.push(data);
+            this.clientAddress.push(snap.key, data.company, data.surname, data.name);
+            console.log("Firma "+snap.key);
           }
         });
-    console.log(address);
+    this.address = this.clientAddress;
+    //console.log(this.address);
   }
 
 }
