@@ -6,7 +6,7 @@ import {DeliveriesComponent} from './deliveries/deliveries.component';
 import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AddOrderComponent} from './add-order/add-order.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NavbarComponent} from './navbar/navbar.component';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
@@ -15,13 +15,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Angular Material
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatOptionModule} from "@angular/material/core";
+import {MatInputModule} from "@angular/material/input";
+import { CustomersComponent } from './customers/customers.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
     DeliveriesComponent,
     AddOrderComponent,
-    NavbarComponent
+    NavbarComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,15 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     FormsModule,
 
     BrowserAnimationsModule,
-    MatBottomSheetModule
+    ReactiveFormsModule,
+
+    // Material Imports
+    MatInputModule,
+    MatBottomSheetModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatOptionModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

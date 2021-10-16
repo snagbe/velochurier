@@ -96,7 +96,7 @@ export class AddOrderComponent implements OnInit {
     })
 
     rootRef.set(nodeTitle + '/article', {
-      "article": article
+      "article1": article
     })
 
     //TODO nur bei success löschen und info einbelnden sonst info einblenden

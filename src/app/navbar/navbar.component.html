@@ -1,13 +1,33 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar">
-        <li><a href="#" (click)="onSelect('deliveries')">Auslieferungen</a></li>
-        <li><a href="#">Kunden</a></li>
-        <li><a href="#" (click)="onSelect('order')">Auftrag erfassen</a></li>
-        <li><a href="#">Aktivitäten</a></li>
-        <li><a href="#">Einstellungen</a></li>
-      </ul>
+<nav class="navbar-element">
+  <div class="side-icon-container">
+    <a class="side-a"  href="#" (click)="onSelect('deliveries')">
+      <mat-icon class="side-icon">groups</mat-icon>
+      <p>Auslieferungen</p>
+    </a>
+  </div>
+  <div class="side-icon-container">
+    <a class="side-a" href="#" (click)="onSelect('customers')">
+      <mat-icon class="side-icon">pedal_bike</mat-icon>
+      <p>Kunden</p>
+    </a>
+  </div>
+  <div class="add-icon-container">
+    <div class="add-icon-background">
+      <a class="add-a" href="#" (click)="onSelect('order')">
+        <mat-icon class="add-icon">add</mat-icon>
+      </a>
     </div>
+  </div>
+  <div class="side-icon-container">
+    <a class="side-a"  href="#">
+      <mat-icon class="side-icon">bar_chart</mat-icon>
+      <p>Aktivitäten</p>
+    </a>
+  </div>
+  <div class="side-icon-container">
+    <a class="side-a"  href="#">
+      <mat-icon class="side-icon">settings</mat-icon>
+      <p>Einstellungen</p>
+    </a>
   </div>
 </nav>
