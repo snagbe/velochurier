@@ -32,9 +32,12 @@ p {
   font-size: 7pt;
 }
 
-side-a:focus + .side-icon + p{
-  background-color: #5f6965;
-  color: #3030a6 !important;
+.side-a:focus > .side-icon, .side-a:focus > p {
+  color: #3030a6;
+}
+
+.side-a:focus {
+  text-decoration: none;
 }
 
 .add-icon-background {
