@@ -21,7 +21,7 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
 import { CustomersComponent } from './customers/customers.component';
 import {MatIconModule} from '@angular/material/icon';
-import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
+import { RoadComponent } from './road/road.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +30,7 @@ import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
         AddOrderComponent,
         NavbarComponent,
         CustomersComponent,
-        AutocompleteComponent
+        RoadComponent
     ],
   imports: [
     BrowserModule,
