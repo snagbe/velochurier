@@ -32,6 +32,14 @@ p {
   font-size: 7pt;
 }
 
+.side-a:hover > .side-icon, .side-a:hover > p {
+  color: #3030a6;
+}
+
+.side-a:hover {
+  text-decoration: none;
+}
+
 .side-a:focus > .side-icon, .side-a:focus > p {
   color: #3030a6;
 }
