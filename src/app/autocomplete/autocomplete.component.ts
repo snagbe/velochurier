@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../deliveries/deliveries";
+import {GlobalComponents} from "../global-components";
 
 @Component({
   selector: 'app-autocomplete',
@@ -15,8 +16,7 @@ export class AutocompleteComponent implements OnInit {
   options: string[] = [];
   sortedAddresses: any[] = [];
   filteredOptions: Observable<string[]>;
-
-  clientAddress: Address[];
+  public clientAddress: Address[];
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -50,16 +50,26 @@ export class AutocompleteComponent implements OnInit {
   }
 
   prefillAddress(clientKey) {
-    clientKey = 'Influr';
-    this.clientAddress = [];
-    this.db.database.ref('address/' + clientKey)
-      .on('value',
-        snap => {
-          const data = snap.val();
-          if (data) {
-            this.clientAddress.push({id: clientKey, city: data.city, company: data.company, street: data.street, zip: data.zip});
-          }
-          console.log(this.clientAddress);
-        });
+    if (clientKey) {
+      this.clientAddress = [];
+      this.db.database.ref('address/' + clientKey)
+        .on('value',
+          snap => {
+            const data = snap.val();
+            if (data) {
+              this.clientAddress.push({
+                id: clientKey,
+                company: data.company,
+                name: data.name,
+                surname: data.surname,
+                street: data.street,
+                zip: data.zip,
+                city: data.city
+              });
+            }
+            console.log(this.clientAddress);
+            GlobalComponents.clientAddress = this.clientAddress;
+          });
+    }
   }
 }

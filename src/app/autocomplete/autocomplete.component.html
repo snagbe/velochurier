@@ -7,7 +7,8 @@
            matInput
            [formControl]="myControl"
            [matAutocomplete]="auto"
-           (blur)="prefillAddress($event.target.value)">
+           (blur)="prefillAddress($event.target.value)"
+           (keyup.enter)="prefillAddress($event.target.value)">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}
