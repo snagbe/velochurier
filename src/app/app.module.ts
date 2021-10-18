@@ -23,6 +23,8 @@ import { CustomersComponent } from './customers/customers.component';
 import {MatIconModule} from '@angular/material/icon';
 import { RoadComponent } from './road/road.component';
 
+import { AgmCoreModule } from '@agm/core';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -34,14 +36,15 @@ import { RoadComponent } from './road/road.component';
     ],
   imports: [
     BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+
+    // Firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    FormsModule,
-
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
 
     // Material Imports
     MatInputModule,
@@ -49,7 +52,12 @@ import { RoadComponent } from './road/road.component';
     MatFormFieldModule,
     MatAutocompleteModule,
     MatOptionModule,
-    MatIconModule
+    MatIconModule,
+
+    //Google Maps integration
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBCA2oaGS7PBkEV4uelWFKaQV-KdE_3iyw'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
