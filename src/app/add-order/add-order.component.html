@@ -1,35 +1,43 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form #orderForm="ngForm">
       <h1>Auftrag erfassen</h1>
 
       <h2>Auftraggeber</h2>
-      <div class="input-container">
+      <div class="input-container" ngModelGroup="client">
+
+        <app-autocomplete></app-autocomplete>
+
         <div class="input-100 form-group">
-          <input type="text" class="form-control" placeholder="Firma" #clientCompanyInput>
+          <input type="text" class="form-control" placeholder="Firma" #clientCompanyInput ngModel name="clientCompany" value="{{clientCompany}}">
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Vorname" #clientSurnameInput>
+            <input type="text" class="form-control" placeholder="Vorname" #clientSurnameInput ngModel name="clientSurname" value="{{clientSurname}}">
           </div>
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Name" #clientNameInput>
-          </div>
-        </div>
-        <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Strasse" #clientStreetInput>
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Nummer" #clientNumberInput>
+            <input type="text" class="form-control" placeholder="Name" #clientNameInput value="{{clientName}}">
           </div>
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="PLZ" #clientZipInput>
+            <input type="number" class="form-control" placeholder="PLZ" #clientZipInput value="{{clientZip}}">
           </div>
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Ort" #clientCityInput>
+            <input type="text" class="form-control" placeholder="Ort" #clientCityInput value="{{clientCity}}">
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Strasse" #clientStreetInput value="{{clientStreet}}">
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Email" #clientEmailInput ngModel name="clientEmail" email>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Telefonnummer" #clientPhoneInput>
           </div>
         </div>
       </div>
@@ -37,10 +45,13 @@
         <div class="col-xs-12 flex-center">
           <button class="btn btn-success" type="submit" style="margin-right: 5px;" (click)="saveClient()">Save</button>
         </div>
+        <div class="col-xs-12 flex-center">
+          <button class="btn btn-success" type="submit" style="margin-right: 5px;" [disabled]="!orderForm.valid" (click)="testPrefill(orderForm)">Test</button>
+        </div>
       </div>
 
       <h2>Empfänger</h2>
-      <div class="input-container">
+      <div class="input-container" ngModelGroup="receiver">
         <div class="input-100 form-group">
           <input type="text" class="form-control" placeholder="Firma" #receiverCompanyInput>
         </div>
@@ -54,18 +65,15 @@
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Strasse" #receiverStreetInput>
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Nummer" #receiverNumberInput>
-          </div>
-        </div>
-        <div class="input-container-2">
-          <div class="input-50 form-group">
             <input type="text" class="form-control" placeholder="PLZ" #receiverZipInput>
           </div>
           <div class="input-50 form-group">
             <input type="text" class="form-control" placeholder="Ort" #receiverCityInput>
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Strasse" #receiverStreetInput>
           </div>
         </div>
       </div>

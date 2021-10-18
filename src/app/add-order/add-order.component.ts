@@ -1,5 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
+import {NgForm} from "@angular/forms";
+import {GlobalComponents} from "../global-components";
 
 @Component({
   selector: 'app-add-order',
@@ -11,18 +13,25 @@ export class AddOrderComponent implements OnInit {
   @ViewChild('clientSurnameInput', {static: false}) clientSurnameInputRef: ElementRef;
   @ViewChild('clientNameInput', {static: false}) clientNameInputRef: ElementRef;
   @ViewChild('clientStreetInput', {static: false}) clientStreetInputRef: ElementRef;
-  @ViewChild('clientNumberInput', {static: false}) clientNumberInputRef: ElementRef;
   @ViewChild('clientZipInput', {static: false}) clientZipInputRef: ElementRef;
   @ViewChild('clientCityInput', {static: false}) clientCityInputRef: ElementRef;
   @ViewChild('receiverCompanyInput', {static: false}) receiverCompanyInputRef: ElementRef;
   @ViewChild('receiverSurnameInput', {static: false}) receiverSurnameInputRef: ElementRef;
   @ViewChild('receiverNameInput', {static: false}) receiverNameInputRef: ElementRef;
   @ViewChild('receiverStreetInput', {static: false}) receiverStreetInputRef: ElementRef;
-  @ViewChild('receiverNumberInput', {static: false}) receiverNumberInputRef: ElementRef;
   @ViewChild('receiverZipInput', {static: false}) receiverZipInputRef: ElementRef;
   @ViewChild('receiverCityInput', {static: false}) receiverCityInputRef: ElementRef;
   @ViewChild('pickupDateInput', {static: false}) pickupDateInputRef: ElementRef;
   @ViewChild('articleInput', {static: false}) articleInputRef: ElementRef;
+
+  @ViewChild('orderForm', {static: false}) orderForm: NgForm;
+
+  clientCompany: string;
+  clientSurname: string;
+  clientName: string;
+  clientStreet: string;
+  clientZip: number;
+  clientCity: string;
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -30,12 +39,21 @@ export class AddOrderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  testPrefill(form: NgForm) {
+    console.log("Firma: " + form.value.client.clientCompany);
+    this.clientCompany = GlobalComponents.clientAddress[0].company;
+    this.clientSurname = GlobalComponents.clientAddress[0].surname;
+    this.clientName = GlobalComponents.clientAddress[0].name;
+    this.clientStreet = GlobalComponents.clientAddress[0].street;
+    this.clientZip = GlobalComponents.clientAddress[0].zip;
+    this.clientCity = GlobalComponents.clientAddress[0].city;
+  }
+
   saveClient() {
     const company = this.clientCompanyInputRef.nativeElement.value;
     const surname = this.clientSurnameInputRef.nativeElement.value;
     const name = this.clientNameInputRef.nativeElement.value;
     const street = this.clientStreetInputRef.nativeElement.value;
-    const nr = this.clientNumberInputRef.nativeElement.value;
     const zip = this.clientZipInputRef.nativeElement.value;
     const city = this.clientCityInputRef.nativeElement.value;
 
@@ -49,7 +67,7 @@ export class AddOrderComponent implements OnInit {
       "company": company,
       "surname": surname,
       "name": name,
-      "street": street + ' ' + nr,
+      "street": street,
       "zip": zip,
       "city": city
     })
@@ -60,28 +78,26 @@ export class AddOrderComponent implements OnInit {
     const clientSurname = this.clientSurnameInputRef.nativeElement.value;
     const clientName = this.clientNameInputRef.nativeElement.value;
     const clientStreet = this.clientStreetInputRef.nativeElement.value;
-    const clientNr = this.clientNumberInputRef.nativeElement.value;
     const clientZip = this.clientZipInputRef.nativeElement.value;
     const clientCity = this.clientCityInputRef.nativeElement.value;
     const receiverCompany = this.receiverCompanyInputRef.nativeElement.value;
     const receiverSurname = this.receiverSurnameInputRef.nativeElement.value;
     const receiverName = this.receiverNameInputRef.nativeElement.value;
     const receiverStreet = this.receiverStreetInputRef.nativeElement.value;
-    const receiverNr = this.receiverNumberInputRef.nativeElement.value;
     const receiverZip = this.receiverZipInputRef.nativeElement.value;
     const receiverCity = this.receiverCityInputRef.nativeElement.value;
     const pickupDate = this.pickupDateInputRef.nativeElement.value;
     const article = this.articleInputRef.nativeElement.value;
 
-    var nodeTitle = clientStreet + ' ' + clientNr + ', ' + clientZip + ' ' + clientCity;
+    var nodeTitle = clientStreet + ', ' + clientZip + ' ' + clientCity;
 
-    //TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
+    // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
     var rootRef = this.db.list('order/' + pickupDate);
     rootRef.set(nodeTitle + '/client', {
       "company": clientCompany,
       "surname": clientSurname,
       "name": clientName,
-      "street": clientStreet + ' ' + clientNr,
+      "street": clientStreet,
       "zip": clientZip,
       "city": clientCity
     })
@@ -90,7 +106,7 @@ export class AddOrderComponent implements OnInit {
       "company": receiverCompany,
       "surname": receiverSurname,
       "name": receiverName,
-      "street": receiverStreet + ' ' + receiverNr,
+      "street": receiverStreet,
       "zip": receiverZip,
       "city": receiverCity
     })
