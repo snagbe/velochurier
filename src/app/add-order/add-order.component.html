@@ -9,90 +9,98 @@
         <app-autocomplete></app-autocomplete>
 
         <div class="input-100 form-group">
-          <input type="text" class="form-control" placeholder="Firma" #clientCompanyInput ngModel name="company" value="{{clientCompany}}">
+          <input type="text" class="form-control" placeholder="Firma" ngModel name="company" value="{{clientCompany}}">
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Vorname" #clientSurnameInput ngModel name="surname" value="{{clientSurname}}">
+            <input type="text" class="form-control" placeholder="Vorname" ngModel name="surname" value="{{clientSurname}}">
           </div>
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Name" #clientNameInput ngModel name="name" value="{{clientName}}">
-          </div>
-        </div>
-        <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="number" class="form-control" placeholder="PLZ" #clientZipInput ngModel name="zip" value="{{clientZip}}">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Ort" #clientCityInput ngModel name="city" value="{{clientCity}}">
+            <input type="text" class="form-control" placeholder="Name" ngModel name="name" value="{{clientName}}">
           </div>
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Strasse" #clientStreetInput ngModel name="street" value="{{clientStreet}}">
+            <input type="number" class="form-control" placeholder="PLZ" ngModel name="zip" value="{{clientZip}}">
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Ort" ngModel name="city" value="{{clientCity}}">
           </div>
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Email" #clientEmailInput ngModel name="mail" email>
+            <input type="text" class="form-control" placeholder="Strasse" ngModel name="street" value="{{clientStreet}}">
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Email" ngModel name="mail"  value="{{clientMail}}" email>
           </div>
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Telefonnummer" #clientPhoneInput ngModel name="phone">
+            <input type="text" class="form-control" placeholder="Telefonnummer" ngModel name="phone" value="{{clientPhone}}">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 flex-center">
-          <button class="btn btn-success" type="submit" style="margin-right: 5px;" (click)="saveClient()">Save</button>
+          <button class="btn btn-success" type="submit" style="margin-right: 5px;" (click)="saveClient(orderForm)">Save</button>
         </div>
         <div class="col-xs-12 flex-center">
-          <button class="btn btn-success" type="submit" style="margin-right: 5px;" [disabled]="!orderForm.valid" (click)="testPrefill(orderForm)">Test</button>
+          <button class="btn btn-success" type="submit" style="margin-right: 5px;" [disabled]="!orderForm.valid" (click)="testPrefill()">Test</button>
         </div>
       </div>
 
       <h2>Empfänger</h2>
       <div class="input-container" ngModelGroup="receiver">
         <div class="input-100 form-group">
-          <input type="text" class="form-control" placeholder="Firma" #receiverCompanyInput ngModel name="company">
+          <input type="text" class="form-control" placeholder="Firma" ngModel name="company">
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Vorname" #receiverSurnameInput ngModel name="surname">
+            <input type="text" class="form-control" placeholder="Vorname" ngModel name="surname">
           </div>
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Name" #receiverNameInput ngModel name="name">
-          </div>
-        </div>
-        <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="PLZ" #receiverZipInput ngModel name="zip">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Ort" #receiverCityInput ngModel name="city">
+            <input type="text" class="form-control" placeholder="Name" ngModel name="name">
           </div>
         </div>
         <div class="input-container-2">
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Strasse" #receiverStreetInput ngModel name="street">
+            <input type="text" class="form-control" placeholder="PLZ" ngModel name="zip">
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Ort" ngModel name="city">
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Strasse" ngModel name="street">
+          </div>
+        </div>
+        <div class="input-container-2">
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Email" ngModel name="mail" email>
+          </div>
+          <div class="input-50 form-group">
+            <input type="text" class="form-control" placeholder="Telefonnummer" ngModel name="phone">
           </div>
         </div>
       </div>
 
       <h2>Auftrag</h2>
-      <div class="input-container">
+      <div class="input-container" ngModelGroup="order">
         <div class="input-container-2">
           <div class="input-50 form-group">
             <input type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')" class="form-control"
-                   placeholder="Abholdatum" #pickupDateInput ngModel name="pickupDate">
+                   placeholder="Abholdatum" ngModel name="pickupDate">
           </div>
           <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Artikel" #articleInput ngModel name="article">
+            <input type="text" class="form-control" placeholder="Artikel" ngModel name="article">
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12 flex-center">
-          <button class="btn btn-primary" type="button" (click)="saveOrder()">Add Order</button>
+          <button class="btn btn-primary" type="button" (click)="saveOrder(orderForm)">Add Order</button>
         </div>
       </div>
 

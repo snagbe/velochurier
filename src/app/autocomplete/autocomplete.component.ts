@@ -3,7 +3,6 @@ import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {Address} from "../deliveries/deliveries";
 import {GlobalComponents} from "../global-components";
 
 @Component({
@@ -16,7 +15,6 @@ export class AutocompleteComponent implements OnInit {
   options: string[] = [];
   sortedAddresses: any[] = [];
   filteredOptions: Observable<string[]>;
-  public clientAddress: Address[];
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -51,13 +49,13 @@ export class AutocompleteComponent implements OnInit {
 
   prefillAddress(clientKey) {
     if (clientKey) {
-      this.clientAddress = [];
+      GlobalComponents.clientAddress = [];
       this.db.database.ref('address/' + clientKey)
         .on('value',
           snap => {
             const data = snap.val();
             if (data) {
-              this.clientAddress.push({
+              GlobalComponents.clientAddress.push({
                 id: clientKey,
                 company: data.company,
                 name: data.name,
@@ -67,8 +65,6 @@ export class AutocompleteComponent implements OnInit {
                 city: data.city
               });
             }
-            console.log(this.clientAddress);
-            GlobalComponents.clientAddress = this.clientAddress;
           });
     }
   }
