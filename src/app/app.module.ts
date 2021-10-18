@@ -59,7 +59,7 @@ import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
     //Google Maps integration
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBCA2oaGS7PBkEV4uelWFKaQV-KdE_3iyw',
-      libraries: ['imagery', 'places'],
+      libraries: ['imagery', 'places', 'libraries'],
       language: 'de',
       region: 'CH'
     })
