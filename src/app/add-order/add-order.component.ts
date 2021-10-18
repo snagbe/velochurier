@@ -40,7 +40,7 @@ export class AddOrderComponent implements OnInit {
   }
 
   testPrefill(form: NgForm) {
-    console.log("Firma: " + form.value.client.clientCompany);
+    console.log("Firma: " + form.value.client.company);
     this.clientCompany = GlobalComponents.clientAddress[0].company;
     this.clientSurname = GlobalComponents.clientAddress[0].surname;
     this.clientName = GlobalComponents.clientAddress[0].name;
@@ -115,22 +115,7 @@ export class AddOrderComponent implements OnInit {
       "article1": article
     })
 
-    //TODO nur bei success löschen und info einbelnden sonst info einblenden
-    this.clientCompanyInputRef.nativeElement.value = '';
-    this.clientSurnameInputRef.nativeElement.value = '';
-    this.clientNameInputRef.nativeElement.value = '';
-    this.clientStreetInputRef.nativeElement.value = '';
-    this.clientNumberInputRef.nativeElement.value = '';
-    this.clientZipInputRef.nativeElement.value = '';
-    this.clientCityInputRef.nativeElement.value = '';
-    this.receiverCompanyInputRef.nativeElement.value = '';
-    this.receiverSurnameInputRef.nativeElement.value = '';
-    this.receiverNameInputRef.nativeElement.value = '';
-    this.receiverStreetInputRef.nativeElement.value = '';
-    this.receiverNumberInputRef.nativeElement.value = '';
-    this.receiverZipInputRef.nativeElement.value = '';
-    this.receiverCityInputRef.nativeElement.value = '';
-    this.pickupDateInputRef.nativeElement.value = '';
-    this.articleInputRef.nativeElement.value ='';
+    // TODO nur bei success löschen und info einblenden sonst info einblenden
+    this.orderForm.reset();
   }
 }
