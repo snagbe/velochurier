@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {} from 'googlemaps';
-import {ViewChild} from '@angular/core';
-
 
 @Component({
   selector: 'app-road',
@@ -10,24 +8,54 @@ import {ViewChild} from '@angular/core';
 })
 
 export class RoadComponent implements OnInit {
-  @ViewChild('map', {static: true}) mapElement: any;
-  map: google.maps.Map;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    // The location of Uluru
-    const chur = { lat: 46.85785, lng: 9.53059 };
-    // The map, centered at Uluru
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-      center: chur,
-    });
-    // The marker, positioned at Uluru
-    const marker = new google.maps.Marker({
-      position: chur,
-      map: map,
+    var pointA = new google.maps.LatLng(46.85785, 9.53059),
+      pointB = new google.maps.LatLng(46.86162956441514, 9.535373971909936),
+      myOptions = {
+        zoom: 14,
+        center: pointA
+      },
+      map = new google.maps.Map(document.getElementById('map'), myOptions),
+      // Instantiate a directions service.
+      directionsService = new google.maps.DirectionsService,
+      directionsDisplay = new google.maps.DirectionsRenderer({
+        map: map
+      }),
+      markerA = new google.maps.Marker({
+        position: pointA,
+        title: "point A",
+        label: "A",
+        map: map
+      }),
+      markerB = new google.maps.Marker({
+        position: pointB,
+        title: "point B",
+        label: "B",
+        map: map
+      });
+
+    // get route from A to B
+    this.calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
+
+  }
+
+  calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
+    directionsService.route({
+      origin: pointA,
+      destination: pointB,
+      avoidTolls: true,
+      avoidHighways: false,
+      travelMode: google.maps.TravelMode.BICYCLING
+    }, function (response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
     });
   }
 }
