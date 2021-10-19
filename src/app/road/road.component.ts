@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {} from 'googlemaps';
+import {map} from "rxjs/operators";
+import {AddressGeocoder} from "./road";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Component({
   selector: 'app-road',
@@ -8,54 +11,28 @@ import {} from 'googlemaps';
 })
 
 export class RoadComponent implements OnInit {
+  addresses: AddressGeocoder[];
 
-  constructor() {
+  constructor(private db: AngularFireDatabase) {
   }
 
   ngOnInit(): void {
-    var pointA = new google.maps.LatLng(46.85785, 9.53059),
-      pointB = new google.maps.LatLng(46.86162956441514, 9.535373971909936),
-      myOptions = {
-        zoom: 14,
-        center: pointA
-      },
-      map = new google.maps.Map(document.getElementById('map'), myOptions),
-      // Instantiate a directions service.
-      directionsService = new google.maps.DirectionsService,
-      directionsDisplay = new google.maps.DirectionsRenderer({
-        map: map
-      }),
-      markerA = new google.maps.Marker({
-        position: pointA,
-        title: "point A",
-        label: "A",
-        map: map
-      }),
-      markerB = new google.maps.Marker({
-        position: pointB,
-        title: "point B",
-        label: "B",
-        map: map
-      });
-
-    // get route from A to B
-    this.calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
-
+    this.getAdresses().subscribe();
+    console.log(this.addresses)
   }
 
-  calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
-    directionsService.route({
-      origin: pointA,
-      destination: pointB,
-      avoidTolls: true,
-      avoidHighways: false,
-      travelMode: google.maps.TravelMode.BICYCLING
-    }, function (response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        directionsDisplay.setDirections(response);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
+
+  public getAdresses() {
+    this.addresses = [];
+    return this.db.list('address')
+      .snapshotChanges()
+      .pipe(map(items => {
+        return items.map(a => {
+          const data = a.payload.val();
+          const key = a.payload.key;
+          // @ts-ignore
+          this.addresses.push({id: key, city: data.city, street: data.street, zip: data.zip});
+        });
+      }));
   }
 }
