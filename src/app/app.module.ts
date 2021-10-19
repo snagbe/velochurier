@@ -22,6 +22,7 @@ import {MatInputModule} from "@angular/material/input";
 import { CustomersComponent } from './customers/customers.component';
 import {MatIconModule} from '@angular/material/icon';
 import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
+import {GlobalComponents} from "./global-components";
 
 @NgModule({
     declarations: [
@@ -51,7 +52,7 @@ import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
     MatOptionModule,
     MatIconModule
   ],
-  providers: [],
+  providers: [GlobalComponents],
   bootstrap: [AppComponent]
 })
 export class AppModule {
