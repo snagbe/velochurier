@@ -8,8 +8,7 @@ import {GlobalComponents} from "../global-components";
 
 @Component({
   selector: 'app-autocomplete',
-  templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.css']
+  templateUrl: './autocomplete.component.html'
 })
 export class AutocompleteComponent implements OnInit {
   myControl = new FormControl();

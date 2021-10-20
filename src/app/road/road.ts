@@ -10,4 +10,12 @@ export interface AddressGeocoder {
   phone?: string;
   lat: string;
   lng: string;
+  marker?: Marker;
+}
+
+export interface Marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable: boolean;
 }
