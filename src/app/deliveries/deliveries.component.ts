@@ -12,10 +12,11 @@ import {DeliveriesService} from "./deliveries.service";
 export class DeliveriesComponent implements OnInit {
 
   addresses: Address[];
-  sortedAddresses:any[] = [];
+  sortedAddresses: any[] = [];
   address: String;
 
-  @ViewChild('templateBottomSheet') TemplateBottomSheet: TemplateRef<any>;
+  @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
+  @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
 
   constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet, private deliveriesService: DeliveriesService) {
   }
@@ -24,11 +25,19 @@ export class DeliveriesComponent implements OnInit {
     this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
   }
 
-  openTemplateSheetMenu() {
-    this.bottomSheet.open(this.TemplateBottomSheet);
+  openSortSheetMenu() {
+    this.bottomSheet.open(this.SortBottomSheet);
   }
 
-  closeTemplateSheetMenu() {
+  closeSortSheetMenu() {
+    this.bottomSheet.dismiss();
+  }
+
+  openDeliverSheetMenu() {
+    this.bottomSheet.open(this.DeliverBottomSheet);
+  }
+
+  closeDeliverSheetMenu() {
     this.bottomSheet.dismiss();
   }
 
@@ -37,13 +46,15 @@ export class DeliveriesComponent implements OnInit {
     this.db.database.ref('address').orderByChild(city)
       .on('child_added',
         snap => {
-      const data = snap.val();
-      this.sortedAddresses.push(data);
-    });
+          const data = snap.val();
+          this.sortedAddresses.push(data);
+        });
 
     this.addresses = this.sortedAddresses;
   }
 
-
+  deleteDeliver(deliveryMethod, address) {
+    this.db.object('/address/' + address.id).remove();
+  }
 
 }
