@@ -63,7 +63,7 @@ export class RoadComponent implements OnInit {
         if (status === 'OK') {
           this.addresses[i].lat = results[0].geometry.location.lat();
           this.addresses[i].lng = results[0].geometry.location.lng();
-          console.log("lat: " + this.addresses[0].lat + ", long: " + this.addresses[0].lng);
+          console.log("Addresse Strasse: " + this.addresses[i].street + ", lat: " + this.addresses[0].lat + ", long: " + this.addresses[0].lng);
         } else {
           console.log('Geocode was not successful for the following reason: ' + status);
           //alert('Geocode was not successful for the following reason: ' + status);
