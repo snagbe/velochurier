@@ -8,10 +8,10 @@
 
         <app-autocomplete></app-autocomplete>
 
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Firma</mat-label>
-            <input matInput ngModel name="company" value="{{clientCompany}}">
-          </mat-form-field>
+        <mat-form-field class="input-100" appearance="outline">
+          <mat-label>Firma</mat-label>
+          <input matInput ngModel name="company" value="{{clientCompany}}">
+        </mat-form-field>
         <div class="input-container-2">
           <mat-form-field class="input-100" appearance="outline">
             <mat-label>Vorname</mat-label>
@@ -57,37 +57,45 @@
 
       <h2>Empfänger</h2>
       <div class="input-container" ngModelGroup="receiver">
-        <div class="input-100 form-group">
-          <input type="text" class="form-control" placeholder="Firma" ngModel name="company">
+        <mat-form-field class="input-100" appearance="outline">
+          <mat-label>Firma</mat-label>
+          <input matInput ngModel name="company">
+        </mat-form-field>
+        <div class="input-container-2">
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Vorname</mat-label>
+            <input matInput ngModel name="name">
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput ngModel name="surname">
+          </mat-form-field>
         </div>
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Vorname" ngModel name="surname">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Name" ngModel name="name">
-          </div>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Postleitzahl</mat-label>
+            <input matInput ngModel name="zip">
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Ort</mat-label>
+            <input matInput ngModel name="city">
+          </mat-form-field>
         </div>
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="PLZ" ngModel name="zip">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Ort" ngModel name="city">
-          </div>
+          <mat-form-field class="input-50" appearance="outline">
+            <mat-label>Strasse</mat-label>
+            <input matInput ngModel name="street">
+          </mat-form-field>
         </div>
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Strasse" ngModel name="street">
-          </div>
-        </div>
-        <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Email" ngModel name="mail" email>
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Telefonnummer" ngModel name="phone">
-          </div>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput ngModel name="mail">
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Telefonnummer</mat-label>
+            <input matInput ngModel name="phone">
+          </mat-form-field>
         </div>
       </div>
 
@@ -106,12 +114,11 @@
           </mat-form-field>
         </div>
       </div>
-      <div>
+      <div style="margin-bottom: 120px">
         <div class="col-xs-12 flex-center">
           <button class="btn btn-primary" type="button" (click)="saveOrder(orderForm)">Auftrag erfassen</button>
         </div>
       </div>
-
     </form>
   </div>
 </div>
