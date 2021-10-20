@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -11,28 +11,33 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AngularFireStorageModule} from '@angular/fire/compat/storage';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 //Angular Material
-import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatOptionModule} from "@angular/material/core";
+import {DateAdapter, MatNativeDateModule, MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
-import { CustomersComponent } from './customers/customers.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {CustomersComponent} from './customers/customers.component';
 import {MatIconModule} from '@angular/material/icon';
 import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
 import {GlobalComponents} from "./global-components";
+import {CustomDateAdapter} from "./custom-date-adapters";
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/de";
+registerLocaleData(localeFr);
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        DeliveriesComponent,
-        AddOrderComponent,
-        NavbarComponent,
-        CustomersComponent,
-        AutocompleteComponent
-    ],
+  declarations: [
+    AppComponent,
+    DeliveriesComponent,
+    AddOrderComponent,
+    NavbarComponent,
+    CustomersComponent,
+    AutocompleteComponent
+  ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -50,9 +55,15 @@ import {GlobalComponents} from "./global-components";
     MatFormFieldModule,
     MatAutocompleteModule,
     MatOptionModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [GlobalComponents],
+  providers: [
+    GlobalComponents,
+    {provide: DateAdapter, useClass: CustomDateAdapter },
+    {provide: LOCALE_ID, useValue: 'de'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

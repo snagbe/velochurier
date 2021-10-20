@@ -69,9 +69,10 @@ export class AddOrderComponent implements OnInit {
     const receiver = form.value.reciver;
     const order = form.value.order;
     const nodeTitle = client.street + ', ' + client.zip + ' ' + client.city;
+    const orderDate = order.pickupDate.toISOString().split('T')[0];
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-    var rootRef = this.db.list('order/' + order.pickupDate);
+    var rootRef = this.db.list('order/' + orderDate);
     rootRef.set(nodeTitle + '/client', {
       "company": client.company,
       "surname": client.surname,

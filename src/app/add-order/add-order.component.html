@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-xs-12">
+<div>
+  <div class="flex-center">
     <form #orderForm="ngForm">
       <h1>Auftrag erfassen</h1>
 
@@ -8,40 +8,48 @@
 
         <app-autocomplete></app-autocomplete>
 
-        <div class="input-100 form-group">
-          <input type="text" class="form-control" placeholder="Firma" ngModel name="company" value="{{clientCompany}}">
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Firma</mat-label>
+            <input matInput ngModel name="company" value="{{clientCompany}}">
+          </mat-form-field>
+        <div class="input-container-2">
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Vorname</mat-label>
+            <input matInput ngModel name="name" value="{{clientName}}">
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput ngModel name="surname" value="{{clientSurname}}">
+          </mat-form-field>
         </div>
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Vorname" ngModel name="surname" value="{{clientSurname}}">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Name" ngModel name="name" value="{{clientName}}">
-          </div>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Postleitzahl</mat-label>
+            <input matInput ngModel name="zip" value="{{clientZip}}">
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Ort</mat-label>
+            <input matInput ngModel name="city" value="{{clientCity}}">
+          </mat-form-field>
         </div>
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="number" class="form-control" placeholder="PLZ" ngModel name="zip" value="{{clientZip}}">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Ort" ngModel name="city" value="{{clientCity}}">
-          </div>
+          <mat-form-field class="input-50" appearance="outline">
+            <mat-label>Strasse</mat-label>
+            <input matInput ngModel name="street" value="{{clientStreet}}">
+          </mat-form-field>
         </div>
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Strasse" ngModel name="street" value="{{clientStreet}}">
-          </div>
-        </div>
-        <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Email" ngModel name="mail"  value="{{clientMail}}" email>
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Telefonnummer" ngModel name="phone" value="{{clientPhone}}">
-          </div>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput ngModel name="mail" value="{{clientMail}}">
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Telefonnummer</mat-label>
+            <input matInput ngModel name="phone" value="{{clientPhone}}">
+          </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <div>
         <div class="col-xs-12 flex-center">
           <button class="btn btn-success" type="submit" style="margin-right: 5px;" (click)="saveClient(orderForm)">Speichern</button>
         </div>
@@ -86,16 +94,19 @@
       <h2>Auftrag</h2>
       <div class="input-container" ngModelGroup="order">
         <div class="input-container-2">
-          <div class="input-50 form-group">
-            <input type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')" class="form-control"
-                   placeholder="Abholdatum" ngModel name="pickupDate">
-          </div>
-          <div class="input-50 form-group">
-            <input type="text" class="form-control" placeholder="Artikel" ngModel name="article">
-          </div>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Abholdatum</mat-label>
+            <input matInput [matDatepicker]="picker" ngModel name="pickupDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="input-100" appearance="outline">
+            <mat-label>Artikel</mat-label>
+            <textarea matInput ngModel name="article"></textarea>
+          </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <div>
         <div class="col-xs-12 flex-center">
           <button class="btn btn-primary" type="button" (click)="saveOrder(orderForm)">Auftrag erfassen</button>
         </div>
