@@ -9,6 +9,13 @@
   border-radius: 2px;
 }
 
+.deliver-button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+
 .sort-img {
   width: 4rem;
   padding-right: 0.75rem;

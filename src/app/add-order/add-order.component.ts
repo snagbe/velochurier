@@ -1,7 +1,9 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {NgForm} from "@angular/forms";
 import {GlobalComponents} from "../global-components";
+import {Subscription} from "rxjs";
+import {Address} from "../deliveries/adresses";
 
 @Component({
   selector: 'app-add-order',
@@ -9,21 +11,6 @@ import {GlobalComponents} from "../global-components";
   styleUrls: ['./add-order.component.css']
 })
 export class AddOrderComponent implements OnInit {
-  @ViewChild('clientCompanyInput', {static: false}) clientCompanyInputRef: ElementRef;
-  @ViewChild('clientSurnameInput', {static: false}) clientSurnameInputRef: ElementRef;
-  @ViewChild('clientNameInput', {static: false}) clientNameInputRef: ElementRef;
-  @ViewChild('clientStreetInput', {static: false}) clientStreetInputRef: ElementRef;
-  @ViewChild('clientZipInput', {static: false}) clientZipInputRef: ElementRef;
-  @ViewChild('clientCityInput', {static: false}) clientCityInputRef: ElementRef;
-  @ViewChild('receiverCompanyInput', {static: false}) receiverCompanyInputRef: ElementRef;
-  @ViewChild('receiverSurnameInput', {static: false}) receiverSurnameInputRef: ElementRef;
-  @ViewChild('receiverNameInput', {static: false}) receiverNameInputRef: ElementRef;
-  @ViewChild('receiverStreetInput', {static: false}) receiverStreetInputRef: ElementRef;
-  @ViewChild('receiverZipInput', {static: false}) receiverZipInputRef: ElementRef;
-  @ViewChild('receiverCityInput', {static: false}) receiverCityInputRef: ElementRef;
-  @ViewChild('pickupDateInput', {static: false}) pickupDateInputRef: ElementRef;
-  @ViewChild('articleInput', {static: false}) articleInputRef: ElementRef;
-
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
 
   clientCompany: string;
@@ -32,87 +19,84 @@ export class AddOrderComponent implements OnInit {
   clientStreet: string;
   clientZip: number;
   clientCity: string;
+  clientMail: string;
+  clientPhone: string;
+  subscription: Subscription
+  clientAddress: Address[];
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) {
   }
 
   ngOnInit(): void {
+    this.subscription = this.globalComp.clientAddressChange
+      .subscribe(() => {
+        this.clientAddress = this.globalComp.getAddress()
+        this.orderForm.controls['client'].setValue({
+          company: this.clientAddress[0].company,
+          surname: this.clientAddress[0].surname,
+          name: this.clientAddress[0].name,
+          zip: this.clientAddress[0].zip,
+          city: this.clientAddress[0].city,
+          street: this.clientAddress[0].street,
+          mail: this.clientAddress[0].email,
+          phone: this.clientAddress[0].phone
+        });
+      });
   }
 
-  testPrefill(form: NgForm) {
-    console.log("Firma: " + form.value.client.company);
-    this.clientCompany = GlobalComponents.clientAddress[0].company;
-    this.clientSurname = GlobalComponents.clientAddress[0].surname;
-    this.clientName = GlobalComponents.clientAddress[0].name;
-    this.clientStreet = GlobalComponents.clientAddress[0].street;
-    this.clientZip = GlobalComponents.clientAddress[0].zip;
-    this.clientCity = GlobalComponents.clientAddress[0].city;
-  }
-
-  saveClient() {
-    const company = this.clientCompanyInputRef.nativeElement.value;
-    const surname = this.clientSurnameInputRef.nativeElement.value;
-    const name = this.clientNameInputRef.nativeElement.value;
-    const street = this.clientStreetInputRef.nativeElement.value;
-    const zip = this.clientZipInputRef.nativeElement.value;
-    const city = this.clientCityInputRef.nativeElement.value;
-
-    var nodeTitle = company;
+  saveClient(form: NgForm) {
+    const client = form.value.client;
+    var nodeTitle = client.company;
     if (!nodeTitle) {
-      nodeTitle = name + ' ' + surname;
+      nodeTitle = client.name + ' ' + client.surname;
     }
 
     var rootRef = this.db.list('address');
     rootRef.set(nodeTitle, {
-      "company": company,
-      "surname": surname,
-      "name": name,
-      "street": street,
-      "zip": zip,
-      "city": city
+      "company": client.company,
+      "surname": client.surname,
+      "name": client.name,
+      "street": client.street,
+      "zip": client.zip,
+      "city": client.city,
+      "mail": client.mail,
+      "phone": client.phone
     })
   }
 
-  saveOrder() {
-    const clientCompany = this.clientCompanyInputRef.nativeElement.value;
-    const clientSurname = this.clientSurnameInputRef.nativeElement.value;
-    const clientName = this.clientNameInputRef.nativeElement.value;
-    const clientStreet = this.clientStreetInputRef.nativeElement.value;
-    const clientZip = this.clientZipInputRef.nativeElement.value;
-    const clientCity = this.clientCityInputRef.nativeElement.value;
-    const receiverCompany = this.receiverCompanyInputRef.nativeElement.value;
-    const receiverSurname = this.receiverSurnameInputRef.nativeElement.value;
-    const receiverName = this.receiverNameInputRef.nativeElement.value;
-    const receiverStreet = this.receiverStreetInputRef.nativeElement.value;
-    const receiverZip = this.receiverZipInputRef.nativeElement.value;
-    const receiverCity = this.receiverCityInputRef.nativeElement.value;
-    const pickupDate = this.pickupDateInputRef.nativeElement.value;
-    const article = this.articleInputRef.nativeElement.value;
-
-    var nodeTitle = clientStreet + ', ' + clientZip + ' ' + clientCity;
+  saveOrder(form: NgForm) {
+    const client = form.value.client;
+    const receiver = form.value.reciver;
+    const order = form.value.order;
+    const nodeTitle = client.street + ', ' + client.zip + ' ' + client.city;
+    const orderDate = order.pickupDate.toISOString().split('T')[0];
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-    var rootRef = this.db.list('order/' + pickupDate);
+    var rootRef = this.db.list('order/' + orderDate);
     rootRef.set(nodeTitle + '/client', {
-      "company": clientCompany,
-      "surname": clientSurname,
-      "name": clientName,
-      "street": clientStreet,
-      "zip": clientZip,
-      "city": clientCity
+      "company": client.company,
+      "surname": client.surname,
+      "name": client.name,
+      "street": client.street,
+      "zip": client.zip,
+      "city": client.city,
+      "mail": client.mail,
+      "phone": client.phone
     })
 
     rootRef.set(nodeTitle + '/receiver', {
-      "company": receiverCompany,
-      "surname": receiverSurname,
-      "name": receiverName,
-      "street": receiverStreet,
-      "zip": receiverZip,
-      "city": receiverCity
+      "company": receiver.company,
+      "surname": receiver.surname,
+      "name": receiver.name,
+      "street": receiver.street,
+      "zip": receiver.zip,
+      "city": receiver.city,
+      "mail": receiver.mail,
+      "phone": receiver.phone
     })
 
     rootRef.set(nodeTitle + '/article', {
-      "article1": article
+      "article1": order.article
     })
 
     // TODO nur bei success löschen und info einblenden sonst info einblenden

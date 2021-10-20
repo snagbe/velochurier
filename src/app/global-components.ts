@@ -2,6 +2,16 @@ import {Address} from "./deliveries/deliveries";
 import {Subject} from "rxjs";
 
 export class GlobalComponents {
-  public static clientAddress: Address[];
+  public clientAddressChange = new Subject<number>();
+  private clientAddress: Address[]
+
+  setAddress(address: Address) {
+    this.clientAddress = [];
+    this.clientAddress.push(address);
+  }
+
+  getAddress() {
+    return this.clientAddress;
+  }
   public geoAddressChange = new Subject<number>();
 }
