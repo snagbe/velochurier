@@ -5,6 +5,7 @@ import {AddressGeocoder} from "./road";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MapsAPILoader, AgmMap} from '@agm/core';
 import {GlobalComponents} from "../global-components";
+import {Address} from "../deliveries/adresses";
 
 
 @Component({
@@ -16,6 +17,7 @@ import {GlobalComponents} from "../global-components";
 export class RoadComponent implements OnInit {
   addresses: AddressGeocoder[];
   geoAddress: String;
+  addressCount: number;
   public platform: any;
   public geocoder: any;
 
@@ -29,6 +31,7 @@ export class RoadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAddressCount();
     this.getAdresses().subscribe();
     console.log(this.addresses);
 
@@ -41,6 +44,14 @@ export class RoadComponent implements OnInit {
     });
   }
 
+  getAddressCount() {
+    this.db.database.ref('address')
+      .on('value',
+        snap => {
+          this.addressCount = snap.numChildren();
+        });
+  }
+
   getAdresses() {
     this.addresses = [];
     return this.db.list('address')
@@ -51,7 +62,9 @@ export class RoadComponent implements OnInit {
           const key = a.payload.key;
           // @ts-ignore
           this.addresses.push({id: key, city: data.city, street: data.street, zip: data.zip});
-          this.globalComponents.geoAddressChange.next();
+          if (this.addresses.length === this.addressCount) {
+            this.globalComponents.geoAddressChange.next();
+          }
         });
       }));
   }
@@ -63,7 +76,7 @@ export class RoadComponent implements OnInit {
         if (status === 'OK') {
           this.addresses[i].lat = results[0].geometry.location.lat();
           this.addresses[i].lng = results[0].geometry.location.lng();
-          console.log("Addresse Strasse: " + this.addresses[i].street + ", lat: " + this.addresses[0].lat + ", long: " + this.addresses[0].lng);
+          console.log("Addresse Strasse: " + this.addresses[i].street + ", lat: " + this.addresses[i].lat + ", long: " + this.addresses[i].lng);
         } else {
           console.log('Geocode was not successful for the following reason: ' + status);
           //alert('Geocode was not successful for the following reason: ' + status);
