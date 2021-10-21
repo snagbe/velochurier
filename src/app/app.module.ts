@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -18,11 +18,16 @@ import {GlobalComponents} from "./global-components";
 import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {MatOptionModule} from "@angular/material/core";
+import {DateAdapter, MatNativeDateModule, MatOptionModule} from "@angular/material/core";
 import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
 import {CustomersComponent} from './customers/customers.component';
 import {MatIconModule} from '@angular/material/icon';
 import {RoadComponent} from './road/road.component';
+import { CustomDateAdapter } from './custom-date-adapters';
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/de";
+registerLocaleData(localeFr);
 
 //Google Maps
 import {AgmCoreModule} from '@agm/core';
@@ -57,6 +62,8 @@ import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
     MatAutocompleteModule,
     MatOptionModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
 
     //Google Maps integration
     AgmCoreModule.forRoot({
@@ -66,7 +73,11 @@ import {AutocompleteComponent} from "./autocomplete/autocomplete.component";
       language: 'de'
     })
   ],
-  providers: [GlobalComponents],
+  providers: [
+    GlobalComponents,
+    {provide: DateAdapter, useClass: CustomDateAdapter },
+    {provide: LOCALE_ID, useValue: 'de'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
