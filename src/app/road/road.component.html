@@ -1,2 +1,13 @@
-<p>road works!</p>
-<div id="map"></div>
+<agm-map
+  [latitude]='lat'
+  [longitude]='lng'
+  [zoom]='zoom'>
+  <agm-marker
+    *ngFor="let address of addresses"
+    [latitude]="address.lat"
+    [longitude]="address.lng">
+    <agm-info-window>
+      {{ address.street }}
+    </agm-info-window>
+  </agm-marker>
+</agm-map>

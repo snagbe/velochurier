@@ -5,8 +5,6 @@ import {AddressGeocoder} from "./road";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MapsAPILoader, AgmMap} from '@agm/core';
 import {GlobalComponents} from "../global-components";
-import {Address} from "../deliveries/adresses";
-
 
 @Component({
   selector: 'app-road',
@@ -18,19 +16,24 @@ export class RoadComponent implements OnInit {
   addresses: AddressGeocoder[];
   geoAddress: String;
   addressCount: number;
-  public platform: any;
-  public geocoder: any;
+  geocoder: any;
+  lat: number;
+  lng: number;
+  zoom: number;
 
   @ViewChild(AgmMap) map: AgmMap;
 
   constructor(private db: AngularFireDatabase,
               private mapsApiLoader: MapsAPILoader,
-              private ngZone: NgZone,
               private globalComponents: GlobalComponents) {
-    this.mapsApiLoader = mapsApiLoader;
   }
 
   ngOnInit(): void {
+    this.lat = 46.85785;
+    this.lng = 9.53059;
+    this.zoom = 14.5;
+
+
     this.getAddressCount();
     this.getAdresses().subscribe();
     console.log(this.addresses);
@@ -76,10 +79,9 @@ export class RoadComponent implements OnInit {
         if (status === 'OK') {
           this.addresses[i].lat = results[0].geometry.location.lat();
           this.addresses[i].lng = results[0].geometry.location.lng();
-          console.log("Addresse Strasse: " + this.addresses[i].street + ", lat: " + this.addresses[i].lat + ", long: " + this.addresses[i].lng);
+          //console.log("Addresse Strasse: " + this.addresses[i].street + ", lat: " + this.addresses[i].lat + ", long: " + this.addresses[i].lng);
         } else {
-          console.log('Geocode was not successful for the following reason: ' + status);
-          //alert('Geocode was not successful for the following reason: ' + status);
+          alert('Geocode was not successful for the following reason: ' + status);
         }
       });
     }
