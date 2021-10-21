@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {Address} from "./deliveries";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
@@ -9,14 +9,17 @@ import {DeliveriesService} from "./deliveries.service";
   templateUrl: './deliveries.component.html',
   styleUrls: ['./deliveries.component.css']
 })
-export class DeliveriesComponent implements OnInit {
 
+export class DeliveriesComponent implements OnInit {
   addresses: Address[];
+  currentIndex: number;
   sortedAddresses: any[] = [];
   address: String;
+  visibilityComponent = false;
+  selectedType: String = 'deliveries';
+  @Output() featureSelected = new EventEmitter<string>();
 
   @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
-  @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
 
   constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet, private deliveriesService: DeliveriesService) {
   }
@@ -33,14 +36,6 @@ export class DeliveriesComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  openDeliverSheetMenu() {
-    this.bottomSheet.open(this.DeliverBottomSheet);
-  }
-
-  closeDeliverSheetMenu() {
-    this.bottomSheet.dismiss();
-  }
-
   setSort(city: string) {
     this.sortedAddresses = [];
     this.db.database.ref('address').orderByChild(city)
@@ -53,8 +48,11 @@ export class DeliveriesComponent implements OnInit {
     this.addresses = this.sortedAddresses;
   }
 
-  deleteDeliver(deliveryMethod, address) {
-    this.db.object('/address/' + address.id).remove();
-  }
+  onDeliveryComponent(index: number, feature: string) {
+    this.selectedType = 'delivery';
+    this.featureSelected.emit(feature);
 
+    //TODO @Samuel Nagbe: Übergabe vom Parameter address muss direkt an die Komponente DeliveryComponent gemacht werden
+    this.currentIndex = index;
+  }
 }

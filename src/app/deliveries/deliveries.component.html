@@ -1,92 +1,44 @@
-<div class="container">
-  <button class="sort-button" (click)="openSortSheetMenu()"><img class="sort-img" src="assets/sort_24dp-x1.png"/>
-  </button>
-  <ng-template class="bottom-sheet-container" #sortBottomSheet>
-    <table style="width:100%">
-      <tr>
-        <td>
-          <p class="bottom-sheet-element">Sortieren nach</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button class="bottom-sheet-element" (click)="setSort('street')">Strasse</button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button class="bottom-sheet-element" (click)="setSort('zip')">Postleitzahl</button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button class="bottom-sheet-element" (click)="setSort('city')">Ort</button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button class="bottom-sheet-element" (click)="closeSortSheetMenu()">Cancel</button>
-        </td>
-      </tr>
-    </table>
-  </ng-template>
-  <h1>Auslieferungen</h1>
-  <button class="deliver-button" (click)="openDeliverSheetMenu()">
-    <div class="addresses" *ngFor="let address of addresses">
-      <img class="box-img" src="assets/box.png"/>
-      {{address.street}}, {{address.zip}} {{address.city}}
-      <ng-template class="bottom-sheet-container" #deliverBottomSheet>
-        <table style="width:100%">
-          <tr>
-            <td>
-              <p class="bottom-sheet-element">Zugestellt</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Empfang', address)">Empfang</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Wohnungstüre', address)">Wohnungstüre
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Haustüre', address)">Haustüre</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Nachbar', address)">Nachbar</button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Retourniert', address)">Retourniert zum
-                Absender
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <button class="bottom-sheet-element" (click)="closeDeliverSheetMenu()">Cancel</button>
-            </td>
-          </tr>
-        </table>
-      </ng-template>
+<div [ngSwitch]="selectedType">
+  <div *ngSwitchCase="'deliveries'" class="container" xmlns="http://www.w3.org/1999/html">
+    <button class="sort-button" (click)="openSortSheetMenu()"><img class="sort-img" src="assets/sort_24dp-x1.png"/>
+    </button>
+    <ng-template class="bottom-sheet-container" #sortBottomSheet>
+      <table style="width:100%">
+        <tr>
+          <td>
+            <p class="bottom-sheet-element">Sortieren nach</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="bottom-sheet-element" (click)="setSort('street')">Strasse</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="bottom-sheet-element" (click)="setSort('zip')">Postleitzahl</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="bottom-sheet-element" (click)="setSort('city')">Ort</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button class="bottom-sheet-element" (click)="closeSortSheetMenu()">Cancel</button>
+          </td>
+        </tr>
+      </table>
+    </ng-template>
+    <h1>Auslieferungen</h1>
+    <div class="addresses" *ngFor="let address of addresses; let i = index">
+      <button class="delivery-button" (click)="onDeliveryComponent(i, 'deliveryDetails')">
+        <img class="box-img" src="assets/box.png"/>
+        {{address.street}}, {{address.zip}} {{address.city}}
+      </button>
     </div>
-  </button>
+  </div>
+  <app-delivery [currentIndex]="currentIndex" *ngSwitchCase="'delivery'">
+  </app-delivery>
 </div>
