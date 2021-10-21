@@ -5,16 +5,13 @@
 
 .sort-button {
   background-color: transparent;
-  border: #5f6965;
-  border-radius: 2px;
-}
-
-.deliver-button {
-  width: 100%;
-  background-color: transparent;
   border: none;
 }
 
+.delivery-button {
+  background-color: transparent;
+  border: none;
+}
 
 .sort-img {
   width: 4rem;
