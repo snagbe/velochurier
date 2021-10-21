@@ -16,8 +16,7 @@ export class DeliveriesComponent implements OnInit {
   sortedAddresses: any[] = [];
   address: String;
   visibilityComponent = false;
-  selectedType: String = 'deliveries';
-  @Output() featureSelected = new EventEmitter<string>();
+  @Output() featureSelectedChild = new EventEmitter<any>();
 
   @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
 
@@ -49,10 +48,7 @@ export class DeliveriesComponent implements OnInit {
   }
 
   onDeliveryComponent(index: number, feature: string) {
-    this.selectedType = 'delivery';
-    this.featureSelected.emit(feature);
-
     //TODO @Samuel Nagbe: Übergabe vom Parameter address muss direkt an die Komponente DeliveryComponent gemacht werden
-    this.currentIndex = index;
+    this.featureSelectedChild.emit({index, feature});
   }
 }

@@ -1,44 +1,40 @@
-<div [ngSwitch]="selectedType">
-  <div *ngSwitchCase="'deliveries'" class="container" xmlns="http://www.w3.org/1999/html">
-    <button class="sort-button" (click)="openSortSheetMenu()"><img class="sort-img" src="assets/sort_24dp-x1.png"/>
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <button class="sort-button" (click)="openSortSheetMenu()"><img class="sort-img" src="assets/sort_24dp-x1.png"/>
+  </button>
+  <ng-template class="bottom-sheet-container" #sortBottomSheet>
+    <table style="width:100%">
+      <tr>
+        <td>
+          <p class="bottom-sheet-element">Sortieren nach</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="setSort('street')">Strasse</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="setSort('zip')">Postleitzahl</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="setSort('city')">Ort</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="bottom-sheet-element" (click)="closeSortSheetMenu()">Cancel</button>
+        </td>
+      </tr>
+    </table>
+  </ng-template>
+  <h1>Auslieferungen</h1>
+  <div class="addresses" *ngFor="let address of addresses; let i = index">
+    <button class="delivery-button" (click)="onDeliveryComponent(i, 'deliveryDetails')">
+      <img class="box-img" src="assets/box.png"/>
+      {{address.street}}, {{address.zip}} {{address.city}}
     </button>
-    <ng-template class="bottom-sheet-container" #sortBottomSheet>
-      <table style="width:100%">
-        <tr>
-          <td>
-            <p class="bottom-sheet-element">Sortieren nach</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button class="bottom-sheet-element" (click)="setSort('street')">Strasse</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button class="bottom-sheet-element" (click)="setSort('zip')">Postleitzahl</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button class="bottom-sheet-element" (click)="setSort('city')">Ort</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button class="bottom-sheet-element" (click)="closeSortSheetMenu()">Cancel</button>
-          </td>
-        </tr>
-      </table>
-    </ng-template>
-    <h1>Auslieferungen</h1>
-    <div class="addresses" *ngFor="let address of addresses; let i = index">
-      <button class="delivery-button" (click)="onDeliveryComponent(i, 'deliveryDetails')">
-        <img class="box-img" src="assets/box.png"/>
-        {{address.street}}, {{address.zip}} {{address.city}}
-      </button>
-    </div>
   </div>
-  <app-delivery [currentIndex]="currentIndex" *ngSwitchCase="'delivery'">
-  </app-delivery>
 </div>
