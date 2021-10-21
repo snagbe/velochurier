@@ -1,0 +1,71 @@
+<div id="flex-container">
+  <div class="half-containers">
+    <p>Maps Google</p>
+  </div>
+  <div class="half-containers">
+    <div *ngFor="let address of addresses; let i = index">
+      <div *ngIf="i === currentIndex">
+        <h2>{{address.id}}</h2>
+        <p>{{address.zip}} {{address.city}}</p>
+      </div>
+    </div>
+    <div>
+      <mat-icon class="call-icon">call</mat-icon>
+      <mat-icon class="location-icon">location_on</mat-icon>
+    </div>
+    <button class="delivery-button" (click)="openDeliverSheetMenu()">
+      <ng-template class="bottom-sheet-container" #deliverBottomSheet>
+        <table style="width:100%">
+          <tr>
+            <td>
+              <p class="p-sheet-element">Zugestellt</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Empfang', address)">Empfang</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Wohnungstüre', address)">Wohnungstüre
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Haustüre', address)">Haustüre</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Nachbar', address)">Nachbar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Retourniert', address)">Retourniert zum
+                Absender
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="closeDeliverSheetMenu()">Cancel</button>
+            </td>
+          </tr>
+        </table>
+      </ng-template>
+    </button>
+  </div>
+</div>
