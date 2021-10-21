@@ -27,6 +27,7 @@ import {GlobalComponents} from "./global-components";
 import {CustomDateAdapter} from "./custom-date-adapters";
 import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/de";
+import { AddressComponent } from './address/address.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -36,7 +37,8 @@ registerLocaleData(localeFr);
     AddOrderComponent,
     NavbarComponent,
     CustomersComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    AddressComponent
   ],
   imports: [
     BrowserModule,

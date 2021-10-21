@@ -4,6 +4,7 @@ import {NgForm} from "@angular/forms";
 import {GlobalComponents} from "../global-components";
 import {Subscription} from "rxjs";
 import {Address} from "../deliveries/adresses";
+import {AddressComponent} from "../address/address.component";
 
 @Component({
   selector: 'app-add-order',
@@ -12,6 +13,8 @@ import {Address} from "../deliveries/adresses";
 })
 export class AddOrderComponent implements OnInit {
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
+  @ViewChild('client') client: AddressComponent;
+  @ViewChild('receiver') receiver: AddressComponent;
 
   clientCompany: string;
   clientSurname: string;
@@ -21,7 +24,15 @@ export class AddOrderComponent implements OnInit {
   clientCity: string;
   clientMail: string;
   clientPhone: string;
-  subscription: Subscription
+  receiverCompany: string;
+  receiverSurname: string;
+  receiverName: string;
+  receiverStreet: string;
+  receiverZip: number;
+  receiverCity: string;
+  receiverMail: string;
+  receiverPhone: string;
+  subscription: Subscription;
   clientAddress: Address[];
 
   constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) {
@@ -31,45 +42,45 @@ export class AddOrderComponent implements OnInit {
     this.subscription = this.globalComp.clientAddressChange
       .subscribe(() => {
         this.clientAddress = this.globalComp.getAddress()
-        this.orderForm.controls['client'].setValue({
-          company: this.clientAddress[0].company,
-          surname: this.clientAddress[0].surname,
-          name: this.clientAddress[0].name,
-          zip: this.clientAddress[0].zip,
-          city: this.clientAddress[0].city,
-          street: this.clientAddress[0].street,
-          mail: this.clientAddress[0].email,
-          phone: this.clientAddress[0].phone
-        });
+        this.clientCompany = this.clientAddress[0].company;
+        this.clientSurname = this.clientAddress[0].surname;
+        this.clientName = this.clientAddress[0].name;
+        this.clientZip = this.clientAddress[0].zip;
+        this.clientCity = this.clientAddress[0].city;
+        this.clientStreet = this.clientAddress[0].street;
+        this.clientMail = this.clientAddress[0].email;
+        this.clientPhone = this.clientAddress[0].phone;
       });
   }
 
-  saveClient(form: NgForm) {
-    const client = form.value.client;
-    var nodeTitle = client.company;
+  saveAddress(resource: string) {
+    let node = this.receiver;
+    if (resource === 'client') {
+      node = this.client;
+    }
+    let nodeTitle = node.company;
     if (!nodeTitle) {
-      nodeTitle = client.name + ' ' + client.surname;
+      nodeTitle = node.name + ' ' + node.surname;
     }
 
     var rootRef = this.db.list('address');
     rootRef.set(nodeTitle, {
-      "company": client.company,
-      "surname": client.surname,
-      "name": client.name,
-      "street": client.street,
-      "zip": client.zip,
-      "city": client.city,
-      "mail": client.mail,
-      "phone": client.phone
+      "company": node.company,
+      "surname": node.surname,
+      "name": node.name,
+      "street": node.street,
+      "zip": node.zip,
+      "city": node.city,
+      "mail": node.mail,
+      "phone": node.phone
     })
   }
 
   saveOrder(form: NgForm) {
-    const client = form.value.client;
-    const receiver = form.value.reciver;
-    const order = form.value.order;
+    const client = this.client;
+    const receiver = this.receiver;
     const nodeTitle = client.street + ', ' + client.zip + ' ' + client.city;
-    const orderDate = order.pickupDate.toISOString().split('T')[0];
+    const orderDate = form.value.pickupDate.toISOString().split('T')[0];
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
     var rootRef = this.db.list('order/' + orderDate);
@@ -96,7 +107,7 @@ export class AddOrderComponent implements OnInit {
     })
 
     rootRef.set(nodeTitle + '/article', {
-      "article1": order.article
+      "article1": form.value.article
     })
 
     // TODO nur bei success löschen und info einblenden sonst info einblenden
