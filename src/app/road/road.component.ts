@@ -1,10 +1,11 @@
-import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {} from 'googlemaps';
 import {map} from "rxjs/operators";
-import {AddressGeocoder} from "./road";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {MapsAPILoader, AgmMap} from '@agm/core';
-import {GlobalComponents} from "../global-components";
+import {AgmMap} from '@agm/core';
+import {FormControl} from "@angular/forms";
+import {Address} from "../deliveries/adresses";
+import {DeliveriesService} from "../deliveries/deliveries.service";
 
 @Component({
   selector: 'app-road',
@@ -13,19 +14,17 @@ import {GlobalComponents} from "../global-components";
 })
 
 export class RoadComponent implements OnInit {
-  addresses: AddressGeocoder[];
+  addresses: Address[];
   geoAddress: String;
-  addressCount: number;
   geocoder: any;
   lat: number;
   lng: number;
   zoom: number;
+  date = new FormControl(new Date());
 
   @ViewChild(AgmMap) map: AgmMap;
 
-  constructor(private db: AngularFireDatabase,
-              private mapsApiLoader: MapsAPILoader,
-              private globalComponents: GlobalComponents) {
+  constructor(private db: AngularFireDatabase) {
   }
 
   ngOnInit(): void {
@@ -33,57 +32,27 @@ export class RoadComponent implements OnInit {
     this.lng = 9.53059;
     this.zoom = 14.5;
 
-
-    this.getAddressCount();
-    this.getAdresses().subscribe();
-    //console.log(this.addresses);
-
-    this.globalComponents.geoAddressChange.subscribe(() => {
-      this.mapsApiLoader.load().then(() => {
-        console.log('google script loaded');
-        this.geocoder = new google.maps.Geocoder();
-        this.getGeocode()
-      });
-    });
+    this.getAddresses(this.date.value).subscribe();
   }
 
-  getAddressCount() {
-    this.db.database.ref('address')
-      .on('value',
-        snap => {
-          this.addressCount = snap.numChildren();
-        });
-  }
-
-  getAdresses() {
+  public getAddresses(date) {
     this.addresses = [];
-    return this.db.list('address')
+    const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    return this.db.list('order/' + selectedDate)
       .snapshotChanges()
       .pipe(map(items => {
         return items.map(a => {
           const data = a.payload.val();
+          // @ts-ignore
+          const receiver = data.receiver;
           const key = a.payload.key;
           // @ts-ignore
-          this.addresses.push({id: key, city: data.city, street: data.street, zip: data.zip});
-          if (this.addresses.length === this.addressCount) {
-            this.globalComponents.geoAddressChange.next();
-          }
+          this.addresses.push({id: key, city: receiver.city, street: receiver.street, zip: receiver.zip, lat: receiver.lat, lng: receiver.lng});
         });
       }));
   }
 
-  getGeocode() {
-    for (let i = 0; i < this.addresses.length; i++) {
-      this.geoAddress = this.addresses[i].street + ' ' + this.addresses[i].zip + ' ' + this.addresses[i].city;
-      this.geocoder.geocode({'address': this.geoAddress}, (results, status) => {
-        if (status === 'OK') {
-          this.addresses[i].lat = results[0].geometry.location.lat();
-          this.addresses[i].lng = results[0].geometry.location.lng();
-          //console.log("Addresse Strasse: " + this.addresses[i].street + ", lat: " + this.addresses[i].lat + ", long: " + this.addresses[i].lng);
-        } else {
-          alert('Geocode was not successful for the following reason: ' + status);
-        }
-      });
-    }
+  onDateChanged() {
+    this.getAddresses(this.date.value).subscribe();
   }
 }

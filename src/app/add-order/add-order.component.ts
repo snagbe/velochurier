@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {Address} from "../deliveries/adresses";
 import {AddressComponent} from "../address/address.component";
 import {AutocompleteComponent} from "../autocomplete/autocomplete.component";
+import {MapsAPILoader} from "@agm/core";
 
 @Component({
   selector: 'app-add-order',
@@ -37,8 +38,9 @@ export class AddOrderComponent implements OnInit {
   receiverPhone: string;
   subscription: Subscription;
   selectedAddress: Address[];
+  geocoder: any;
 
-  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) {
+  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents, private mapsApiLoader: MapsAPILoader) {
   }
 
   ngOnInit(): void {
@@ -91,45 +93,70 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSubmit() {
+    this.mapsApiLoader.load().then(() => {
+      console.log('google script loaded');
+      this.geocoder = new google.maps.Geocoder();
+      this.getGeocode();
+    });
+  }
+
+  getGeocode() {
+    const geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    type CoordsType = Array<{ lat: number, lng: number }>
+    this.geocoder.geocode({'address': geoAddress}, (results, status) => {
+      if (status === 'OK') {
+        const coords: CoordsType = [
+          {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+        ];
+        this.saveOrder(coords);
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
+  saveOrder(coords) {
     const client = this.client;
     const receiver = this.receiver;
     const nodeTitle = receiver.street + ', ' + receiver.zip + ' ' + receiver.city;
     const date = this.orderForm.value.pickupDate;
-    const orderDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    const orderDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-    var rootRef = this.db.list('order/' + orderDate);
-    rootRef.set(nodeTitle + '/client', {
-      "company": client.company,
-      "surname": client.surname,
-      "name": client.name,
-      "street": client.street,
-      "zip": client.zip,
-      "city": client.city,
-      "mail": client.mail,
-      "phone": client.phone
-    })
+      var rootRef = this.db.list('order/' + orderDate);
+      rootRef.set(nodeTitle + '/client', {
+        "company": client.company,
+        "surname": client.surname,
+        "name": client.name,
+        "street": client.street,
+        "zip": client.zip,
+        "city": client.city,
+        "mail": client.mail,
+        "phone": client.phone
+      })
 
-    rootRef.set(nodeTitle + '/receiver', {
-      "company": receiver.company,
-      "surname": receiver.surname,
-      "name": receiver.name,
-      "street": receiver.street,
-      "zip": receiver.zip,
-      "city": receiver.city,
-      "mail": receiver.mail,
-      "phone": receiver.phone
-    })
+      rootRef.set(nodeTitle + '/receiver', {
+        "company": receiver.company,
+        "surname": receiver.surname,
+        "name": receiver.name,
+        "street": receiver.street,
+        "zip": receiver.zip,
+        "city": receiver.city,
+        "mail": receiver.mail,
+        "phone": receiver.phone,
+        "lat": coords[0].lat,
+        "lng": coords[0].lng
+      })
 
-    rootRef.set(nodeTitle + '/article', {
-      "article1": this.orderForm.value.article
-    })
+      rootRef.set(nodeTitle + '/article', {
+        "article1": this.orderForm.value.article
+      })
 
-    // TODO nur bei success löschen und info einblenden sonst info einblenden
-    this.client.onReset();
-    this.autoClient.onReset();
-    this.receiver.onReset();
-    this.autoReceiver.onReset();
-    this.orderForm.reset();
+      // TODO nur bei success löschen und info einblenden sonst info einblenden
+      this.client.onReset();
+      this.autoClient.onReset();
+      this.receiver.onReset();
+      this.autoReceiver.onReset();
+      this.orderForm.reset();
   }
 }

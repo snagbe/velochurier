@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
-import {Address} from "./deliveries";
+import {Address} from "./adresses";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Injectable({
@@ -27,7 +27,7 @@ export class DeliveriesService {
       }));
   }
 
-  public getDeliveryAdresses(date) {
+  public getDeliveryAddresses(date) {
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
     return this.db.list('order/' + selectedDate)
       .snapshotChanges()

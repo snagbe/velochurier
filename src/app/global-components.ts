@@ -13,5 +13,4 @@ export class GlobalComponents {
   getAddress() {
     return this.clientAddress;
   }
-  public geoAddressChange = new Subject<number>();
 }

@@ -13,7 +13,6 @@ import {FormControl, NgForm} from "@angular/forms";
 
 export class DeliveriesComponent implements OnInit {
   addresses: Address[];
-  currentIndex: number;
   sortedAddresses: any[] = [];
   address: String;
   visibilityComponent = false;
@@ -27,7 +26,7 @@ export class DeliveriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.deliveriesService.getDeliveryAdresses(this.date.value).subscribe(value => this.addresses = value);
+    this.deliveriesService.getDeliveryAddresses(this.date.value).subscribe(value => this.addresses = value);
   }
 
   openSortSheetMenu() {
@@ -57,6 +56,6 @@ export class DeliveriesComponent implements OnInit {
   }
 
   onDateChanged() {
-    this.deliveriesService.getDeliveryAdresses(this.date.value).subscribe(value => this.addresses = value);
+    this.deliveriesService.getDeliveryAddresses(this.date.value).subscribe(value => this.addresses = value);
   }
 }
