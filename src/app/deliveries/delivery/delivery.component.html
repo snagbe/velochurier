@@ -46,14 +46,7 @@
           <mat-icon class="location-icon">location_on</mat-icon>
         </div>
         <div class="receiver-details">
-          <div *ngIf="!receiverAddress.company">
-            <strong>{{receiverAddress.name}} {{receiverAddress.surname}}</strong>
-          </div>
-
-          <div *ngIf="receiverAddress.company">
-            <strong>{{receiverAddress.company}}</strong>
-          </div>
-
+          <strong>{{receiverAddress.id}}</strong>
           <p>{{receiverAddress.street}}</p>
           <p>{{receiverAddress.zip}} {{receiverAddress.city}}</p>
         </div>

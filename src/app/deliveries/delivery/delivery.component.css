@@ -12,6 +12,10 @@ agm-map {
   border-color: transparent;
 }
 
+::ng-deep button.gm-ui-hover-effect {
+  outline: none;
+}
+
 .bottom-sheet-element {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
