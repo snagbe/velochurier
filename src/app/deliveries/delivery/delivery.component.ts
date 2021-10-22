@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../deliveries";
@@ -11,6 +11,7 @@ import {DeliveriesService} from "../deliveries.service";
 })
 export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
+  @Output() featureSelected = new EventEmitter<string>();
   @Input() currentIndex: number;
   addresses :Address[];
 
@@ -19,6 +20,10 @@ export class DeliveryComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.currentIndex);
     this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
+  }
+
+  onBack(feature: string){
+    this.featureSelected.emit(feature);
   }
 
   openDeliverSheetMenu() {

@@ -25,19 +25,6 @@ td {
   width: 100%;
 }
 
-.location-icon {
-  color: #006763;
-  transform: scale(1.7);
-}
-
-.call-icon {
-  color: #006763;
-  transform: scale(1);
-  padding: 1.8rem;
-  background-color: #0067632F;
-  border-radius: 50%;
-}
-
 #flex-container {
   display: flex;
   flex-direction: column;
@@ -48,7 +35,87 @@ td {
   flex: 1;
 }
 
-/*.delivery-button {
-  background-color: transparent;
-  border: 2px;
-}*/
+.half-containers:nth-child(2) {
+  margin: 2rem;
+}
+
+.goBack {
+  margin: 1.5rem 0rem 0rem 1.5rem;
+}
+
+.client-container {
+  margin-bottom: 2rem;
+}
+
+.client {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-details > h2 {
+  margin: 0rem 0rem 0.2rem 0rem;
+}
+
+.call-icon-container {
+  padding: 0.6rem;
+  background-color: #0067632F;
+  border-radius: 50%;
+}
+
+.call-icon {
+  color: #006763;
+  transform: scale(0.8);
+}
+
+.receiver {
+  display: flex;
+  background-color: #F8F8F8;
+  padding: 2rem;
+}
+
+.location-icon-container {
+  margin-right: 2rem;
+}
+
+.location-icon {
+  color: #006763;
+  transform: scale(1.4);
+}
+
+.receiver-details > p {
+  margin: 0rem 0rem 0.2rem 0rem;
+}
+
+.deliver-container {
+  position: absolute;
+  bottom: 3rem;
+  left: 0;
+  right: 0;
+  text-align: -webkit-center;
+}
+
+.deliver-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #006763;
+  width: 13rem;
+  height: 3.8rem;
+  border-radius: 3pt;
+}
+
+.mailbox-icons {
+  color: #FFFF;
+  margin-right: 1rem;
+}
+
+.deliver-button > p {
+  color: #FFFF;
+  margin: 0rem;
+}

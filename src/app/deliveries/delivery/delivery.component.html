@@ -1,19 +1,40 @@
 <div id="flex-container">
   <div class="half-containers">
-    <p>Maps Google</p>
+    <p>
+      <mat-icon (click)="onBack('deliveries')" class="goBack">chevron_left</mat-icon>
+      Google Maps Integration
+    </p>
   </div>
+
   <div class="half-containers">
-    <div *ngFor="let address of addresses; let i = index">
-      <div *ngIf="i === currentIndex">
-        <h2>{{address.id}}</h2>
-        <p>{{address.zip}} {{address.city}}</p>
+    <div class="client-container" *ngFor="let address of addresses; let i = index">
+      <div class="client" *ngIf="i === currentIndex">
+        <div class="client-details">
+          <h2>{{address.id}}</h2>
+          <p>{{address.zip}} {{address.city}}</p>
+        </div>
+        <a href="Tel: {{address.phone}}" class="call-icon-container">
+          <mat-icon class="call-icon">call</mat-icon>
+        </a>
       </div>
     </div>
-    <div>
-      <mat-icon class="call-icon">call</mat-icon>
-      <mat-icon class="location-icon">location_on</mat-icon>
+    <div class="receiver-container" *ngFor="let address of addresses; let i = index">
+      <div class="receiver" *ngIf="i === currentIndex">
+        <div class="location-icon-container">
+          <mat-icon class="location-icon">location_on</mat-icon>
+        </div>
+        <div class="receiver-details">
+          <strong>{{address.id}}</strong>
+          <p>{{address.street}}</p>
+          <p>{{address.zip}} {{address.city}}</p>
+        </div>
+      </div>
     </div>
-    <button class="delivery-button" (click)="openDeliverSheetMenu()">
+    <div class="deliver-container">
+      <div class="deliver-button" (click)="openDeliverSheetMenu()">
+        <mat-icon class="mailbox-icons">markunread_mailbox</mat-icon>
+        <p>Zustellen</p>
+      </div>
       <ng-template class="bottom-sheet-container" #deliverBottomSheet>
         <table style="width:100%">
           <tr>
@@ -23,7 +44,8 @@
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich</button>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich
+              </button>
             </td>
           </tr>
           <tr>
@@ -33,7 +55,8 @@
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten</button>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten
+              </button>
             </td>
           </tr>
           <tr>
@@ -66,6 +89,6 @@
           </tr>
         </table>
       </ng-template>
-    </button>
+    </div>
   </div>
 </div>
