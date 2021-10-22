@@ -27,9 +27,9 @@ export class DeliveriesService {
       }));
   }
 
-  public getDeliveryAddresses(date) {
+  public getOrderAddresses(date) {
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
-    return this.db.list('order/' + selectedDate)
+    return this.db.list('order/open/' + selectedDate)
       .snapshotChanges()
       .pipe(map(items => {
         return items.map(a => {

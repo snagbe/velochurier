@@ -123,7 +123,7 @@ export class AddOrderComponent implements OnInit {
     const orderDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-      var rootRef = this.db.list('order/' + orderDate);
+      var rootRef = this.db.list('order/open/' + orderDate);
       rootRef.set(nodeTitle + '/client', {
         "company": client.company,
         "surname": client.surname,

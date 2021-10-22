@@ -32,13 +32,13 @@ export class RoadComponent implements OnInit {
     this.lng = 9.53059;
     this.zoom = 14.5;
 
-    this.getAddresses(this.date.value).subscribe();
+    this.getOrderAddresses(this.date.value).subscribe();
   }
 
-  public getAddresses(date) {
+  public getOrderAddresses(date) {
     this.addresses = [];
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
-    return this.db.list('order/' + selectedDate)
+    return this.db.list('order/open/' + selectedDate)
       .snapshotChanges()
       .pipe(map(items => {
         return items.map(a => {
@@ -53,6 +53,6 @@ export class RoadComponent implements OnInit {
   }
 
   onDateChanged() {
-    this.getAddresses(this.date.value).subscribe();
+    this.getOrderAddresses(this.date.value).subscribe();
   }
 }
