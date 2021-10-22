@@ -1,5 +1,5 @@
-import {Component, OnInit,} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, Input, OnInit, ViewChild,} from '@angular/core';
+import {FormControl, NgForm} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
@@ -12,6 +12,8 @@ import {Address} from "../deliveries/adresses";
   styleUrls: ['./autocomplete.component.css']
 })
 export class AutocompleteComponent implements OnInit {
+  @ViewChild('autocompleteForm', {static: false}) autocompleteForm: NgForm;
+  @Input() title: string;
   myControl = new FormControl();
   options: string[] = [];
   sortedAddresses: any[] = [];
@@ -48,18 +50,22 @@ export class AutocompleteComponent implements OnInit {
     this.options = this.sortedAddresses;
   }
 
-  prefillAddress(clientKey) {
-    if (clientKey) {
-      this.db.database.ref('address/' + clientKey)
+  onAddressSelected(eventTarget) {
+    if (eventTarget.value) {
+      this.db.database.ref('address/' + eventTarget.value)
         .on('value',
           snap => {
             const data = snap.val();
             if (data) {
-              const address = new Address(clientKey, data.company, data.name, data.surname, data.city, data.street, data.zip, data.mail, data.phone);
+              const address = new Address(eventTarget.value, data.company, data.name, data.surname, data.city, data.street, data.zip, data.mail, data.phone, eventTarget.ariaLabel);
               this.globalComp.setAddress(address);
               this.globalComp.clientAddressChange.next();
             }
           });
     }
+  }
+
+  onReset() {
+    this.myControl.reset('');
   }
 }

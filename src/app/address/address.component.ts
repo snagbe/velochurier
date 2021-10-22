@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {FormControl, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-address',
@@ -7,6 +7,7 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
+  @ViewChild('addressForm', {static: false}) addressForm: NgForm;
   @Input() company: string;
   @Input() surname: string;
   @Input() name: string;
@@ -38,6 +39,10 @@ export class AddressComponent implements OnInit {
     }
 
     return this.email.hasError('email') ? 'Keine gültige E-mAil Adresse' : '';
+  }
+
+  onReset() {
+    this.addressForm.reset();
   }
 
 }

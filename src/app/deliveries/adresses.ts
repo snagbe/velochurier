@@ -7,6 +7,7 @@ export class Address {
               public street: string,
               public zip: number,
               public email: string,
-              public phone: string) {}
+              public phone: string,
+              public type?: string) {}
 
 }

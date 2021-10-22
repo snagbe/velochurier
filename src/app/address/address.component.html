@@ -1,41 +1,43 @@
-<mat-form-field class="input-100" appearance="outline">
-  <mat-label>Firma</mat-label>
-  <input matInput ngModel name="company" [(ngModel)]="company">
-</mat-form-field>
-<div class="input-container">
+<form #addressForm="ngForm">
   <mat-form-field class="input-100" appearance="outline">
-    <mat-label>Vorname</mat-label>
-    <input matInput ngModel name="name" [(ngModel)]="name">
+    <mat-label>Firma</mat-label>
+    <input matInput ngModel name="company" [(ngModel)]="company">
   </mat-form-field>
-  <mat-form-field class="input-100" appearance="outline">
-    <mat-label>Name</mat-label>
-    <input matInput ngModel name="surname" [(ngModel)]="surname">
-  </mat-form-field>
-</div>
-<div class="input-container">
-  <mat-form-field class="input-100" appearance="outline">
-    <mat-label>Postleitzahl</mat-label>
-    <input matInput ngModel name="zip" [(ngModel)]="zip">
-  </mat-form-field>
-  <mat-form-field class="input-100" appearance="outline">
-    <mat-label>Ort</mat-label>
-    <input matInput ngModel name="city" [(ngModel)]="city">
-  </mat-form-field>
-</div>
-<div class="input-container">
-  <mat-form-field class="input-50" appearance="outline">
-    <mat-label>Strasse</mat-label>
-    <input matInput ngModel name="street" [(ngModel)]="street">
-  </mat-form-field>
-</div>
-<div class="input-container">
-  <mat-form-field class="input-100" appearance="outline">
-    <mat-label>Email</mat-label>
-    <input matInput ngModel name="mail" [(ngModel)]="mail">
-    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-  </mat-form-field>
-  <mat-form-field class="input-100" appearance="outline">
-    <mat-label>Telefonnummer</mat-label>
-    <input matInput ngModel name="phone" [(ngModel)]="phone" value="">
-  </mat-form-field>
-</div>
+  <div class="input-container">
+    <mat-form-field class="input-100" appearance="outline">
+      <mat-label>Vorname</mat-label>
+      <input matInput ngModel name="name" [(ngModel)]="name">
+    </mat-form-field>
+    <mat-form-field class="input-100" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput ngModel name="surname" [(ngModel)]="surname">
+    </mat-form-field>
+  </div>
+  <div class="input-container">
+    <mat-form-field class="input-100" appearance="outline">
+      <mat-label>Postleitzahl</mat-label>
+      <input matInput ngModel name="zip" [(ngModel)]="zip">
+    </mat-form-field>
+    <mat-form-field class="input-100" appearance="outline">
+      <mat-label>Ort</mat-label>
+      <input matInput ngModel name="city" [(ngModel)]="city">
+    </mat-form-field>
+  </div>
+  <div class="input-container">
+    <mat-form-field class="input-50" appearance="outline">
+      <mat-label>Strasse</mat-label>
+      <input matInput ngModel name="street" [(ngModel)]="street">
+    </mat-form-field>
+  </div>
+  <div class="input-container">
+    <mat-form-field class="input-100" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput ngModel name="mail" [(ngModel)]="mail">
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="input-100" appearance="outline">
+      <mat-label>Telefonnummer</mat-label>
+      <input matInput ngModel name="phone" [(ngModel)]="phone" value="">
+    </mat-form-field>
+  </div>
+</form>

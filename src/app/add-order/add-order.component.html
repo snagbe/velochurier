@@ -1,10 +1,12 @@
 <div>
   <div class="flex-center" style="margin: 10px">
-    <form #orderForm="ngForm">
+    <form #orderForm="ngForm" (ngSubmit)="onSubmit()">
       <h1>Auftrag erfassen</h1>
 
       <h2>Auftraggeber</h2>
-      <app-autocomplete></app-autocomplete>
+      <app-autocomplete #autoClient
+      [title]="'Auftraggeber'"
+      ></app-autocomplete>
       <app-address #client
                    [company]="clientCompany"
                    [surname]="clientSurname"
@@ -16,10 +18,13 @@
                    [phone]="clientPhone">
       </app-address>
       <div class="col-xs-12 flex-center">
-        <button class="btn btn-success" type="submit" (click)="saveAddress('client')">Speichern</button>
+        <button class="btn btn-success" type="button" (click)="onSaveAddress('client')">Speichern</button>
       </div>
 
       <h2>Empfänger</h2>
+      <app-autocomplete #autoReceiver
+                        [title]="'Empfänger'"
+      ></app-autocomplete>
       <app-address #receiver
                    [company]="receiverCompany"
                    [surname]="receiverSurname"
@@ -30,9 +35,12 @@
                    [mail]="receiverMail"
                    [phone]="receiverPhone">
       </app-address>
+      <div class="col-xs-12 flex-center">
+        <button class="btn btn-success" type="button" (click)="onSaveAddress('receiver')">Speichern</button>
+      </div>
 
       <h2>Auftrag</h2>
-      <div class="input-container-2">
+      <div class="input-container">
         <mat-form-field class="input-50" appearance="outline">
           <mat-label>Abholdatum</mat-label>
           <input matInput [matDatepicker]="picker" ngModel name="pickupDate" required>
@@ -44,11 +52,8 @@
           <textarea matInput ngModel name="article" required></textarea>
         </mat-form-field>
       </div>
-      <div class="col-xs-12 flex-center">
-        <button class="btn btn-success" type="submit" style="margin-bottom: 5px;" (click)="saveAddress('receiver')">Speichern</button>
-      </div>
       <div class="col-xs-12 flex-center" style="margin-bottom: 120px">
-        <button class="btn btn-primary" type="button" (click)="saveOrder(orderForm)">Auftrag erfassen</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!orderForm.valid">Auftrag erfassen</button>
       </div>
     </form>
   </div>

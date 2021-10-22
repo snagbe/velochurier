@@ -1,13 +1,13 @@
-<form>
+<form #autocompleteForm="ngForm">
   <mat-form-field style="width: 50%; padding-right: 5px" appearance="outline">
-    <mat-label>Auftraggeber</mat-label>
+    <mat-label>{{title}}</mat-label>
     <input type="text"
-           aria-label="Auftraggeber"
            matInput
+           [attr.aria-label]="title"
            [formControl]="myControl"
            [matAutocomplete]="auto"
-           (blur)="prefillAddress($event.target.value)"
-           (keyup.enter)="prefillAddress($event.target.value)">
+           (blur)="onAddressSelected($event.target)"
+           (keyup.enter)="onAddressSelected($event.target)">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{option}}
