@@ -3,7 +3,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {NgForm} from "@angular/forms";
 import {GlobalComponents} from "../global-components";
 import {Subscription} from "rxjs";
-import {Address} from "../deliveries/adresses";
+import {Address} from "../address/addresses";
 import {AddressComponent} from "../address/address.component";
 import {AutocompleteComponent} from "../autocomplete/autocomplete.component";
 import {MapsAPILoader} from "@agm/core";

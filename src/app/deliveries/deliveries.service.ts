@@ -1,6 +1,6 @@
 import { Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
-import {Address} from "./adresses";
+import {Address} from "../address/addresses";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Injectable({

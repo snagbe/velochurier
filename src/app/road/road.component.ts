@@ -4,7 +4,7 @@ import {map} from "rxjs/operators";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {AgmMap} from '@agm/core';
 import {FormControl} from "@angular/forms";
-import {Address} from "../deliveries/adresses";
+import {Address} from "../address/addresses";
 import {DeliveriesService} from "../deliveries/deliveries.service";
 
 @Component({

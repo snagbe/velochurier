@@ -1,4 +1,4 @@
-import {Address} from "./deliveries/adresses";
+import {Address} from "./address/addresses";
 import {Subject} from "rxjs";
 
 export class GlobalComponents {

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {Address} from "../deliveries";
+import {Address} from "../../address/addresses";
 import {DeliveriesService} from "../deliveries.service";
 
 @Component({

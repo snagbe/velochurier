@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../global-components";
-import {Address} from "../deliveries/adresses";
+import {Address} from "../address/addresses";
 
 @Component({
   selector: 'app-autocomplete',
