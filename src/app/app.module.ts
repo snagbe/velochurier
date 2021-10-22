@@ -28,6 +28,7 @@ import { RoadComponent } from './road/road.component';
 import { CustomDateAdapter } from './custom-date-adapters';
 import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/de";
+import { AddressComponent } from './address/address.component';
 
 registerLocaleData(localeFr);
 
@@ -44,7 +45,8 @@ import { AutocompleteComponent } from "./autocomplete/autocomplete.component";
     CustomersComponent,
     RoadComponent,
     AutocompleteComponent,
-    DeliveryComponent
+    DeliveryComponent,
+    AddressComponent
   ],
   imports: [
     BrowserModule,
