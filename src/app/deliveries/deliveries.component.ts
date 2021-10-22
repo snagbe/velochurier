@@ -51,8 +51,8 @@ export class DeliveriesComponent implements OnInit {
   }
 
   onDeliveryComponent(index: number, feature: string) {
-    //TODO @Samuel Nagbe: Übergabe vom Parameter address muss direkt an die Komponente DeliveryComponent gemacht werden
-    this.featureSelectedChild.emit({index, feature});
+    let date = this.date;
+    this.featureSelectedChild.emit({index, feature, date});
   }
 
   onDateChanged() {

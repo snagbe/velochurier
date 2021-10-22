@@ -1,40 +1,55 @@
 <div id="flex-container">
   <div class="half-containers">
     <p>
-      <mat-icon (click)="onBack('deliveries')" class="goBack">chevron_left</mat-icon>
+      <button class="onBackButton" (click)="onBack('deliveries')">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
       Google Maps Integration
     </p>
   </div>
-
   <div class="half-containers">
-    <div class="client-container" *ngFor="let address of addresses; let i = index">
+    <div class="client-container" *ngFor="let clientAddress of clientAddresses; let i = index">
       <div class="client" *ngIf="i === currentIndex">
         <div class="client-details">
-          <h2>{{address.id}}</h2>
-          <p>{{address.zip}} {{address.city}}</p>
+          <div *ngIf="!clientAddress.company">
+            <h2>{{clientAddress.name}} {{clientAddress.surname}}</h2>
+          </div>
+
+          <div *ngIf="clientAddress.company">
+            <h2>{{clientAddress.company}}</h2>
+          </div>
+
+          <p>{{clientAddress.zip}} {{clientAddress.city}}</p>
         </div>
-        <a href="Tel: {{address.phone}}" class="call-icon-container">
+        <a href="Tel: {{clientAddress.phone}}" class="call-icon-container">
           <mat-icon class="call-icon">call</mat-icon>
         </a>
       </div>
     </div>
-    <div class="receiver-container" *ngFor="let address of addresses; let i = index">
+    <div class="receiver-container" *ngFor="let receiverAddress of receiverAddresses; let i = index">
       <div class="receiver" *ngIf="i === currentIndex">
         <div class="location-icon-container">
           <mat-icon class="location-icon">location_on</mat-icon>
         </div>
         <div class="receiver-details">
-          <strong>{{address.id}}</strong>
-          <p>{{address.street}}</p>
-          <p>{{address.zip}} {{address.city}}</p>
+          <div *ngIf="!receiverAddress.company">
+            <strong>{{receiverAddress.name}} {{receiverAddress.surname}}</strong>
+          </div>
+
+          <div *ngIf="receiverAddress.company">
+            <strong>{{receiverAddress.company}}</strong>
+          </div>
+
+          <p>{{receiverAddress.street}}</p>
+          <p>{{receiverAddress.zip}} {{receiverAddress.city}}</p>
         </div>
       </div>
     </div>
     <div class="deliver-container">
-      <div class="deliver-button" (click)="openDeliverSheetMenu()">
+      <button class="deliver-button" (click)="openDeliverSheetMenu()">
         <mat-icon class="mailbox-icons">markunread_mailbox</mat-icon>
         <p>Zustellen</p>
-      </div>
+      </button>
       <ng-template class="bottom-sheet-container" #deliverBottomSheet>
         <table style="width:100%">
           <tr>

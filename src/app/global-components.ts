@@ -3,7 +3,8 @@ import {Subject} from "rxjs";
 
 export class GlobalComponents {
   public clientAddressChange = new Subject<number>();
-  private clientAddress: Address[]
+  private clientAddress: Address[];
+  private isCompEmpty: number;
 
   setAddress(address: Address) {
     this.clientAddress = [];

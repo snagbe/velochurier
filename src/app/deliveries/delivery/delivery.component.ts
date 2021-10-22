@@ -13,22 +13,36 @@ export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
   @Output() featureSelected = new EventEmitter<string>();
   @Input() currentIndex: number;
-  addresses :Address[];
+  @Input() currentDate: any;
 
-  constructor(private bottomSheet: MatBottomSheet, private db: AngularFireDatabase, private deliveriesService: DeliveriesService){ }
+  receiverCount: number;
+  clientCount: number
+  receiverAddresses: Address[];
+  clientAddresses: Address[];
 
-  ngOnInit(): void {
-    //console.log(this.currentIndex);
-    this.deliveriesService.getAddresses().subscribe(value => this.addresses = value);
+  constructor(private bottomSheet: MatBottomSheet, private db: AngularFireDatabase, private deliveriesService: DeliveriesService) {
   }
 
-  onBack(feature: string){
+  ngOnInit(): void {
+
+    this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
+    this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'client').subscribe(value => this.clientAddresses = value);
+    console.log(this.receiverAddresses);
+    console.log(this.clientAddresses);
+  }
+
+  onBack(feature: string) {
     this.featureSelected.emit(feature);
+  }
+
+  checkIsEmpty() {
+    console.log('test');
   }
 
   openDeliverSheetMenu() {
     this.bottomSheet.open(this.DeliverBottomSheet);
   }
+
   closeDeliverSheetMenu() {
     this.bottomSheet.dismiss();
   }

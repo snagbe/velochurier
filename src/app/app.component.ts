@@ -8,7 +8,8 @@ import {Component} from '@angular/core';
 export class AppComponent {
   title = 'velochurier';
   loadedFeature = 'deliveries';
-  Index: number;
+  index: number;
+  date: any;
 
   onNavigate(feature: string) {
     this.loadedFeature = feature;
@@ -16,6 +17,7 @@ export class AppComponent {
 
   onChildNavigate(value) {
     this.loadedFeature = value.feature;
-    this.Index = value.index
+    this.index = value.index;
+    this.date = value.date;
   }
 }

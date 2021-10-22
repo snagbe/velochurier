@@ -2,6 +2,7 @@ import { Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
 import {Address} from "../address/addresses";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
+import {GlobalComponents} from "../global-components";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 export class DeliveriesService {
   getType: any;
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) { }
 
   ngOnInit(): void {
   }
@@ -49,7 +50,7 @@ export class DeliveriesService {
           const key = a.payload.key;
 
           // @ts-ignore
-          const address: Address = {id: key, city: this.getType.city, street: this.getType.street, zip: this.getType.zip};
+          const address: Address = {id: key, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, lat: this.getType.lat, lng: this.getType.lng, street: this.getType.street, zip: this.getType.zip};
           return address;
         });
       }));
