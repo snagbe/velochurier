@@ -3,6 +3,7 @@ import {Address} from "./deliveries";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {DeliveriesService} from "./deliveries.service";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-deliveries',
@@ -19,12 +20,14 @@ export class DeliveriesComponent implements OnInit {
   @Output() featureSelectedChild = new EventEmitter<any>();
 
   @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
+  @ViewChild('dateForm') dateForm: NgForm;
 
   constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet, private deliveriesService: DeliveriesService) {
   }
 
   ngOnInit(): void {
     this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
+    this.dateForm.value.date = '2020-10-22';//new Date('2020-10-22');
   }
 
   openSortSheetMenu() {

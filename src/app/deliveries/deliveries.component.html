@@ -31,6 +31,14 @@
     </table>
   </ng-template>
   <h1>Auslieferungen</h1>
+  <form #dateForm="ngForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Auftragsdatum</mat-label>
+      <input matInput [matDatepicker]="picker" ngModel name="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
   <div class="addresses" *ngFor="let address of addresses; let i = index">
     <button class="delivery-button" (click)="onDeliveryComponent(i, 'deliveryDetails')">
       <img class="box-img" src="assets/box.png"/>
