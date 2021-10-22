@@ -36,7 +36,7 @@ export class RoadComponent implements OnInit {
 
     this.getAddressCount();
     this.getAdresses().subscribe();
-    console.log(this.addresses);
+    //console.log(this.addresses);
 
     this.globalComponents.geoAddressChange.subscribe(() => {
       this.mapsApiLoader.load().then(() => {
