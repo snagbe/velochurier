@@ -26,7 +26,7 @@ export class DeliveriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.deliveriesService.getOrderAddresses(this.date.value).subscribe(value => this.addresses = value);
+    this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 
   openSortSheetMenu() {
@@ -56,6 +56,6 @@ export class DeliveriesComponent implements OnInit {
   }
 
   onDateChanged() {
-    this.deliveriesService.getOrderAddresses(this.date.value).subscribe(value => this.addresses = value);
+    this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 }

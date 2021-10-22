@@ -5,7 +5,6 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {AgmMap} from '@agm/core';
 import {FormControl} from "@angular/forms";
 import {Address} from "../address/addresses";
-import {DeliveriesService} from "../deliveries/deliveries.service";
 
 @Component({
   selector: 'app-road',
@@ -21,6 +20,7 @@ export class RoadComponent implements OnInit {
   lng: number;
   zoom: number;
   date = new FormControl(new Date());
+  getType: any;
 
   @ViewChild(AgmMap) map: AgmMap;
 
@@ -32,27 +32,35 @@ export class RoadComponent implements OnInit {
     this.lng = 9.53059;
     this.zoom = 14.5;
 
-    this.getOrderAddresses(this.date.value).subscribe();
+    this.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe();
   }
 
-  public getOrderAddresses(date) {
+  public getOrderAddresses(date, status, type) {
     this.addresses = [];
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
-    return this.db.list('order/open/' + selectedDate)
+    return this.db.list('order/' + status + '/' + selectedDate)
       .snapshotChanges()
       .pipe(map(items => {
         return items.map(a => {
           const data = a.payload.val();
-          // @ts-ignore
-          const receiver = data.receiver;
+          if(type === 'receiver') {
+            // @ts-ignore
+            this.getType = data.receiver;
+          }else if (type === 'client') {
+            // @ts-ignore
+            this.getType = data.client;
+          }else {
+            // @ts-ignore
+            this.getType = data.receiver;
+          }
           const key = a.payload.key;
           // @ts-ignore
-          this.addresses.push({id: key, city: receiver.city, street: receiver.street, zip: receiver.zip, lat: receiver.lat, lng: receiver.lng});
+          this.addresses.push({id: key, city: this.getType.city, street: this.getType.street, zip: this.getType.zip, lat: this.getType.lat, lng: this.getType.lng});
         });
       }));
   }
 
   onDateChanged() {
-    this.getOrderAddresses(this.date.value).subscribe();
+    this.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe();
   }
 }

@@ -39,6 +39,7 @@ export class AddOrderComponent implements OnInit {
   subscription: Subscription;
   selectedAddress: Address[];
   geocoder: any;
+  geoAddress: any;
 
   constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents, private mapsApiLoader: MapsAPILoader) {
   }
@@ -96,14 +97,20 @@ export class AddOrderComponent implements OnInit {
     this.mapsApiLoader.load().then(() => {
       console.log('google script loaded');
       this.geocoder = new google.maps.Geocoder();
-      this.getGeocode();
+      this.getGeocode('receiver');
     });
   }
 
-  getGeocode() {
-    const geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+  getGeocode(type) {
+    if(type === 'receiver') {
+      this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    }else if (type === 'client') {
+      this.geoAddress = this.client.street + ' ' + this.client.zip + ' ' + this.client.city;
+    }else {
+      this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    }
     type CoordsType = Array<{ lat: number, lng: number }>
-    this.geocoder.geocode({'address': geoAddress}, (results, status) => {
+    this.geocoder.geocode({'address': this.geoAddress}, (results, status) => {
       if (status === 'OK') {
         const coords: CoordsType = [
           {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
