@@ -26,4 +26,19 @@ export class DeliveriesService {
         });
       }));
   }
+
+  public getDeliveryAdresses(date) {
+    const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    return this.db.list('order/' + selectedDate)
+      .snapshotChanges()
+      .pipe(map(items => {
+        return items.map(a => {
+          const data = a.payload.val();
+          const key = a.payload.key;
+          // @ts-ignore
+          const address: Address = {id: key, city: data.receiver.city, street: data.receiver.street, zip: data.receiver.zip};
+          return address;
+        });
+      }));
+  }
 }

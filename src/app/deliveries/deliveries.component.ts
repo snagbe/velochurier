@@ -27,7 +27,7 @@ export class DeliveriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
+    this.deliveriesService.getDeliveryAdresses(this.date.value).subscribe(value => this.addresses = value);
   }
 
   openSortSheetMenu() {
@@ -38,13 +38,14 @@ export class DeliveriesComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  setSort(city: string) {
+  setSort(value: string) {
     this.sortedAddresses = [];
-    this.db.database.ref('address').orderByChild(city)
+    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth()+1) + '-' + this.date.value.getDate();
+    this.db.database.ref('order/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
         snap => {
           const data = snap.val();
-          this.sortedAddresses.push(data);
+          this.sortedAddresses.push(data.receiver);
         });
 
     this.addresses = this.sortedAddresses;
@@ -53,5 +54,9 @@ export class DeliveriesComponent implements OnInit {
   onDeliveryComponent(index: number, feature: string) {
     //TODO @Samuel Nagbe: Übergabe vom Parameter address muss direkt an die Komponente DeliveryComponent gemacht werden
     this.featureSelectedChild.emit({index, feature});
+  }
+
+  onDateChanged() {
+    this.deliveriesService.getDeliveryAdresses(this.date.value).subscribe(value => this.addresses = value);
   }
 }
