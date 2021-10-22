@@ -18,8 +18,8 @@ export class DeliveryComponent implements OnInit {
   constructor(private bottomSheet: MatBottomSheet, private db: AngularFireDatabase, private deliveriesService: DeliveriesService){ }
 
   ngOnInit(): void {
-    console.log(this.currentIndex);
-    this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
+    //console.log(this.currentIndex);
+    this.deliveriesService.getAddresses().subscribe(value => this.addresses = value);
   }
 
   onBack(feature: string){
@@ -34,6 +34,6 @@ export class DeliveryComponent implements OnInit {
   }
 
   deleteDeliver(deliveryMethod, address) {
-    this.db.object('/address/' + address.id).remove();
+    //this.db.object('/address/' + address.id).remove();
   }
 }

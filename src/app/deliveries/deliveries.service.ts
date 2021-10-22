@@ -13,7 +13,7 @@ export class DeliveriesService {
   ngOnInit(): void {
   }
 
-  public getAdresses() {
+  public getAddresses() {
     return this.db.list('address')
       .snapshotChanges()
       .pipe(map(items => {
