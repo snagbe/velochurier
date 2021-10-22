@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'velochurier';
-  loadedFeature = 'deliveries';
+  loadedFeature = 'login';
   Index: number;
 
   onNavigate(feature: string) {

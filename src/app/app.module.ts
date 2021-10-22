@@ -35,6 +35,7 @@ registerLocaleData(localeFr);
 //Google Maps
 import { AgmCoreModule } from '@agm/core';
 import { AutocompleteComponent } from "./autocomplete/autocomplete.component";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AutocompleteComponent } from "./autocomplete/autocomplete.component";
     RoadComponent,
     AutocompleteComponent,
     DeliveryComponent,
-    AddressComponent
+    AddressComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
