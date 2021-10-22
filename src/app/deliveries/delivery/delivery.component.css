@@ -1,6 +1,15 @@
-.map-container {
+agm-map {
   height: 100%;
   width: 100%;
+}
+
+.onBackButton {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 99;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .bottom-sheet-element {
@@ -43,13 +52,6 @@ td {
 .half-containers:nth-child(2) {
   margin: 2rem;
 }
-
-.onBackButton {
-  margin: 1.5rem 0rem 0rem 1.5rem;
-  background-color: transparent;
-  border-color: transparent;
-}
-
 
 .client-container {
   margin-bottom: 2rem;

@@ -15,6 +15,7 @@ export class DeliveryComponent implements OnInit {
   @Input() currentIndex: number;
   @Input() currentDate: any;
 
+  zoom: number;
   receiverCount: number;
   clientCount: number
   receiverAddresses: Address[];
@@ -24,6 +25,7 @@ export class DeliveryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.zoom = 20;
 
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'client').subscribe(value => this.clientAddresses = value);

@@ -1,11 +1,25 @@
 <div id="flex-container">
   <div class="half-containers">
-    <p>
-      <button class="onBackButton" (click)="onBack('deliveries')">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      Google Maps Integration
-    </p>
+    <button class="onBackButton" (click)="onBack('deliveries')">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <agm-map
+             [latitude]='receiverAddresses[currentIndex].lat'
+             [longitude]='receiverAddresses[currentIndex].lng'
+             [zoom]='zoom'>
+      <div *ngFor="let receiverAddress of receiverAddresses; let i = index">
+        <div *ngIf="i === currentIndex">
+          <agm-marker
+            [latitude]="receiverAddress.lat"
+            [longitude]="receiverAddress.lng">
+            <agm-info-window>
+              <div>{{ receiverAddress.id }}</div>
+              <div>{{ receiverAddress.street }}</div>
+            </agm-info-window>
+          </agm-marker>
+        </div>
+      </div>
+    </agm-map>
   </div>
   <div class="half-containers">
     <div class="client-container" *ngFor="let clientAddress of clientAddresses; let i = index">
