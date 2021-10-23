@@ -14,6 +14,10 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalComponents } from "./global-components";
 import { DeliveryComponent } from "./deliveries/delivery/delivery.component";
+import { OverlayComponent } from './overlay/overlay.component';
+import { DialogComponent } from './overlay/dialog/dialog.component';
+import { AddressComponent } from './address/address.component';
+import { RoadComponent } from './road/road.component';
 
 //Angular Material
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -24,11 +28,11 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { CustomersComponent } from './customers/customers.component';
 import { MatIconModule } from '@angular/material/icon';
-import { RoadComponent } from './road/road.component';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 import { CustomDateAdapter } from './custom-date-adapters';
 import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/de";
-import { AddressComponent } from './address/address.component';
 
 registerLocaleData(localeFr);
 
@@ -48,7 +52,9 @@ import { LoginComponent } from './login/login.component';
     AutocompleteComponent,
     DeliveryComponent,
     AddressComponent,
-    LoginComponent
+    LoginComponent,
+    OverlayComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +77,8 @@ import { LoginComponent } from './login/login.component';
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatDialogModule,
+    MatButtonModule,
 
     //Google Maps integration
     AgmCoreModule.forRoot({
@@ -83,6 +91,9 @@ import { LoginComponent } from './login/login.component';
 
   providers: [
     GlobalComponents,
+    OverlayComponent,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
     { provide: DateAdapter, useClass: CustomDateAdapter },
     { provide: LOCALE_ID, useValue: 'de' }
   ],

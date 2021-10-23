@@ -27,3 +27,7 @@ button.eye {
   border: none;
   background-color: inherit;
 }
+
+mat-form-field {
+  width: 23rem;
+}

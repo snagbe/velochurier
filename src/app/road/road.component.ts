@@ -5,7 +5,6 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {AgmMap} from '@agm/core';
 import {FormControl} from "@angular/forms";
 import {Address} from "../address/addresses";
-import {DeliveriesService} from "../deliveries/deliveries.service";
 
 @Component({
   selector: 'app-road',
