@@ -22,3 +22,8 @@ form {
 a:hover {
   cursor: pointer;
 }
+
+button.eye {
+  border: none;
+  background-color: inherit;
+}
