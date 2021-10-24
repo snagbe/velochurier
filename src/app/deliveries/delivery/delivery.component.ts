@@ -16,8 +16,6 @@ export class DeliveryComponent implements OnInit {
   @Input() currentIndex: number;
   @Input() currentDate: any;
 
-  lat: number
-  lng: number
   zoom: number;
   clientCount: number
   receiverAddresses: Address[];
@@ -27,11 +25,8 @@ export class DeliveryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.lat = 46.85785;
-    this.lng = 9.53059;
     this.zoom = 20;
-    console.log('currentIndex ', this.currentIndex)
+    //console.log('currentIndex ', this.currentIndex)
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'client').subscribe(value => this.clientAddresses = value);
     /*console.log(this.receiverAddresses);
