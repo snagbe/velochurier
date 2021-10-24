@@ -12,11 +12,13 @@ import {DeliveriesService} from "../deliveries.service";
 export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
   @Output() featureSelected = new EventEmitter<string>();
+  @Input() currentID: any;
   @Input() currentIndex: number;
   @Input() currentDate: any;
 
+  lat: number
+  lng: number
   zoom: number;
-  receiverCount: number;
   clientCount: number
   receiverAddresses: Address[];
   clientAddresses: Address[];
@@ -25,12 +27,15 @@ export class DeliveryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.zoom = 20;
 
+    this.lat = 46.85785;
+    this.lng = 9.53059;
+    this.zoom = 20;
+    console.log('currentIndex ', this.currentIndex)
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'client').subscribe(value => this.clientAddresses = value);
-    console.log(this.receiverAddresses);
-    console.log(this.clientAddresses);
+    /*console.log(this.receiverAddresses);
+    console.log(this.clientAddresses);*/
   }
 
   onBack(feature: string) {
@@ -49,7 +54,18 @@ export class DeliveryComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  deleteDeliver(deliveryMethod, address) {
+  onMoveToDelivered(deliveryMethod, address) {
+    /*const selectedDate = this.currentDate.value.getFullYear() + '-' + (this.currentDate.value.getMonth()+1) + '-' + this.currentDate.value.getDate();
     //this.db.object('/address/' + address.id).remove();
+    this.db.list('address/open/' + selectedDate)
+      .on('value',
+        snap => {
+          const data = snap.val();
+          if (data) {
+            const address = new Address(eventTarget.value, data.company, data.name, data.surname, data.city, data.street, data.zip, data.mail, data.phone, eventTarget.ariaLabel);
+            this.globalComp.setAddress(address);
+            this.globalComp.clientAddressChange.next();
+          }
+        });*/
   }
 }

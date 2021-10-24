@@ -3,12 +3,13 @@
     <button class="onBackButton" (click)="onBack('deliveries')">
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
+    <!-- Todo: set center by key and not by index -> index is set default by alphabet-->
     <agm-map
              [latitude]='receiverAddresses[currentIndex].lat'
              [longitude]='receiverAddresses[currentIndex].lng'
-             [zoom]='zoom'>
+      [zoom]='zoom'>
       <div *ngFor="let receiverAddress of receiverAddresses; let i = index">
-        <div *ngIf="i === currentIndex">
+        <div *ngIf="receiverAddress == currentID">
           <agm-marker
             [latitude]="receiverAddress.lat"
             [longitude]="receiverAddress.lng">
@@ -23,7 +24,7 @@
   </div>
   <div class="half-containers">
     <div class="client-container" *ngFor="let clientAddress of clientAddresses; let i = index">
-      <div class="client" *ngIf="i === currentIndex">
+      <div class="client" *ngIf="clientAddress.id == currentID">
         <div class="client-details">
           <div *ngIf="!clientAddress.company">
             <h2>{{clientAddress.name}} {{clientAddress.surname}}</h2>
@@ -41,7 +42,7 @@
       </div>
     </div>
     <div class="receiver-container" *ngFor="let receiverAddress of receiverAddresses; let i = index">
-      <div class="receiver" *ngIf="i === currentIndex">
+      <div class="receiver" *ngIf="receiverAddress.id == currentID">
         <div class="location-icon-container">
           <mat-icon class="location-icon">location_on</mat-icon>
         </div>
@@ -66,40 +67,40 @@
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Persönlich', address)">Persönlich
               </button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Empfang', address)">Empfang</button>
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Empfang', address)">Empfang</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Milchkasten', address)">Milchkasten
               </button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Wohnungstüre', address)">Wohnungstüre
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Wohnungstüre', address)">Wohnungstüre
               </button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Haustüre', address)">Haustüre</button>
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Haustüre', address)">Haustüre</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Nachbar', address)">Nachbar</button>
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Nachbar', address)">Nachbar</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Retourniert', address)">Retourniert zum
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Retourniert', address)">Retourniert zum
                 Absender
               </button>
             </td>
