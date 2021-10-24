@@ -3,13 +3,14 @@
     <button class="onBackButton" (click)="onBack('deliveries')">
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
-    <!-- Todo: set center by key and not by index -> index is set default by alphabet-->
+    <!-- Todo:  - set center by key and not by index -> index is set default by alphabet
+                - remove error in console-->
     <agm-map
              [latitude]='receiverAddresses[currentIndex].lat'
              [longitude]='receiverAddresses[currentIndex].lng'
       [zoom]='zoom'>
       <div *ngFor="let receiverAddress of receiverAddresses; let i = index">
-        <div *ngIf="receiverAddress == currentID">
+        <div *ngIf="receiverAddress.id == currentID">
           <agm-marker
             [latitude]="receiverAddress.lat"
             [longitude]="receiverAddress.lng">
