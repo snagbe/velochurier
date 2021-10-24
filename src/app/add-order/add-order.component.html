@@ -1,123 +1,59 @@
 <div>
-  <div class="flex-center">
-    <form #orderForm="ngForm">
+  <div class="flex-center" style="margin: 10px">
+    <form #orderForm="ngForm" (ngSubmit)="onSubmit()">
       <h1>Auftrag erfassen</h1>
 
       <h2>Auftraggeber</h2>
-      <div class="input-container" ngModelGroup="client">
-
-        <app-autocomplete></app-autocomplete>
-
-        <mat-form-field class="input-100" appearance="outline">
-          <mat-label>Firma</mat-label>
-          <input matInput ngModel name="company" value="{{clientCompany}}">
-        </mat-form-field>
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Vorname</mat-label>
-            <input matInput ngModel name="name" value="{{clientName}}">
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput ngModel name="surname" value="{{clientSurname}}">
-          </mat-form-field>
-        </div>
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Postleitzahl</mat-label>
-            <input matInput ngModel name="zip" value="{{clientZip}}">
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Ort</mat-label>
-            <input matInput ngModel name="city" value="{{clientCity}}">
-          </mat-form-field>
-        </div>
-        <div class="input-container-2">
-          <mat-form-field class="input-50" appearance="outline">
-            <mat-label>Strasse</mat-label>
-            <input matInput ngModel name="street" value="{{clientStreet}}">
-          </mat-form-field>
-        </div>
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput ngModel name="mail" value="{{clientMail}}">
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Telefonnummer</mat-label>
-            <input matInput ngModel name="phone" value="{{clientPhone}}">
-          </mat-form-field>
-        </div>
-      </div>
-      <div>
-        <div class="col-xs-12 flex-center">
-          <button class="btn btn-success" type="submit" style="margin-right: 5px;" (click)="saveClient(orderForm)">Speichern</button>
-        </div>
+      <app-autocomplete #autoClient
+      [title]="'Auftraggeber'"
+      ></app-autocomplete>
+      <app-address #client
+                   [company]="clientCompany"
+                   [surname]="clientSurname"
+                   [name]="clientName"
+                   [street]="clientStreet"
+                   [zip]="clientZip"
+                   [city]="clientCity"
+                   [mail]="clientMail"
+                   [phone]="clientPhone">
+      </app-address>
+      <div class="col-xs-12 flex-center">
+        <button class="btn btn-success" type="button" (click)="onSaveAddress('client')">Speichern</button>
       </div>
 
       <h2>Empfänger</h2>
-      <div class="input-container" ngModelGroup="receiver">
-        <mat-form-field class="input-100" appearance="outline">
-          <mat-label>Firma</mat-label>
-          <input matInput ngModel name="company">
-        </mat-form-field>
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Vorname</mat-label>
-            <input matInput ngModel name="name">
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput ngModel name="surname">
-          </mat-form-field>
-        </div>
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Postleitzahl</mat-label>
-            <input matInput ngModel name="zip">
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Ort</mat-label>
-            <input matInput ngModel name="city">
-          </mat-form-field>
-        </div>
-        <div class="input-container-2">
-          <mat-form-field class="input-50" appearance="outline">
-            <mat-label>Strasse</mat-label>
-            <input matInput ngModel name="street">
-          </mat-form-field>
-        </div>
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput ngModel name="mail">
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Telefonnummer</mat-label>
-            <input matInput ngModel name="phone">
-          </mat-form-field>
-        </div>
+      <app-autocomplete #autoReceiver
+                        [title]="'Empfänger'"
+      ></app-autocomplete>
+      <app-address #receiver
+                   [company]="receiverCompany"
+                   [surname]="receiverSurname"
+                   [name]="receiverName"
+                   [street]="receiverStreet"
+                   [zip]="receiverZip"
+                   [city]="receiverCity"
+                   [mail]="receiverMail"
+                   [phone]="receiverPhone">
+      </app-address>
+      <div class="col-xs-12 flex-center">
+        <button class="btn btn-success" type="button" (click)="onSaveAddress('receiver')">Speichern</button>
       </div>
 
       <h2>Auftrag</h2>
-      <div class="input-container" ngModelGroup="order">
-        <div class="input-container-2">
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Abholdatum</mat-label>
-            <input matInput [matDatepicker]="picker" ngModel name="pickupDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="input-100" appearance="outline">
-            <mat-label>Artikel</mat-label>
-            <textarea matInput ngModel name="article"></textarea>
-          </mat-form-field>
-        </div>
+      <div class="input-container">
+        <mat-form-field class="input-50" appearance="outline">
+          <mat-label>Abholdatum</mat-label>
+          <input matInput [matDatepicker]="picker" ngModel name="pickupDate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="input-100" appearance="outline">
+          <mat-label>Artikel</mat-label>
+          <textarea matInput ngModel name="article" required></textarea>
+        </mat-form-field>
       </div>
-      <div style="margin-bottom: 120px">
-        <div class="col-xs-12 flex-center">
-          <button class="btn btn-primary" type="button" (click)="saveOrder(orderForm)">Auftrag erfassen</button>
-        </div>
+      <div class="col-xs-12 flex-center" style="margin-bottom: 120px">
+        <button class="btn btn-primary" type="submit" [disabled]="!orderForm.valid">Auftrag erfassen</button>
       </div>
     </form>
   </div>

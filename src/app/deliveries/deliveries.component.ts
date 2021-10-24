@@ -1,28 +1,33 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {Address} from "./deliveries";
+import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Address} from "../address/addresses";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {DeliveriesService} from "./deliveries.service";
+import {FormControl, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-deliveries',
   templateUrl: './deliveries.component.html',
   styleUrls: ['./deliveries.component.css']
 })
-export class DeliveriesComponent implements OnInit {
 
+export class DeliveriesComponent implements OnInit {
   addresses: Address[];
   sortedAddresses: any[] = [];
+  selectedSort: String;
   address: String;
+  visibilityComponent = false;
+  date = new FormControl(new Date());
+  @Output() featureSelectedChild = new EventEmitter<any>();
 
   @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
-  @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
+  @ViewChild('dateForm') dateForm: NgForm;
 
   constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet, private deliveriesService: DeliveriesService) {
   }
 
   ngOnInit(): void {
-    this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
+    this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 
   openSortSheetMenu() {
@@ -33,28 +38,26 @@ export class DeliveriesComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  openDeliverSheetMenu() {
-    this.bottomSheet.open(this.DeliverBottomSheet);
-  }
-
-  closeDeliverSheetMenu() {
-    this.bottomSheet.dismiss();
-  }
-
-  setSort(city: string) {
+  setSort(value: string, valueName: string) {
     this.sortedAddresses = [];
-    this.db.database.ref('address').orderByChild(city)
+    this.selectedSort = valueName;
+    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth()+1) + '-' + this.date.value.getDate();
+    this.db.database.ref('order/open/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
         snap => {
           const data = snap.val();
-          this.sortedAddresses.push(data);
+          this.sortedAddresses.push(data.receiver);
         });
 
     this.addresses = this.sortedAddresses;
   }
 
-  deleteDeliver(deliveryMethod, address) {
-    this.db.object('/address/' + address.id).remove();
+  onDeliveryComponent(index: number, feature: string) {
+    let date = this.date;
+    this.featureSelectedChild.emit({index, feature, date});
   }
 
+  onDateChanged() {
+    this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
+  }
 }

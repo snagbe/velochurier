@@ -1,0 +1,21 @@
+agm-map {
+  height: 100%;
+  width: 100%;
+}
+
+::ng-deep button.gm-ui-hover-effect {
+  outline: none;
+}
+
+::ng-deep .mat-form-field-outline {
+  background-color: white;
+  border-radius: 5px;
+  border-color: white;
+}
+
+#date-over_map {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 99;
+}

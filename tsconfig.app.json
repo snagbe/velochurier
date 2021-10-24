@@ -3,11 +3,14 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [
+      "googlemaps"
+    ]
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+    "node_modules/@types/jasmine/index.d.ts"
   ],
   "include": [
     "src/**/*.d.ts"

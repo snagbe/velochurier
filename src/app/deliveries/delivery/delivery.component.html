@@ -1,0 +1,116 @@
+<div id="flex-container">
+  <div class="half-containers">
+    <button class="onBackButton" (click)="onBack('deliveries')">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <agm-map
+             [latitude]='receiverAddresses[currentIndex].lat'
+             [longitude]='receiverAddresses[currentIndex].lng'
+             [zoom]='zoom'>
+      <div *ngFor="let receiverAddress of receiverAddresses; let i = index">
+        <div *ngIf="i === currentIndex">
+          <agm-marker
+            [latitude]="receiverAddress.lat"
+            [longitude]="receiverAddress.lng">
+            <agm-info-window>
+              <div>{{ receiverAddress.id }}</div>
+              <div>{{ receiverAddress.street }}</div>
+            </agm-info-window>
+          </agm-marker>
+        </div>
+      </div>
+    </agm-map>
+  </div>
+  <div class="half-containers">
+    <div class="client-container" *ngFor="let clientAddress of clientAddresses; let i = index">
+      <div class="client" *ngIf="i === currentIndex">
+        <div class="client-details">
+          <div *ngIf="!clientAddress.company">
+            <h2>{{clientAddress.name}} {{clientAddress.surname}}</h2>
+          </div>
+
+          <div *ngIf="clientAddress.company">
+            <h2>{{clientAddress.company}}</h2>
+          </div>
+
+          <p>{{clientAddress.zip}} {{clientAddress.city}}</p>
+        </div>
+        <a href="Tel: {{clientAddress.phone}}" class="call-icon-container">
+          <mat-icon class="call-icon">call</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="receiver-container" *ngFor="let receiverAddress of receiverAddresses; let i = index">
+      <div class="receiver" *ngIf="i === currentIndex">
+        <div class="location-icon-container">
+          <mat-icon class="location-icon">location_on</mat-icon>
+        </div>
+        <div class="receiver-details">
+          <strong>{{receiverAddress.id}}</strong>
+          <p>{{receiverAddress.street}}</p>
+          <p>{{receiverAddress.zip}} {{receiverAddress.city}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="deliver-container">
+      <button class="deliver-button" (click)="openDeliverSheetMenu()">
+        <mat-icon class="mailbox-icons">markunread_mailbox</mat-icon>
+        <p>Zustellen</p>
+      </button>
+      <ng-template class="bottom-sheet-container" #deliverBottomSheet>
+        <table style="width:100%">
+          <tr>
+            <td>
+              <p class="p-sheet-element">Zugestellt</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Empfang', address)">Empfang</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Wohnungstüre', address)">Wohnungstüre
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Haustüre', address)">Haustüre</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Nachbar', address)">Nachbar</button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="deleteDeliver('Retourniert', address)">Retourniert zum
+                Absender
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <button class="bottom-sheet-element" (click)="closeDeliverSheetMenu()">Cancel</button>
+            </td>
+          </tr>
+        </table>
+      </ng-template>
+    </div>
+  </div>
+</div>
