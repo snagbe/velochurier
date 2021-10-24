@@ -14,6 +14,7 @@ import {FormControl, NgForm} from "@angular/forms";
 export class DeliveriesComponent implements OnInit {
   addresses: Address[];
   sortedAddresses: any[] = [];
+  selectedSort: String;
   address: String;
   visibilityComponent = false;
   date = new FormControl(new Date());
@@ -37,8 +38,9 @@ export class DeliveriesComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  setSort(value: string) {
+  setSort(value: string, valueName: string) {
     this.sortedAddresses = [];
+    this.selectedSort = valueName;
     const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth()+1) + '-' + this.date.value.getDate();
     this.db.database.ref('order/open/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
