@@ -41,6 +41,7 @@ registerLocaleData(localeFr);
 import { AgmCoreModule } from '@agm/core';
 import { AutocompleteComponent } from "./autocomplete/autocomplete.component";
 import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: 'auth', component: LoginComponent },
@@ -48,7 +49,9 @@ const appRoutes: Routes = [
   { path: 'deliveries/:id', component: DeliveryComponent },
   { path: 'customers', component: CustomersComponent },
   { path: 'order', component: AddOrderComponent },
-  { path: 'road', component: RoadComponent }
+  { path: 'road', component: RoadComponent },
+  { path: '', redirectTo: '/deliveries', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -64,7 +67,8 @@ const appRoutes: Routes = [
     AddressComponent,
     LoginComponent,
     OverlayComponent,
-    DialogComponent
+    DialogComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

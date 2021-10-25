@@ -10,12 +10,8 @@ export class AppComponent {
   loadedFeature = 'deliveries';
   Index: number;
 
-  onNavigate(feature: string) {
-    this.loadedFeature = feature;
-  }
-
   onChildNavigate(value) {
-    this.loadedFeature = value.feature;
+    //this.loadedFeature = value.feature;
     this.Index = value.index
   }
 }

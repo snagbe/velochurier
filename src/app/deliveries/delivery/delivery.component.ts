@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../../address/addresses";
 import {DeliveriesService} from "../deliveries.service";
 import {AuthService} from "../../login/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-delivery',
@@ -12,14 +13,14 @@ import {AuthService} from "../../login/auth.service";
 })
 export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
-  @Output() featureSelected = new EventEmitter<string>();
   @Input() currentIndex: number;
   addresses: Address[];
 
   constructor(private bottomSheet: MatBottomSheet,
               private db: AngularFireDatabase,
               private deliveriesService: DeliveriesService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -27,8 +28,8 @@ export class DeliveryComponent implements OnInit {
     this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
   }
 
-  onBack(feature: string) {
-    this.featureSelected.emit(feature);
+  onBack() {
+    this.router.navigate(['/deliveries']);
   }
 
   openDeliverSheetMenu() {

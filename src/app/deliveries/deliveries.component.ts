@@ -5,6 +5,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {DeliveriesService} from "./deliveries.service";
 import {FormControl, NgForm} from "@angular/forms";
 import {AuthService} from "../login/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-deliveries',
@@ -26,7 +27,8 @@ export class DeliveriesComponent implements OnInit {
   constructor(private db: AngularFireDatabase,
               private bottomSheet: MatBottomSheet,
               private deliveriesService: DeliveriesService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -55,9 +57,10 @@ export class DeliveriesComponent implements OnInit {
     this.addresses = this.sortedAddresses;
   }
 
-  onDeliveryComponent(index: number, feature: string) {
+  onDeliveryComponent(address: Address) {
     //TODO @Samuel Nagbe: Übergabe vom Parameter address muss direkt an die Komponente DeliveryComponent gemacht werden
-    this.featureSelectedChild.emit({index, feature});
+    //this.featureSelectedChild.emit({index, feature});
+    this.router.navigate(['/deliveries', address.id]);
   }
 
   onDateChanged() {
