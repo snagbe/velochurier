@@ -13,7 +13,8 @@ export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
   @Output() featureSelected = new EventEmitter<string>();
   @Input() currentID: any;
-  @Input() currentIndex: number;
+  @Input() currentReceiverLat: number;
+  @Input() currentReceiverLng: number;
   @Input() currentDate: any;
 
   zoom: number;
@@ -27,11 +28,12 @@ export class DeliveryComponent implements OnInit {
 
   ngOnInit(): void {
     this.zoom = 20;
-    //console.log('currentIndex ', this.currentIndex)
+    /*console.log('currentReceiverLat ', this.currentReceiverLat);
+    console.log('currentReceiverLng ', this.currentReceiverLng);
+    console.log('currentID ', this.currentID);
+    console.log('currentDate ', this.currentDate);*/
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
     this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'client').subscribe(value => this.clientAddresses = value);
-    /*console.log(this.receiverAddresses);
-    console.log(this.clientAddresses);*/
   }
 
   onBack(feature: string) {

@@ -54,12 +54,12 @@ export class DeliveriesComponent implements OnInit {
     this.closeSortSheetMenu();
   }
 
-  onDeliveryComponent(id: any, index: number, feature: string) {
-    let date = this.date;
-    this.featureSelectedChild.emit({id, index, feature, date});
-  }
-
   onDateChanged() {
     this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
+  }
+
+  onDeliveryComponent(id: any, lat: number, lng: number, feature: string) {
+    let date = this.date;
+    this.featureSelectedChild.emit({id, lat, lng, feature, date});
   }
 }

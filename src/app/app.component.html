@@ -2,5 +2,5 @@
 <app-add-order *ngIf="loadedFeature === 'order'"></app-add-order>
 <app-customers *ngIf="loadedFeature === 'customers'"></app-customers>
 <app-road *ngIf="loadedFeature === 'road'"></app-road>
-<app-delivery *ngIf="loadedFeature === 'deliveryDetails'" [currentID]="id" [currentIndex]="index" [currentDate]="date" (featureSelected)="onNavigate($event)"></app-delivery>
+<app-delivery *ngIf="loadedFeature === 'deliveryDetails'" [currentID]="id" [currentReceiverLat]="lat" [currentReceiverLng]="lng" [currentDate]="date" (featureSelected)="onNavigate($event)"></app-delivery>
 <app-navbar *ngIf="loadedFeature !=='deliveryDetails'" (featureSelected)="onNavigate($event)"></app-navbar>

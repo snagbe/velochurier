@@ -10,8 +10,8 @@ export class AppComponent {
   loadedFeature = 'deliveries';
   id: any;
   date: any;
-  index: number;
-  login: String;
+  lat: number;
+  lng: number;
 
   onNavigate(feature: string) {
     this.loadedFeature = feature;
@@ -20,7 +20,8 @@ export class AppComponent {
   onChildNavigate(value) {
     this.loadedFeature = value.feature;
     this.id = value.id;
-    this.index = value.index;
+    this.lat = value.lat;
+    this.lng = value.lng;
     this.date = value.date;
   }
 }
