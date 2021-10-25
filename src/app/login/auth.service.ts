@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -7,12 +8,22 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 export class AuthService {
 
   constructor(
-    private afAuth: AngularFireAuth) {}
+    private afAuth: AngularFireAuth,
+    private router: Router) {
+  }
 
   ngOnInit(): void {
   }
 
   doLogin(email: string, password: string) {
     return this.afAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  doAuthCheck() {
+    this.afAuth.authState.subscribe(res => {
+      if (!res || !res.uid) {
+        this.router.navigate(['/auth']);
+      }
+    });
   }
 }

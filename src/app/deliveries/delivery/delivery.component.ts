@@ -3,6 +3,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../../address/addresses";
 import {DeliveriesService} from "../deliveries.service";
+import {AuthService} from "../../login/auth.service";
 
 @Component({
   selector: 'app-delivery',
@@ -13,22 +14,27 @@ export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
   @Output() featureSelected = new EventEmitter<string>();
   @Input() currentIndex: number;
-  addresses :Address[];
+  addresses: Address[];
 
-  constructor(private bottomSheet: MatBottomSheet, private db: AngularFireDatabase, private deliveriesService: DeliveriesService){ }
+  constructor(private bottomSheet: MatBottomSheet,
+              private db: AngularFireDatabase,
+              private deliveriesService: DeliveriesService,
+              private authService: AuthService) {
+  }
 
   ngOnInit(): void {
-    console.log(this.currentIndex);
+    this.authService.doAuthCheck();
     this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
   }
 
-  onBack(feature: string){
+  onBack(feature: string) {
     this.featureSelected.emit(feature);
   }
 
   openDeliverSheetMenu() {
     this.bottomSheet.open(this.DeliverBottomSheet);
   }
+
   closeDeliverSheetMenu() {
     this.bottomSheet.dismiss();
   }

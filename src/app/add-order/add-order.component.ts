@@ -7,6 +7,7 @@ import {Address} from "../address/addresses";
 import {AddressComponent} from "../address/address.component";
 import {AutocompleteComponent} from "../autocomplete/autocomplete.component";
 import {MapsAPILoader} from "@agm/core";
+import {AuthService} from "../login/auth.service";
 
 @Component({
   selector: 'app-add-order',
@@ -40,10 +41,14 @@ export class AddOrderComponent implements OnInit {
   selectedAddress: Address[];
   geocoder: any;
 
-  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents, private mapsApiLoader: MapsAPILoader) {
+  constructor(private db: AngularFireDatabase,
+              private globalComp: GlobalComponents,
+              private mapsApiLoader: MapsAPILoader,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
     this.subscription = this.globalComp.clientAddressChange
       .subscribe(() => {
         this.selectedAddress = this.globalComp.getAddress();
@@ -123,40 +128,40 @@ export class AddOrderComponent implements OnInit {
     const orderDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-      var rootRef = this.db.list('order/' + orderDate);
-      rootRef.set(nodeTitle + '/client', {
-        "company": client.company,
-        "surname": client.surname,
-        "name": client.name,
-        "street": client.street,
-        "zip": client.zip,
-        "city": client.city,
-        "mail": client.mail,
-        "phone": client.phone
-      })
+    var rootRef = this.db.list('order/' + orderDate);
+    rootRef.set(nodeTitle + '/client', {
+      "company": client.company,
+      "surname": client.surname,
+      "name": client.name,
+      "street": client.street,
+      "zip": client.zip,
+      "city": client.city,
+      "mail": client.mail,
+      "phone": client.phone
+    })
 
-      rootRef.set(nodeTitle + '/receiver', {
-        "company": receiver.company,
-        "surname": receiver.surname,
-        "name": receiver.name,
-        "street": receiver.street,
-        "zip": receiver.zip,
-        "city": receiver.city,
-        "mail": receiver.mail,
-        "phone": receiver.phone,
-        "lat": coords[0].lat,
-        "lng": coords[0].lng
-      })
+    rootRef.set(nodeTitle + '/receiver', {
+      "company": receiver.company,
+      "surname": receiver.surname,
+      "name": receiver.name,
+      "street": receiver.street,
+      "zip": receiver.zip,
+      "city": receiver.city,
+      "mail": receiver.mail,
+      "phone": receiver.phone,
+      "lat": coords[0].lat,
+      "lng": coords[0].lng
+    })
 
-      rootRef.set(nodeTitle + '/article', {
-        "article1": this.orderForm.value.article
-      })
+    rootRef.set(nodeTitle + '/article', {
+      "article1": this.orderForm.value.article
+    })
 
-      // TODO nur bei success löschen und info einblenden sonst info einblenden
-      this.client.onReset();
-      this.autoClient.onReset();
-      this.receiver.onReset();
-      this.autoReceiver.onReset();
-      this.orderForm.reset();
+    // TODO nur bei success löschen und info einblenden sonst info einblenden
+    this.client.onReset();
+    this.autoClient.onReset();
+    this.receiver.onReset();
+    this.autoReceiver.onReset();
+    this.orderForm.reset();
   }
 }

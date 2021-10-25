@@ -5,6 +5,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {AgmMap} from '@agm/core';
 import {FormControl} from "@angular/forms";
 import {Address} from "../address/addresses";
+import {AuthService} from "../login/auth.service";
 
 @Component({
   selector: 'app-road',
@@ -23,10 +24,12 @@ export class RoadComponent implements OnInit {
 
   @ViewChild(AgmMap) map: AgmMap;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(private db: AngularFireDatabase,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
     this.lat = 46.85785;
     this.lng = 9.53059;
     this.zoom = 14.5;
@@ -36,7 +39,7 @@ export class RoadComponent implements OnInit {
 
   public getAddresses(date) {
     this.addresses = [];
-    const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+    const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     return this.db.list('order/' + selectedDate)
       .snapshotChanges()
       .pipe(map(items => {
@@ -46,7 +49,14 @@ export class RoadComponent implements OnInit {
           const receiver = data.receiver;
           const key = a.payload.key;
           // @ts-ignore
-          this.addresses.push({id: key, city: receiver.city, street: receiver.street, zip: receiver.zip, lat: receiver.lat, lng: receiver.lng});
+          this.addresses.push({
+            id: key,
+            city: receiver.city,
+            street: receiver.street,
+            zip: receiver.zip,
+            lat: receiver.lat,
+            lng: receiver.lng
+          });
         });
       }));
   }

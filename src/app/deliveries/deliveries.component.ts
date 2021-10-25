@@ -4,6 +4,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {DeliveriesService} from "./deliveries.service";
 import {FormControl, NgForm} from "@angular/forms";
+import {AuthService} from "../login/auth.service";
 
 @Component({
   selector: 'app-deliveries',
@@ -22,10 +23,14 @@ export class DeliveriesComponent implements OnInit {
   @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
   @ViewChild('dateForm') dateForm: NgForm;
 
-  constructor(private db: AngularFireDatabase, private bottomSheet: MatBottomSheet, private deliveriesService: DeliveriesService) {
+  constructor(private db: AngularFireDatabase,
+              private bottomSheet: MatBottomSheet,
+              private deliveriesService: DeliveriesService,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
     this.deliveriesService.getDeliveryAddresses(this.date.value).subscribe(value => this.addresses = value);
   }
 
@@ -39,7 +44,7 @@ export class DeliveriesComponent implements OnInit {
 
   setSort(value: string) {
     this.sortedAddresses = [];
-    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth()+1) + '-' + this.date.value.getDate();
+    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth() + 1) + '-' + this.date.value.getDate();
     this.db.database.ref('order/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
         snap => {

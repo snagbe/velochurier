@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Address} from "../address/addresses";
 import {DeliveriesService} from "../deliveries/deliveries.service";
+import {AuthService} from "../login/auth.service";
 
 @Component({
   selector: 'app-customers',
@@ -11,13 +12,16 @@ export class CustomersComponent implements OnInit {
   addresses: Address[];
   addOrder: boolean = false;
 
-  constructor(private deliveriesService: DeliveriesService) { }
+  constructor(private deliveriesService: DeliveriesService,
+              private authService: AuthService) {
+  }
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
     this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
   }
 
-  openAddOrder(){
+  openAddOrder() {
     this.addOrder = !this.addOrder;
   }
 }

@@ -3,6 +3,7 @@ import {FormControl, NgForm, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {AppComponent} from "../app.component";
 import {DialogData, OverlayComponent} from "../overlay/overlay.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,11 @@ export class LoginComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
   hide = true;
 
-  constructor(private authService: AuthService, private nav: AppComponent, private overlay:OverlayComponent) { }
+  constructor(private authService: AuthService,
+              private nav: AppComponent,
+              private overlay: OverlayComponent,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -25,7 +30,7 @@ export class LoginComponent implements OnInit {
     }
     this.authService.doLogin(this.email.value, this.password.value)
       .then(res => {
-        this.nav.onNavigate('deliveries');
+        this.router.navigate(['/deliveries']);
       }, err => {
         let errorMessage = err.code;
         switch (err.code) {
