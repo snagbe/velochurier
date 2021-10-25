@@ -6,8 +6,8 @@
     <!-- Todo:  - set center by key and not by index -> index is set default by alphabet
                 - remove error in console-->
     <agm-map
-             [latitude]='receiverAddresses[currentIndex].lat'
-             [longitude]='receiverAddresses[currentIndex].lng'
+      [latitude]='receiverAddresses[currentIndex].lat'
+      [longitude]='receiverAddresses[currentIndex].lng'
       [zoom]='zoom'>
       <div *ngFor="let receiverAddress of receiverAddresses; let i = index">
         <div *ngIf="receiverAddress.id == currentID">

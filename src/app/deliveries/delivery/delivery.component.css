@@ -12,6 +12,10 @@ agm-map {
   border-color: transparent;
 }
 
+.onBackButton:focus {
+  outline: none;
+}
+
 ::ng-deep button.gm-ui-hover-effect {
   outline: none;
 }

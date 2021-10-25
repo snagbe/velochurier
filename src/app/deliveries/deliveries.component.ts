@@ -50,6 +50,8 @@ export class DeliveriesComponent implements OnInit {
         });
 
     this.addresses = this.sortedAddresses;
+
+    this.closeSortSheetMenu();
   }
 
   onDeliveryComponent(id: any, index: number, feature: string) {

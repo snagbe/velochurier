@@ -8,23 +8,27 @@
   border: none;
 }
 
-.sot-container {
+.sort-container {
   display: flex;
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.sot-container > p {
+.sort-container > p {
   margin: 0rem;
   height: 2rem;
 }
+
 
 .sort-button {
   height: 2rem;
   margin-bottom: 0.3rem;
 }
 
+.sort-button:focus {
+  outline: none;
+}
 
 .delivery-button {
   background-color: transparent;
