@@ -49,6 +49,10 @@ p {
   text-decoration: none;
 }
 
+.active-nav {
+  color: #3030a6;
+}
+
 .add-icon-background {
   display: flex;
   justify-content: center;

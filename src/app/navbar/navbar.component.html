@@ -1,35 +1,35 @@
 <nav class="navbar-element">
   <div class="side-icon-container">
-    <a class="side-a"  href="#" (click)="onSelect('deliveries')">
-      <mat-icon class="side-icon">groups</mat-icon>
-      <p>Auslieferungen</p>
+    <a class="side-a" routerLink="/deliveries" (click)="onSelect('deliveries')">
+      <mat-icon class="side-icon" routerLinkActive="active-nav">groups</mat-icon>
+      <p routerLinkActive="active-nav">Auslieferungen</p>
     </a>
   </div>
   <div class="side-icon-container">
-    <a class="side-a" href="#" (click)="onSelect('customers')">
-      <mat-icon class="side-icon">pedal_bike</mat-icon>
-      <p>Kunden</p>
+    <a class="side-a" routerLink="/customers" (click)="onSelect('customers')">
+      <mat-icon class="side-icon" routerLinkActive="active-nav">pedal_bike</mat-icon>
+      <p routerLinkActive="active-nav">Kunden</p>
     </a>
   </div>
   <div class="add-icon-container">
     <div class="add-icon-background">
-      <a class="add-a" href="#" (click)="onSelect('order')">
-        <mat-icon class="add-icon">add</mat-icon>
+      <a class="add-a" routerLink="/order" (click)="onSelect('order')">
+        <mat-icon class="add-icon" routerLinkActive="active-nav">add</mat-icon>
       </a>
     </div>
   </div>
   <div class="side-icon-container">
-    <a class="side-a"  href="#" (click)="onSelect('road')">
-      <mat-icon class="side-icon">directions</mat-icon>
-      <p>Route</p>
+    <a class="side-a" routerLink="/road" (click)="onSelect('road')">
+      <mat-icon class="side-icon" routerLinkActive="active-nav">directions</mat-icon>
+      <p routerLinkActive="active-nav">Route</p>
       <!--<mat-icon class="side-icon">bar_chart</mat-icon>
       <p>Aktivitäten</p>-->
     </a>
   </div>
   <div class="side-icon-container">
     <a class="side-a"  href="#">
-      <mat-icon class="side-icon">settings</mat-icon>
-      <p>Einstellungen</p>
+      <mat-icon class="side-icon" routerLinkActive="active-nav">settings</mat-icon>
+      <p routerLinkActive="active-nav">Einstellungen</p>
     </a>
   </div>
 </nav>

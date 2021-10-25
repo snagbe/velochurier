@@ -1,7 +1,10 @@
-<app-login *ngIf="loadedFeature === 'login'"></app-login>
+<!--<app-login *ngIf="loadedFeature === 'login'"></app-login>
 <app-deliveries *ngIf="loadedFeature === 'deliveries'" (featureSelectedChild)="onChildNavigate($event)"></app-deliveries>
 <app-add-order *ngIf="loadedFeature === 'order'"></app-add-order>
 <app-customers *ngIf="loadedFeature === 'customers'"></app-customers>
 <app-road *ngIf="loadedFeature === 'road'"></app-road>
 <app-delivery *ngIf="loadedFeature === 'deliveryDetails'" [currentIndex]="Index" (featureSelected)="onNavigate($event)"></app-delivery>
-<app-navbar *ngIf="!(loadedFeature ==='deliveryDetails' || loadedFeature === 'login')" (featureSelected)="onNavigate($event)"></app-navbar>
+<app-navbar *ngIf="!(loadedFeature ==='deliveryDetails' || loadedFeature === 'login')" (featureSelected)="onNavigate($event)"></app-navbar>-->
+
+<router-outlet></router-outlet>
+<app-navbar *ngIf="!(loadedFeature ==='deliveryDetails' || loadedFeature === 'login')"></app-navbar>

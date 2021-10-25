@@ -1,5 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {RouterModule, Routes} from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
@@ -41,6 +42,15 @@ import { AgmCoreModule } from '@agm/core';
 import { AutocompleteComponent } from "./autocomplete/autocomplete.component";
 import { LoginComponent } from './login/login.component';
 
+const appRoutes: Routes = [
+  { path: 'auth', component: LoginComponent },
+  { path: 'deliveries', component: DeliveriesComponent },
+  { path: 'deliveries/:id', component: DeliveryComponent },
+  { path: 'customers', component: CustomersComponent },
+  { path: 'order', component: AddOrderComponent },
+  { path: 'road', component: RoadComponent }
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +71,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes),
 
     // Firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),
