@@ -20,6 +20,7 @@ export class DeliveryComponent implements OnInit {
   clientCount: number
   receiverAddresses: Address[];
   clientAddresses: Address[];
+  currentRecord: any[] = [];
 
   constructor(private bottomSheet: MatBottomSheet, private db: AngularFireDatabase, private deliveriesService: DeliveriesService) {
   }
@@ -49,18 +50,42 @@ export class DeliveryComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  onMoveToDelivered(deliveryMethod, address) {
-    /*const selectedDate = this.currentDate.value.getFullYear() + '-' + (this.currentDate.value.getMonth()+1) + '-' + this.currentDate.value.getDate();
-    //this.db.object('/address/' + address.id).remove();
-    this.db.list('address/open/' + selectedDate)
-      .on('value',
+  /**
+   * move the selected order in the firebase from open to delivered
+   * @param deliveryMethod method to send the email
+   */
+  onMoveToDelivered(deliveryMethod) {
+    this.currentRecord = [];
+    // get the selected Object from 'open' and push the object to the list 'currentRecord'
+    const selectedDate = this.currentDate.value.getFullYear() + '-' + (this.currentDate.value.getMonth() + 1) + '-' + this.currentDate.value.getDate();
+    this.db.list('order/open/' + selectedDate).query
+      .on('child_added',
         snap => {
+          const key = snap.key;
           const data = snap.val();
-          if (data) {
-            const address = new Address(eventTarget.value, data.company, data.name, data.surname, data.city, data.street, data.zip, data.mail, data.phone, eventTarget.ariaLabel);
-            this.globalComp.setAddress(address);
-            this.globalComp.clientAddressChange.next();
+          if (this.currentID === key) {
+            this.currentRecord.push(data);
           }
-        });*/
+        });
+
+    // remove the selected Object
+    if (this.currentRecord) {
+      this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
+
+    }
+
+    let article = this.currentRecord[0].article;
+    let client = this.currentRecord[0].client;
+    let receiver = this.currentRecord[0].receiver;
+
+    // move the list 'currentRecord' to the 'delivered' record
+    this.db.list('order/delivered/' + selectedDate + '/')
+      .set(this.currentID, {
+        "article": article,
+        "client": client,
+        "receiver": receiver
+      })
+    this.closeDeliverSheetMenu();
+    this.onBack('deliveries');
   }
 }

@@ -11,6 +11,7 @@ export class AppComponent {
   id: any;
   date: any;
   index: number;
+  login: String;
 
   onNavigate(feature: string) {
     this.loadedFeature = feature;
