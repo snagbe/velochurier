@@ -8,6 +8,28 @@
   border: none;
 }
 
+.sort-container {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sort-container > p {
+  margin: 0rem;
+  height: 2rem;
+}
+
+
+.sort-button {
+  height: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.sort-button:focus {
+  outline: none;
+}
+
 .delivery-button {
   background-color: transparent;
   border: none;
@@ -48,7 +70,7 @@ td {
   color: #0A84FF;
 }
 
-p {
+td > p {
   text-align: center;
   font-size: 10px;
   color: rgba(194, 199, 194, 0.8) !important;

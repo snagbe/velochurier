@@ -1,3 +1,25 @@
+agm-map {
+  height: 100%;
+  width: 100%;
+}
+
+.onBackButton {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 99;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.onBackButton:focus {
+  outline: none;
+}
+
+::ng-deep button.gm-ui-hover-effect {
+  outline: none;
+}
+
 .bottom-sheet-element {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -39,10 +61,6 @@ td {
   margin: 2rem;
 }
 
-.goBack {
-  margin: 1.5rem 0rem 0rem 1.5rem;
-}
-
 .client-container {
   margin-bottom: 2rem;
 }
@@ -58,8 +76,8 @@ td {
   flex-direction: column;
 }
 
-.client-details > h2 {
-  margin: 0rem 0rem 0.2rem 0rem;
+.client-details div > h2 {
+  margin: 0rem 0rem 0.1rem 0rem;
 }
 
 .call-icon-container {

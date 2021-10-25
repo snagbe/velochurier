@@ -18,7 +18,7 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
-    this.deliveriesService.getAdresses().subscribe(value => this.addresses = value);
+    this.deliveriesService.getAddresses().subscribe(value => this.addresses = value);
   }
 
   openAddOrder() {

@@ -16,6 +16,7 @@ import {Router} from "@angular/router";
 export class DeliveriesComponent implements OnInit {
   addresses: Address[];
   sortedAddresses: any[] = [];
+  selectedSort: String;
   address: String;
   visibilityComponent = false;
   date = new FormControl(new Date());
@@ -33,7 +34,7 @@ export class DeliveriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
-    this.deliveriesService.getDeliveryAddresses(this.date.value).subscribe(value => this.addresses = value);
+    this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 
   openSortSheetMenu() {
@@ -44,10 +45,11 @@ export class DeliveriesComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  setSort(value: string) {
+  setSort(value: string, valueName: string) {
     this.sortedAddresses = [];
-    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth() + 1) + '-' + this.date.value.getDate();
-    this.db.database.ref('order/' + selectedDate).orderByChild('receiver/' + value)
+    this.selectedSort = valueName;
+    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth()+1) + '-' + this.date.value.getDate();
+    this.db.database.ref('order/open/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
         snap => {
           const data = snap.val();
@@ -55,15 +57,17 @@ export class DeliveriesComponent implements OnInit {
         });
 
     this.addresses = this.sortedAddresses;
-  }
 
-  onDeliveryComponent(address: Address) {
-    //TODO @Samuel Nagbe: Übergabe vom Parameter address muss direkt an die Komponente DeliveryComponent gemacht werden
-    //this.featureSelectedChild.emit({index, feature});
-    this.router.navigate(['/deliveries', address.id]);
+    this.closeSortSheetMenu();
   }
 
   onDateChanged() {
-    this.deliveriesService.getDeliveryAddresses(this.date.value).subscribe(value => this.addresses = value);
+    this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
+  }
+
+  onDeliveryComponent(id: any, lat: number, lng: number, feature: string) {
+    let date = this.date;
+    //this.featureSelectedChild.emit({id, lat, lng, feature, date});
+    this.router.navigate(['/deliveries', id]);
   }
 }

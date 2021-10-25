@@ -1,40 +1,62 @@
 <div id="flex-container">
   <div class="half-containers">
-    <p>
-      <mat-icon (click)="onBack()" class="goBack">chevron_left</mat-icon>
-      Google Maps Integration
-    </p>
-  </div>
-
-  <div class="half-containers">
-    <div class="client-container" *ngFor="let address of addresses; let i = index">
-      <div class="client" *ngIf="i === currentIndex">
-        <div class="client-details">
-          <h2>{{address.id}}</h2>
-          <p>{{address.zip}} {{address.city}}</p>
+    <button class="onBackButton" (click)="onBack()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <agm-map
+      [latitude]='currentReceiverLat'
+      [longitude]='currentReceiverLng'
+      [zoom]='zoom'>
+      <div *ngFor="let receiverAddress of receiverAddresses; let i = index">
+        <div *ngIf="receiverAddress.id == currentID">
+          <agm-marker
+            [latitude]="receiverAddress.lat"
+            [longitude]="receiverAddress.lng">
+            <agm-info-window>
+              <div>{{ receiverAddress.id }}</div>
+              <div>{{ receiverAddress.street }}</div>
+            </agm-info-window>
+          </agm-marker>
         </div>
-        <a href="Tel: {{address.phone}}" class="call-icon-container">
+      </div>
+    </agm-map>
+  </div>
+  <div class="half-containers">
+    <div class="client-container" *ngFor="let clientAddress of clientAddresses; let i = index">
+      <div class="client" *ngIf="clientAddress.id == currentID">
+        <div class="client-details">
+          <div *ngIf="!clientAddress.company">
+            <h2>{{clientAddress.name}} {{clientAddress.surname}}</h2>
+          </div>
+
+          <div *ngIf="clientAddress.company">
+            <h2>{{clientAddress.company}}</h2>
+          </div>
+
+          <p>{{clientAddress.zip}} {{clientAddress.city}}</p>
+        </div>
+        <a href="Tel: {{clientAddress.phone}}" class="call-icon-container">
           <mat-icon class="call-icon">call</mat-icon>
         </a>
       </div>
     </div>
-    <div class="receiver-container" *ngFor="let address of addresses; let i = index">
-      <div class="receiver" *ngIf="i === currentIndex">
+    <div class="receiver-container" *ngFor="let receiverAddress of receiverAddresses; let i = index">
+      <div class="receiver" *ngIf="receiverAddress.id == currentID">
         <div class="location-icon-container">
           <mat-icon class="location-icon">location_on</mat-icon>
         </div>
         <div class="receiver-details">
-          <strong>{{address.id}}</strong>
-          <p>{{address.street}}</p>
-          <p>{{address.zip}} {{address.city}}</p>
+          <strong>{{receiverAddress.id}}</strong>
+          <p>{{receiverAddress.street}}</p>
+          <p>{{receiverAddress.zip}} {{receiverAddress.city}}</p>
         </div>
       </div>
     </div>
     <div class="deliver-container">
-      <div class="deliver-button" (click)="openDeliverSheetMenu()">
+      <button class="deliver-button" (click)="openDeliverSheetMenu()">
         <mat-icon class="mailbox-icons">markunread_mailbox</mat-icon>
         <p>Zustellen</p>
-      </div>
+      </button>
       <ng-template class="bottom-sheet-container" #deliverBottomSheet>
         <table style="width:100%">
           <tr>
@@ -44,40 +66,40 @@
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Persönlich', address)">Persönlich
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Persönlich')">Persönlich
               </button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Empfang', address)">Empfang</button>
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Empfang')">Empfang</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Milchkasten', address)">Milchkasten
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Milchkasten')">Milchkasten
               </button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Wohnungstüre', address)">Wohnungstüre
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Wohnungstüre')">Wohnungstüre
               </button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Haustüre', address)">Haustüre</button>
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Haustüre')">Haustüre</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Nachbar', address)">Nachbar</button>
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Nachbar')">Nachbar</button>
             </td>
           </tr>
           <tr>
             <td>
-              <button class="bottom-sheet-element" (click)="deleteDeliver('Retourniert', address)">Retourniert zum
+              <button class="bottom-sheet-element" (click)="onMoveToDelivered('Retourniert')">Retourniert zum
                 Absender
               </button>
             </td>

@@ -40,6 +40,7 @@ export class AddOrderComponent implements OnInit {
   subscription: Subscription;
   selectedAddress: Address[];
   geocoder: any;
+  geoAddress: any;
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -101,14 +102,20 @@ export class AddOrderComponent implements OnInit {
     this.mapsApiLoader.load().then(() => {
       console.log('google script loaded');
       this.geocoder = new google.maps.Geocoder();
-      this.getGeocode();
+      this.getGeocode('receiver');
     });
   }
 
-  getGeocode() {
-    const geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+  getGeocode(type) {
+    if(type === 'receiver') {
+      this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    }else if (type === 'client') {
+      this.geoAddress = this.client.street + ' ' + this.client.zip + ' ' + this.client.city;
+    }else {
+      this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    }
     type CoordsType = Array<{ lat: number, lng: number }>
-    this.geocoder.geocode({'address': geoAddress}, (results, status) => {
+    this.geocoder.geocode({'address': this.geoAddress}, (results, status) => {
       if (status === 'OK') {
         const coords: CoordsType = [
           {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
@@ -128,17 +135,17 @@ export class AddOrderComponent implements OnInit {
     const orderDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-    var rootRef = this.db.list('order/' + orderDate);
-    rootRef.set(nodeTitle + '/client', {
-      "company": client.company,
-      "surname": client.surname,
-      "name": client.name,
-      "street": client.street,
-      "zip": client.zip,
-      "city": client.city,
-      "mail": client.mail,
-      "phone": client.phone
-    })
+      var rootRef = this.db.list('order/open/' + orderDate);
+      rootRef.set(nodeTitle + '/client', {
+        "company": client.company,
+        "surname": client.surname,
+        "name": client.name,
+        "street": client.street,
+        "zip": client.zip,
+        "city": client.city,
+        "mail": client.mail,
+        "phone": client.phone
+      })
 
     rootRef.set(nodeTitle + '/receiver', {
       "company": receiver.company,
