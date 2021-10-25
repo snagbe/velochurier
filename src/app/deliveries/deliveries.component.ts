@@ -52,9 +52,9 @@ export class DeliveriesComponent implements OnInit {
     this.addresses = this.sortedAddresses;
   }
 
-  onDeliveryComponent(index: number, feature: string) {
+  onDeliveryComponent(id: any, index: number, feature: string) {
     let date = this.date;
-    this.featureSelectedChild.emit({index, feature, date});
+    this.featureSelectedChild.emit({id, index, feature, date});
   }
 
   onDateChanged() {

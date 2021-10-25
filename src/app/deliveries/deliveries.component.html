@@ -44,7 +44,7 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <div class="addresses" *ngFor="let address of addresses; let i = index">
-    <button class="delivery-button" (click)="onDeliveryComponent(i, 'deliveryDetails')">
+    <button class="delivery-button" (click)="onDeliveryComponent(address.id, i, 'deliveryDetails')">
       <img class="box-img" src="assets/box.png"/>
       {{address.street}}, {{address.zip}} {{address.city}}
     </button>

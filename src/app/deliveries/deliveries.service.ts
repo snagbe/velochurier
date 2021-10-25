@@ -30,7 +30,6 @@ export class DeliveriesService {
   }
 
   public getOrderAddresses(date, status, type) {
-
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
     return this.db.list('order/' + status + '/' + selectedDate)
       .snapshotChanges()
