@@ -118,17 +118,28 @@ td {
   text-align: -webkit-center;
 }
 
+.deliver-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .deliver-button {
   display: flex;
   align-items: center;
   justify-content: center;
   background: #006763;
-  width: 13rem;
+  width: 15rem;
   height: 3.8rem;
   border-radius: 3pt;
+  margin: 0rem 0.5rem 0rem 0.5rem;
 }
 
-.mailbox-icons {
+.deliver-button:focus {
+  outline: none;
+}
+
+.deliver-icons {
   color: #FFFF;
   margin-right: 1rem;
 }

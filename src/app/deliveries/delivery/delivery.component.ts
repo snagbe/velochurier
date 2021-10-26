@@ -12,6 +12,7 @@ import {DeliveriesService} from "../deliveries.service";
 export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
   @Output() featureSelected = new EventEmitter<string>();
+  @Output() featureOrderSelected = new EventEmitter<any>();
   @Input() currentID: any;
   @Input() currentReceiverLat: number;
   @Input() currentReceiverLng: number;
@@ -50,6 +51,10 @@ export class DeliveryComponent implements OnInit {
 
   closeDeliverSheetMenu() {
     this.bottomSheet.dismiss();
+  }
+
+  openAddOrder(feature, order) {
+    this.featureOrderSelected.emit({feature, order});
   }
 
   /**

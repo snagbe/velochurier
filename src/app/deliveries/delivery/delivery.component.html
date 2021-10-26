@@ -52,11 +52,16 @@
         </div>
       </div>
     </div>
-    <div class="deliver-container">
-      <button class="deliver-button" (click)="openDeliverSheetMenu()">
-        <mat-icon class="mailbox-icons">markunread_mailbox</mat-icon>
+    <div class="deliver-container" *ngFor="let receiverAddress of receiverAddresses; let i = index">
+      <div class="deliver-button-container" *ngIf="receiverAddress.id == currentID">
+        <button class="deliver-button" (click)="openDeliverSheetMenu()">
+        <mat-icon class="deliver-icons">markunread_mailbox</mat-icon>
         <p>Zustellen</p>
       </button>
+      <button class="deliver-button" (click)="openAddOrder('order', receiverAddress)">
+      <mat-icon class="deliver-icons">edit</mat-icon>
+      <p>Auftrag bearbeiten</p>
+    </button></div>
       <ng-template class="bottom-sheet-container" #deliverBottomSheet>
         <table style="width:100%">
           <tr>
