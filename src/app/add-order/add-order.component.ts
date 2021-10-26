@@ -73,7 +73,7 @@ export class AddOrderComponent implements OnInit {
       this.currentOrder(this.currentDate, 'open', 'receiver', this.currentId);
     }
 
-    this.subscription = this.globalComp.clientAddressChange
+    this.subscription = this.globalComp.addressChange
       .subscribe(() => {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Auftraggeber' === this.selectedAddress[0].type) {
@@ -140,7 +140,7 @@ export class AddOrderComponent implements OnInit {
                 this.getType = data.article;
               } else if (type === 'receiver') {
                 this.getType = data.receiver;
-                this.orderType = 'empfänger';
+                this.orderType = 'Empfänger';
               } else if (type === 'client') {
                 this.getType = data.client;
                 this.orderType = 'Auftraggeber';
@@ -149,7 +149,7 @@ export class AddOrderComponent implements OnInit {
                 // @ts-ignore
                 const address: Address = {type: this.orderType, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, street: this.getType.street, zip: this.getType.zip, mail: this.getType.mail, phone: this.getType.phone};
                 this.globalComp.setAddress(address);
-                this.globalComp.clientAddressChange.next();
+                this.globalComp.addressChange.next();
               }
             }
           }

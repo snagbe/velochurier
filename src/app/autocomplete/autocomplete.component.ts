@@ -58,7 +58,7 @@ export class AutocompleteComponent implements OnInit {
             if (data) {
               const address = new Address(eventTarget.value, data.company, data.name, data.surname, data.city, data.street, data.zip, data.mail, data.phone, eventTarget.ariaLabel);
               this.globalComp.setAddress(address);
-              this.globalComp.clientAddressChange.next();
+              this.globalComp.addressChange.next();
             }
           });
     }

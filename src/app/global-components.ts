@@ -3,7 +3,7 @@ import {Subject} from "rxjs";
 import {Article} from "./add-order/article";
 
 export class GlobalComponents {
-  public clientAddressChange = new Subject<number>();
+  public addressChange = new Subject<number>();
   private clientAddress: Address[];
   public orderArticleChange = new Subject<number>();
   private orderArticle: Article[];
