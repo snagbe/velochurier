@@ -3,7 +3,7 @@
   font-size: 14px;
 }
 
-.addresses{
+.addresses {
   display: flex;
   align-items: center;
 
@@ -14,9 +14,13 @@
   padding-bottom: 1rem;
 }
 
-.customer-button{
+.customer-button {
   background-color: transparent;
   border: none;
+}
+
+.customer-button:focus {
+  outline: none;
 }
 
 .customer-journey-img {

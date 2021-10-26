@@ -10,6 +10,7 @@ import {MapsAPILoader} from "@agm/core";
 import {AuthService} from "../login/auth.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Article} from "./article";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-order',
@@ -73,6 +74,15 @@ export class AddOrderComponent implements OnInit {
       this.currentOrder(this.currentDate, 'open', 'receiver', this.currentId);
     }
 
+    if (this.route.snapshot.routeConfig.path === 'order/customer') {
+      this.route.data.subscribe(
+        (data: Data) => {
+          this.currentId = data['order'].id;
+        }
+      );
+      this.getAddress(this.currentId);
+    }
+
     this.subscription = this.globalComp.addressChange
       .subscribe(() => {
         this.selectedAddress = this.globalComp.getAddress();
@@ -99,9 +109,25 @@ export class AddOrderComponent implements OnInit {
 
     this.subscription = this.globalComp.orderArticleChange
       .subscribe(() => {
-          this.selectedArticle = this.globalComp.getArticle();
-          this.currentPicker = this.selectedArticle[0].date;
-          this.currentArticle = this.selectedArticle[0].article;
+        this.selectedArticle = this.globalComp.getArticle();
+        this.currentPicker = this.selectedArticle[0].date;
+        this.currentArticle = this.selectedArticle[0].article;
+      });
+  }
+
+  public getAddress(id) {
+    this.db.database.ref('address')
+      .on('child_added',
+        snap => {
+          const key = snap.key;
+          const data = snap.val();
+          this.orderType = 'Empfänger';
+          if (key === id) {
+            // @ts-ignore
+            const address: Address = {type: this.orderType, city: data.city, company: data.company, name: data.name, surname: data.surname, street: data.street, zip: data.zip, mail: data.mail, phone: data.phone};
+            this.globalComp.setAddress(address);
+            this.globalComp.addressChange.next();
+          }
       });
   }
 

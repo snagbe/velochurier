@@ -17,6 +17,7 @@ const appRoutes: Routes = [
   {path: 'customers', component: CustomersComponent},
   {path: 'order', component: AddOrderComponent},
   {path: 'order/edit', component: AddOrderComponent, resolve: {order: OrderResolver}},
+  {path: 'order/customer', component: AddOrderComponent, resolve: {order: OrderResolver}},
   {path: 'road', component: RoadComponent},
   {path: '', redirectTo: '/deliveries', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}

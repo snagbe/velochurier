@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Address} from "../address/addresses";
 import {DeliveriesService} from "../deliveries/deliveries.service";
 import {AuthService} from "../login/auth.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-customers',
@@ -13,7 +14,9 @@ export class CustomersComponent implements OnInit {
   addOrder: boolean = false;
 
   constructor(private deliveriesService: DeliveriesService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -21,7 +24,9 @@ export class CustomersComponent implements OnInit {
     this.deliveriesService.getAddresses().subscribe(value => this.addresses = value);
   }
 
-  openAddOrder() {
-    this.addOrder = !this.addOrder;
+  onEditCustomer(id) {
+    this.router.navigate(['order', 'customer', {id: id}]).then(() => {
+      window.location.reload();
+    });
   }
 }
