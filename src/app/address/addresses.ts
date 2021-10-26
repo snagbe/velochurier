@@ -10,6 +10,6 @@ export class Address {
               public phone: string,
               public type?: string,
               public lat?: number,
-              public lng?: number) {}
-
+              public lng?: number) {
+  }
 }

@@ -63,8 +63,8 @@ export class DeliveryComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  openAddOrder(feature, order) {
-    this.router.navigate(['order']);
+  onEditOrder() {
+      this.router.navigate(['order', 'edit', {id: this.currentID, date: this.currentDate}]);
   }
 
   /**
