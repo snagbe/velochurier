@@ -63,6 +63,10 @@ export class DeliveryComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
+  openAddOrder(feature, order) {
+    this.router.navigate(['order']);
+  }
+
   /**
    * move the selected order in the firebase from open to delivered
    * @param deliveryMethod method to send the email
