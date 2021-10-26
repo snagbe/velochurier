@@ -44,6 +44,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import {DeliveryResolver} from "./deliveries/delivery/delivery-resolver.service";
 import {AppRoutingModule} from "./app-routing.module";
 import { SettingsComponent } from './settings/settings.component';
+import { PasswordComponent } from './settings/password/password.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { SettingsComponent } from './settings/settings.component';
     OverlayComponent,
     DialogComponent,
     PageNotFoundComponent,
-    SettingsComponent
+    SettingsComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,

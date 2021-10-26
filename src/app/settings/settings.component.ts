@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../login/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-settings',
@@ -8,7 +9,8 @@ import {AuthService} from "../login/auth.service";
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -17,6 +19,10 @@ export class SettingsComponent implements OnInit {
 
   doLogout() {
     this.authService.doLogout();
+  }
+
+  changePassword() {
+    this.router.navigate(['settings/password']);
   }
 
   onselected() {

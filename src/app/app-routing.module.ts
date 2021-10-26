@@ -9,6 +9,7 @@ import {AddOrderComponent} from "./add-order/add-order.component";
 import {RoadComponent} from "./road/road.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {SettingsComponent} from "./settings/settings.component";
+import {PasswordComponent} from "./settings/password/password.component";
 
 const appRoutes: Routes = [
   {path: 'auth', component: LoginComponent},
@@ -18,6 +19,7 @@ const appRoutes: Routes = [
   {path: 'order', component: AddOrderComponent},
   {path: 'road', component: RoadComponent},
   {path: 'settings', component: SettingsComponent},
+  {path: 'settings/password', component: PasswordComponent},
   {path: '', redirectTo: '/deliveries', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];

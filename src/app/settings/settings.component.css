@@ -1,5 +1,6 @@
 h1 {
   text-align: center;
+  padding: 2rem 0;
 }
 
 hr {
@@ -20,4 +21,9 @@ button:focus {
 
 button > mat-icon {
   margin-right: 1rem;
+}
+
+.right {
+  position: absolute;
+  right: 0;
 }
