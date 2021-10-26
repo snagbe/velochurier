@@ -4,7 +4,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../../address/addresses";
 import {DeliveriesService} from "../deliveries.service";
 import {AuthService} from "../../login/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router, Data} from "@angular/router";
 
 @Component({
   selector: 'app-delivery',
@@ -13,31 +13,38 @@ import {Router} from "@angular/router";
 })
 export class DeliveryComponent implements OnInit {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
-  @Input() currentID: any;
-  @Input() currentReceiverLat: number;
-  @Input() currentReceiverLng: number;
-  @Input() currentDate: any;
+  currentID: any;
+  currentReceiverLat: number;
+  currentReceiverLng: number;
+  currentDate: any;
 
   zoom: number;
   clientCount: number
   receiverAddresses: Address[];
   clientAddresses: Address[];
-  currentRecord: any[] = [];constructor(private bottomSheet: MatBottomSheet,
+  currentRecord: any[] = [];
+
+  constructor(private bottomSheet: MatBottomSheet,
               private db: AngularFireDatabase,
               private deliveriesService: DeliveriesService,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
     this.zoom = 20;
-    /*console.log('currentReceiverLat ', this.currentReceiverLat);
-    console.log('currentReceiverLng ', this.currentReceiverLng);
-    console.log('currentID ', this.currentID);
-    console.log('currentDate ', this.currentDate);*/
-    this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
-    this.deliveriesService.getOrderAddresses(this.currentDate.value, 'open', 'client').subscribe(value => this.clientAddresses = value);
+    this.route.data.subscribe(
+      (data: Data) => {
+        this.currentID = data['delivery'].id;
+        this.currentReceiverLat = +data['delivery'].lat;
+        this.currentReceiverLng = +data['delivery'].lng;
+        this.currentDate = new Date(data['delivery'].date);
+      }
+  );
+    this.deliveriesService.getOrderAddresses(this.currentDate, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
+    this.deliveriesService.getOrderAddresses(this.currentDate, 'open', 'client').subscribe(value => this.clientAddresses = value);
   }
 
   onBack() {
@@ -92,6 +99,6 @@ export class DeliveryComponent implements OnInit {
         "receiver": receiver
       })
     this.closeDeliverSheetMenu();
-    this.onBack('deliveries');
+    this.onBack();
   }
 }

@@ -1,6 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {RouterModule, Routes} from "@angular/router";
 
 import { AppComponent } from './app.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
@@ -42,17 +41,8 @@ import { AgmCoreModule } from '@agm/core';
 import { AutocompleteComponent } from "./autocomplete/autocomplete.component";
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
-const appRoutes: Routes = [
-  { path: 'auth', component: LoginComponent },
-  { path: 'deliveries', component: DeliveriesComponent },
-  { path: 'deliveries/:id', component: DeliveryComponent },
-  { path: 'customers', component: CustomersComponent },
-  { path: 'order', component: AddOrderComponent },
-  { path: 'road', component: RoadComponent },
-  { path: '', redirectTo: '/deliveries', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
-];
+import {DeliveryResolver} from "./deliveries/delivery/delivery-resolver.service";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -75,7 +65,7 @@ const appRoutes: Routes = [
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule,
 
     // Firebase
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -107,6 +97,7 @@ const appRoutes: Routes = [
   providers: [
     GlobalComponents,
     OverlayComponent,
+    DeliveryResolver,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
     { provide: DateAdapter, useClass: CustomDateAdapter },

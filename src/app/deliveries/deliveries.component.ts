@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Address} from "../address/addresses";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
@@ -20,7 +20,6 @@ export class DeliveriesComponent implements OnInit {
   address: String;
   visibilityComponent = false;
   date = new FormControl(new Date());
-  @Output() featureSelectedChild = new EventEmitter<any>();
 
   @ViewChild('sortBottomSheet') SortBottomSheet: TemplateRef<any>;
   @ViewChild('dateForm') dateForm: NgForm;
@@ -48,7 +47,7 @@ export class DeliveriesComponent implements OnInit {
   setSort(value: string, valueName: string) {
     this.sortedAddresses = [];
     this.selectedSort = valueName;
-    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth()+1) + '-' + this.date.value.getDate();
+    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth() + 1) + '-' + this.date.value.getDate();
     this.db.database.ref('order/open/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
         snap => {
@@ -65,9 +64,7 @@ export class DeliveriesComponent implements OnInit {
     this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 
-  onDeliveryComponent(id: any, lat: number, lng: number, feature: string) {
-    let date = this.date;
-    //this.featureSelectedChild.emit({id, lat, lng, feature, date});
-    this.router.navigate(['/deliveries', id]);
+  onDeliveryComponent(id: any, lat: number, lng: number) {
+    this.router.navigate(['/delivery', {id: id, lat: lat, lng: lng, date: this.date.value}]);
   }
 }
