@@ -130,7 +130,10 @@ export class AddOrderComponent implements OnInit {
   saveOrder(coords) {
     const client = this.client;
     const receiver = this.receiver;
-    const nodeTitle = receiver.street + ', ' + receiver.zip + ' ' + receiver.city;
+    let nodeTitle = receiver.company;
+    if (!nodeTitle) {
+      nodeTitle = receiver.name + ' ' + receiver.surname;
+    }
     const date = this.orderForm.value.pickupDate;
     const orderDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
