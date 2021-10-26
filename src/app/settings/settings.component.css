@@ -1,0 +1,23 @@
+h1 {
+  text-align: center;
+}
+
+hr {
+  border-top: 1.5px solid #9891917C;
+  margin: 1rem 0;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+button:focus {
+  outline: none;
+}
+
+button > mat-icon {
+  margin-right: 1rem;
+}

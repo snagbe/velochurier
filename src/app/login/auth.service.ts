@@ -19,6 +19,11 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
+  doLogout() {
+    this.afAuth.signOut();
+    this.router.navigate(['/auth']);
+  }
+
   doAuthCheck() {
     this.afAuth.authState.subscribe(res => {
       if (!res || !res.uid) {
