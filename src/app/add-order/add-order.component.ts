@@ -10,7 +10,7 @@ import {MapsAPILoader} from "@agm/core";
 import {AuthService} from "../login/auth.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Article} from "./article";
-import {map} from "rxjs/operators";
+import {FirebaseService} from "../firebase/firebase.service";
 
 @Component({
   selector: 'app-add-order',
@@ -62,7 +62,8 @@ export class AddOrderComponent implements OnInit {
               private mapsApiLoader: MapsAPILoader,
               private authService: AuthService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private firebaseService: FirebaseService) {
   }
 
   ngOnInit(): void {
@@ -169,27 +170,7 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSaveAddress(resource: string) {
-    let node = this.receiver;
-    if (resource === 'client') {
-      node = this.client;
-    }
-    let nodeTitle = node.company;
-    if (!nodeTitle) {
-      nodeTitle = node.name + ' ' + node.surname;
-    }
-
-    var rootRef = this.db.list('address');
-    rootRef.set(nodeTitle, {
-      "company": node.company,
-      "surname": node.surname,
-      "name": node.name,
-      "street": node.street,
-      "zip": node.zip,
-      "city": node.city,
-      "email": node.mail,
-      "phone": node.phone,
-      "description": node.description
-    })
+    this.firebaseService.saveAddress(resource)
   }
 
   onSubmit() {
