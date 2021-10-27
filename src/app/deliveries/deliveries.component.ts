@@ -4,7 +4,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {DeliveriesService} from "./deliveries.service";
 import {FormControl, NgForm} from "@angular/forms";
-import {AuthService} from "../login/auth.service";
+import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
 
 @Component({

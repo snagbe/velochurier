@@ -4,7 +4,7 @@
   <h3>Melden dich bitte mit deiner E-Mail Adresse und deinem Passwort an.</h3>
   <div class="input-container">
     <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
+      <mat-label>E-Mail</mat-label>
       <input matInput [formControl]="email" required>
       <mat-icon matSuffix>mail_outline</mat-icon>
       <mat-error *ngIf="email.invalid">{{getErrorMessage(email)}}</mat-error>
@@ -22,6 +22,6 @@
   <div class="col-xs-12 flex-center" style="padding-bottom: 2rem">
     <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">Anmelden</button>
   </div>
-  <a>Passwort vergessen?</a>
+  <a routerLink="/auth/forgetPassword">Passwort vergessen?</a>
 </form>
 </body>

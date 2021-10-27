@@ -7,7 +7,7 @@ import {Address} from "../address/addresses";
 import {AddressComponent} from "../address/address.component";
 import {AutocompleteComponent} from "../autocomplete/autocomplete.component";
 import {MapsAPILoader} from "@agm/core";
-import {AuthService} from "../login/auth.service";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-add-order',

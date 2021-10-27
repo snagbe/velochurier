@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Router} from "@angular/router";
-import {updatePassword} from "@angular/fire/auth";
+import {getAuth, sendPasswordResetEmail, updatePassword} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +40,10 @@ export class AuthService {
       }
     });
     return null;
+  }
+
+  sendPasswordResetMail(email) {
+    const auth = getAuth();
+    return sendPasswordResetEmail(auth, email);
   }
 }

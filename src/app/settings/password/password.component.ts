@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
-import {AuthService} from "../../login/auth.service";
+import {AuthService} from "../../auth/auth.service";
 import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 
 @Component({

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, NgForm, Validators} from "@angular/forms";
-import {AuthService} from "./auth.service";
-import {AppComponent} from "../app.component";
-import {DialogData, OverlayComponent} from "../overlay/overlay.component";
+import {AuthService} from "../auth.service";
+import {AppComponent} from "../../app.component";
+import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 import {Router} from "@angular/router";
 
 @Component({
