@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
@@ -13,24 +13,34 @@ export class PasswordComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private overlay: OverlayComponent) { }
+              private overlay: OverlayComponent) {
+  }
 
   ngOnInit(): void {
   }
 
   onSubmit(passwordForm: NgForm) {
-    this.authService.changePassword(passwordForm.value.passwordNew)
+    this.authService.reauthenticate(passwordForm.value.passwordOld)
       .then(() => {
-        const data: DialogData = {
-          title: 'Passwort geändert',
-          message: 'Das Passwort wurde erfolgreich geändert.'
-        }
-        this.overlay.openDialog(data);
-        passwordForm.reset();
+        this.authService.changePassword(passwordForm.value.passwordNew)
+          .then(() => {
+            const data: DialogData = {
+              title: 'Passwort geändert',
+              message: 'Das Passwort wurde erfolgreich geändert.'
+            }
+            this.overlay.openDialog(data);
+            passwordForm.reset();
+          }).catch((error) => {
+          const data: DialogData = {
+            title: 'Fehler',
+            message: 'Das Passwort konnte nicht geändert werden.'
+          }
+          this.overlay.openDialog(data);
+        });
       }).catch((error) => {
       const data: DialogData = {
         title: 'Fehler',
-        message: 'Ein unerwarteter Fehler ist aufgetreten.'
+        message: 'Das eingegebenen Passwort ist nicht korrekt.'
       }
       this.overlay.openDialog(data);
     });

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Router} from "@angular/router";
-import {getAuth, sendPasswordResetEmail, updatePassword} from "@angular/fire/auth";
+import {getAuth, reauthenticateWithCredential, sendPasswordResetEmail, updatePassword, EmailAuthProvider} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +16,27 @@ export class AuthService {
   ngOnInit(): void {
   }
 
+  /**
+   * Logges the user in.
+   *
+   * @param email The entered email address
+   * @param password The entered password
+   */
   doLogin(email: string, password: string) {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
+  /**
+   * Logges the current user out.
+   */
   doLogout() {
     this.afAuth.signOut();
     this.router.navigate(['/auth']);
   }
 
+  /**
+   * Checks if an user is logged in.
+   */
   doAuthCheck() {
     this.afAuth.authState.subscribe(user => {
       if (!user || !user.uid) {
@@ -33,12 +45,34 @@ export class AuthService {
     });
   }
 
+  /**
+   * Changes the password of the logged in user.
+   *
+   * @param newPwd The new password
+   */
   changePassword(newPwd: string) {
     const auth = getAuth();
     const user = auth.currentUser;
     return updatePassword(user, newPwd);
   }
 
+  /**
+   * reeauthenticate the current logged in user.
+   *
+   * @param pwd The entered password
+   */
+  reauthenticate(pwd: string) {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(user.email, pwd);
+    return reauthenticateWithCredential(user, credential);
+  }
+
+  /**
+   * Sends an email with a link to reset the current password.
+   *
+   * @param email The users email address
+   */
   sendPasswordResetMail(email) {
     const auth = getAuth();
     return sendPasswordResetEmail(auth, email);
