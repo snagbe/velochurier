@@ -2,8 +2,6 @@ import {Injectable} from "@angular/core";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Router} from "@angular/router";
 import {updatePassword} from "@angular/fire/auth";
-import firebase from "firebase/compat";
-import User = firebase.User;
 
 @Injectable({
   providedIn: 'root'
@@ -35,28 +33,12 @@ export class AuthService {
     });
   }
 
-  changePassword(newPwd:string) {
-    /*this.afAuth.authState.subscribe(user => {
+  changePassword(newPwd: string) {
+    this.afAuth.authState.subscribe(user => {
       if (user) {
-        updatePassword(user, newPwd).then(() => {
-          console.log("Update successful.");
-        }).catch((error) => {
-          console.log("An error ocurred");
-          console.log(error);
-          // ...
-        });
+        return updatePassword(user, newPwd);
       }
-    });*/
-
-
-    /*const user = this.afAuth.currentUser;
-    // @ts-ignore
-    updatePassword(user, newPwd).then(() => {
-      console.log("Update successful.");
-    }).catch((error) => {
-      console.log("An error ocurred");
-      console.log(error);
-      // ...
-    });*/
+    });
+    return null;
   }
 }
