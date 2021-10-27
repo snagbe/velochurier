@@ -11,6 +11,7 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {SettingsComponent} from "./settings/settings.component";
 import {PasswordComponent} from "./settings/password/password.component";
 import {ForgetPasswordComponent} from "./auth/forget-password/forget-password.component";
+import {NewUserComponent} from "./settings/new-user/new-user.component";
 
 const appRoutes: Routes = [
   {path: 'auth', component: LoginComponent},
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
   {path: 'road', component: RoadComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'settings/password', component: PasswordComponent},
+  {path: 'settings/newUser', component: NewUserComponent},
   {path: '', redirectTo: '/deliveries', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];

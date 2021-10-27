@@ -1,7 +1,14 @@
 import {Injectable} from "@angular/core";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Router} from "@angular/router";
-import {getAuth, reauthenticateWithCredential, sendPasswordResetEmail, updatePassword, EmailAuthProvider} from "@angular/fire/auth";
+import {
+  getAuth,
+  reauthenticateWithCredential,
+  sendPasswordResetEmail,
+  updatePassword,
+  EmailAuthProvider,
+  createUserWithEmailAndPassword
+} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -76,5 +83,16 @@ export class AuthService {
   sendPasswordResetMail(email) {
     const auth = getAuth();
     return sendPasswordResetEmail(auth, email);
+  }
+
+  /**
+   * Creates a new user.
+   *
+   * @param email The email address from the new user
+   * @param pwd The password from the new user
+   */
+  createUser(email: string, pwd: string) {
+    const auth = getAuth();
+    return createUserWithEmailAndPassword(auth, email, pwd);
   }
 }

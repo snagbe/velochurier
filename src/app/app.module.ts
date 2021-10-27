@@ -46,6 +46,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import { SettingsComponent } from './settings/settings.component';
 import { PasswordComponent } from './settings/password/password.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
+import { NewUserComponent } from './settings/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
     PageNotFoundComponent,
     SettingsComponent,
     PasswordComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,
