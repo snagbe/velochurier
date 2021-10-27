@@ -23,7 +23,7 @@ export class DeliveriesService {
           const data = a.payload.val();
           const key = a.payload.key;
           // @ts-ignore
-          const address: Address = {id: key, city: data.city, street: data.street, zip: data.zip};
+          const address: Address = {id: key, city: data.city, street: data.street, zip: data.zip, surname: data.surname, name: data.name, company: data.company, email: data.email, phone: data.phone, description: data.description};
           return address;
         });
       }));
