@@ -34,7 +34,7 @@ export class CustomerComponent implements OnInit {
   selectedAddress: Address[];
 
   currentId: any;
-  currentDate: any;
+  currentDate: Date;
   orderType: string;
 
   constructor(private db: AngularFireDatabase,

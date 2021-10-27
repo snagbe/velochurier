@@ -48,12 +48,14 @@ export class AddOrderComponent implements OnInit {
   geocoder: any;
   geoAddress: any;
   currentId: any;
-  currentDate: any;
+  currentDate: Date;
   getType: any;
   orderType: string;
   currentPicker: Date;
   currentArticle: string;
   pageTitle: string;
+
+  date: Date;
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -184,7 +186,7 @@ export class AddOrderComponent implements OnInit {
       "street": node.street,
       "zip": node.zip,
       "city": node.city,
-      "mail": node.mail,
+      "email": node.mail,
       "phone": node.phone,
       "description": node.description
     })
@@ -226,8 +228,9 @@ export class AddOrderComponent implements OnInit {
     if (!nodeTitle) {
       nodeTitle = receiver.name + ' ' + receiver.surname;
     }
-    const date = this.orderForm.value.pickupDate;
-    const orderDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    this.date = this.currentPicker;
+    this.date = new Date(this.date);
+    const orderDate = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
 
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
     var rootRef = this.db.list('order/open/' + orderDate);
@@ -238,7 +241,7 @@ export class AddOrderComponent implements OnInit {
       "street": client.street,
       "zip": client.zip,
       "city": client.city,
-      "mail": client.mail,
+      "email": client.mail,
       "phone": client.phone,
       "description": client.description
     })
@@ -250,7 +253,7 @@ export class AddOrderComponent implements OnInit {
       "street": receiver.street,
       "zip": receiver.zip,
       "city": receiver.city,
-      "mail": receiver.mail,
+      "email": receiver.mail,
       "phone": receiver.phone,
       "description": receiver.description,
       "lat": coords[0].lat,
