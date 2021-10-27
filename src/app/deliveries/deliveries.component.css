@@ -1,6 +1,9 @@
 .container {
-  font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
   font-size: 14px;
+}
+
+.container > h1 {
+  text-align: center;
 }
 
 .sort-button {
