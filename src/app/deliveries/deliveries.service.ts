@@ -49,7 +49,7 @@ export class DeliveriesService {
           const key = a.payload.key;
 
           // @ts-ignore
-          const address: Address = {id: key, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, lat: this.getType.lat, lng: this.getType.lng, street: this.getType.street, zip: this.getType.zip};
+          const address: Address = {id: key, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, lat: this.getType.lat, lng: this.getType.lng, street: this.getType.street, zip: this.getType.zip, description: this.getType.description};
           return address;
         });
       }));

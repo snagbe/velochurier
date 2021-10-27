@@ -16,6 +16,7 @@ export class AddressComponent implements OnInit {
   @Input() city: string;
   @Input() mail: string;
   @Input() phone: string;
+  @Input() description: string;
 
   constructor() {
   }
@@ -29,6 +30,7 @@ export class AddressComponent implements OnInit {
     this.city = null;
     this.mail = null;
     this.phone = null;
+    this.description = null;
   }
 
   email = new FormControl('', [Validators.required, Validators.email]);

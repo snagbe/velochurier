@@ -32,6 +32,7 @@ export class AddOrderComponent implements OnInit {
   clientCity: string;
   clientMail: string;
   clientPhone: string;
+  clientDescription: string;
   receiverCompany: string;
   receiverSurname: string;
   receiverName: string;
@@ -40,6 +41,7 @@ export class AddOrderComponent implements OnInit {
   receiverCity: string;
   receiverMail: string;
   receiverPhone: string;
+  receiverDescription: string;
   subscription: Subscription;
   selectedAddress: Address[];
   selectedArticle: Article[];
@@ -51,6 +53,7 @@ export class AddOrderComponent implements OnInit {
   orderType: string;
   currentPicker: Date;
   currentArticle: string;
+  pageTitle: string;
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -62,7 +65,10 @@ export class AddOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
+    this.pageTitle = "Auftrag erfassen";
+
     if (this.route.snapshot.routeConfig.path === 'order/edit') {
+      this.pageTitle = "Auftrag bearbeiten";
       this.route.data.subscribe(
         (data: Data) => {
           this.currentId = data['order'].id;
@@ -72,15 +78,6 @@ export class AddOrderComponent implements OnInit {
       this.currentOrderArticle(this.currentDate, 'open', 'article', this.currentId);
       this.currentOrder(this.currentDate, 'open', 'client', this.currentId);
       this.currentOrder(this.currentDate, 'open', 'receiver', this.currentId);
-    }
-
-    if (this.route.snapshot.routeConfig.path === 'order/customer') {
-      this.route.data.subscribe(
-        (data: Data) => {
-          this.currentId = data['order'].id;
-        }
-      );
-      this.getAddress(this.currentId);
     }
 
     this.subscription = this.globalComp.addressChange
@@ -95,6 +92,7 @@ export class AddOrderComponent implements OnInit {
           this.clientStreet = this.selectedAddress[0].street;
           this.clientMail = this.selectedAddress[0].email;
           this.clientPhone = this.selectedAddress[0].phone;
+          this.clientDescription = this.selectedAddress[0].description;
         } else {
           this.receiverCompany = this.selectedAddress[0].company;
           this.receiverSurname = this.selectedAddress[0].surname;
@@ -104,6 +102,7 @@ export class AddOrderComponent implements OnInit {
           this.receiverStreet = this.selectedAddress[0].street;
           this.receiverMail = this.selectedAddress[0].email;
           this.receiverPhone = this.selectedAddress[0].phone;
+          this.receiverDescription = this.selectedAddress[0].description;
         }
       })
 
@@ -115,21 +114,6 @@ export class AddOrderComponent implements OnInit {
       });
   }
 
-  public getAddress(id) {
-    this.db.database.ref('address')
-      .on('child_added',
-        snap => {
-          const key = snap.key;
-          const data = snap.val();
-          this.orderType = 'Empfänger';
-          if (key === id) {
-            // @ts-ignore
-            const address: Address = {type: this.orderType, city: data.city, company: data.company, name: data.name, surname: data.surname, street: data.street, zip: data.zip, mail: data.mail, phone: data.phone};
-            this.globalComp.setAddress(address);
-            this.globalComp.addressChange.next();
-          }
-      });
-  }
 
   currentOrderArticle(date, status, type, id) {
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -173,7 +157,7 @@ export class AddOrderComponent implements OnInit {
               }
               if (key === id) {
                 // @ts-ignore
-                const address: Address = {type: this.orderType, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, street: this.getType.street, zip: this.getType.zip, mail: this.getType.mail, phone: this.getType.phone};
+                const address: Address = {type: this.orderType, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, street: this.getType.street, zip: this.getType.zip, email: this.getType.email, phone: this.getType.phone, description: this.getType.description};
                 this.globalComp.setAddress(address);
                 this.globalComp.addressChange.next();
               }
@@ -201,7 +185,8 @@ export class AddOrderComponent implements OnInit {
       "zip": node.zip,
       "city": node.city,
       "mail": node.mail,
-      "phone": node.phone
+      "phone": node.phone,
+      "description": node.description
     })
   }
 
@@ -254,7 +239,8 @@ export class AddOrderComponent implements OnInit {
       "zip": client.zip,
       "city": client.city,
       "mail": client.mail,
-      "phone": client.phone
+      "phone": client.phone,
+      "description": client.description
     })
 
     rootRef.set(nodeTitle + '/receiver', {
@@ -266,6 +252,7 @@ export class AddOrderComponent implements OnInit {
       "city": receiver.city,
       "mail": receiver.mail,
       "phone": receiver.phone,
+      "description": receiver.description,
       "lat": coords[0].lat,
       "lng": coords[0].lng
     })
