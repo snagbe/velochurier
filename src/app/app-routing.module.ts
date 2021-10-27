@@ -9,6 +9,8 @@ import {AddOrderComponent} from "./add-order/add-order.component";
 import {RoadComponent} from "./road/road.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {OrderResolver} from "./add-order/order-resolver.service";
+import {SettingsComponent} from "./settings/settings.component";
+import {PasswordComponent} from "./settings/password/password.component";
 
 const appRoutes: Routes = [
   {path: 'auth', component: LoginComponent},
@@ -19,6 +21,8 @@ const appRoutes: Routes = [
   {path: 'order/edit', component: AddOrderComponent, resolve: {order: OrderResolver}},
   {path: 'order/customer', component: AddOrderComponent, resolve: {order: OrderResolver}},
   {path: 'road', component: RoadComponent},
+  {path: 'settings', component: SettingsComponent},
+  {path: 'settings/password', component: PasswordComponent},
   {path: '', redirectTo: '/deliveries', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];

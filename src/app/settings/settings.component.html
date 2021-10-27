@@ -1,0 +1,35 @@
+<div>
+  <h1>Auslieferungen</h1>
+
+  <button class="delivery-button" (click)="doLogout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+    <mat-icon class="right">chevron_right</mat-icon>
+  </button>
+  <hr>
+  <button class="delivery-button" routerLink="/settings/password">
+    <mat-icon>password</mat-icon>
+    Passwort ändern
+    <mat-icon class="right">chevron_right</mat-icon>
+  </button>
+  <hr>
+  <button class="delivery-button" (click)="onselected()">
+    <mat-icon>person_add</mat-icon>
+    Neuen Benutzer
+    <mat-icon class="right">chevron_right</mat-icon>
+  </button>
+  <hr>
+  <button class="delivery-button" (click)="onselected()">
+    <mat-icon>admin_panel_settings</mat-icon>
+    Berechtigungen verwalten
+    <mat-icon class="right">chevron_right</mat-icon>
+  </button>
+  <hr>
+  <button class="delivery-button" (click)="onselected()">
+    <mat-icon>manage_accounts</mat-icon>
+    Profil
+    <mat-icon class="right">chevron_right</mat-icon>
+  </button>
+  <hr>
+</div>
+<app-navbar></app-navbar>

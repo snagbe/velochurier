@@ -43,7 +43,6 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {DeliveryResolver} from "./deliveries/delivery/delivery-resolver.service";
 import {AppRoutingModule} from "./app-routing.module";
-import {OrderResolver} from "./add-order/order-resolver.service";
 
 @NgModule({
   declarations: [
@@ -59,7 +58,9 @@ import {OrderResolver} from "./add-order/order-resolver.service";
     LoginComponent,
     OverlayComponent,
     DialogComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SettingsComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,
