@@ -5,6 +5,7 @@ import {DeliveriesComponent} from "./deliveries/deliveries.component";
 import {DeliveryComponent} from "./deliveries/delivery/delivery.component";
 import {DeliveryResolver} from "./deliveries/delivery/delivery-resolver.service";
 import {CustomersComponent} from "./customers/customers.component";
+import {CustomerComponent} from "./customers/customer/customer.component";
 import {AddOrderComponent} from "./add-order/add-order.component";
 import {RoadComponent} from "./road/road.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   {path: 'deliveries', component: DeliveriesComponent},
   {path: 'delivery', component: DeliveryComponent, resolve: {delivery: DeliveryResolver}},
   {path: 'customers', component: CustomersComponent},
+  {path: 'customer', component: CustomerComponent, resolve: {customer: OrderResolver}},
   {path: 'order', component: AddOrderComponent},
   {path: 'order/edit', component: AddOrderComponent, resolve: {order: OrderResolver}},
   {path: 'order/customer', component: AddOrderComponent, resolve: {order: OrderResolver}},

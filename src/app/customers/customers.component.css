@@ -1,6 +1,11 @@
 .container{
   font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
   font-size: 14px;
+  margin-top: 0.8rem;
+}
+
+.container > h1 {
+  text-align: center;
 }
 
 .addresses {
