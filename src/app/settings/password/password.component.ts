@@ -20,15 +20,17 @@ export class PasswordComponent implements OnInit {
 
   onSubmit(passwordForm: NgForm) {
     this.authService.changePassword(passwordForm.value.passwordNew)
-      .subscribe((res) => {
-        console.log("Update successful.");
+      .then(() => {
+        const data: DialogData = {
+          title: 'Passwort geändert',
+          message: 'Das Passwort wurde erfolgreich geändert.'
+        }
+        this.overlay.openDialog(data);
         passwordForm.reset();
       }).catch((error) => {
-      console.log("An error ocurred");
-      console.log(error);
       const data: DialogData = {
-        type: 'Fehler',
-        message: 'Ein unerwarteter Fehler ist aufgetreten'
+        title: 'Fehler',
+        message: 'Ein unerwarteter Fehler ist aufgetreten.'
       }
       this.overlay.openDialog(data);
     });

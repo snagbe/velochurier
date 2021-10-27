@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
           }
         }
         const data: DialogData = {
-          type: 'Fehler',
+          title: 'Fehler',
           message: errorMessage
         }
         this.overlay.openDialog(data);

@@ -3,7 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./dialog/dialog.component";
 
 export interface DialogData {
-  type: string;
+  title: string;
   message: string;
 }
 
@@ -14,7 +14,7 @@ export interface DialogData {
 })
 export class OverlayComponent {
 
-  type: string;
+  title: string;
   message: string;
 
   constructor(public dialog: MatDialog) {
@@ -23,7 +23,7 @@ export class OverlayComponent {
   openDialog(dialogData: DialogData): void {
     this.dialog.open(DialogComponent, {
       maxWidth: '50%',
-      data: {type: dialogData.type, message: dialogData.message}
+      data: {title: dialogData.title, message: dialogData.message}
     });
   }
 }

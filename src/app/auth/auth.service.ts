@@ -34,12 +34,9 @@ export class AuthService {
   }
 
   changePassword(newPwd: string) {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        return updatePassword(user, newPwd);
-      }
-    });
-    return null;
+    const auth = getAuth();
+    const user = auth.currentUser;
+    return updatePassword(user, newPwd);
   }
 
   sendPasswordResetMail(email) {

@@ -24,7 +24,7 @@ export class ForgetPasswordComponent implements OnInit {
       .then(() => {
         console.log("sending mail successful");
         const data: DialogData = {
-          type: 'Link wurde versendet',
+          title: 'Link wurde versendet',
           message: 'Wir haben dir einen Link, um das Passwort zurückzusetzen, an ' + passwordForm.value.email + ' gesendet.'
         }
         this.overlay.openDialog(data);
@@ -36,7 +36,7 @@ export class ForgetPasswordComponent implements OnInit {
           errorMessage = 'Für die eingegebene E-Mail Adresse existiert kein Konto.';
         }
         const data: DialogData = {
-          type: 'Fehler',
+          title: 'Fehler',
           message: errorMessage
         }
         this.overlay.openDialog(data);
