@@ -8,7 +8,7 @@ export class EmailService {
   transporter: any;
 
   public transport(host, port) {
-    this.nodemailer  = require('nodemailer');
+    //this.nodemailer  = require('nodemailer');
     this.transporter = this.nodemailer.createTransport({
       host: host,
       port: port,
