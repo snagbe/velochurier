@@ -79,8 +79,8 @@ export class CustomerComponent implements OnInit {
       node = this.client;
     }
 
-    this.rootRef = this.firebaseService.saveAddress(node);
-    this.firebaseService.removeAddress(this.rootRef);
+    this.firebaseService.saveAddress(node);
+    this.firebaseService.removeAddress(this.currentId);
 
 
     this.onBack();

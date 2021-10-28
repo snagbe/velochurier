@@ -55,7 +55,7 @@ export class FirebaseService {
     let nodeTitle = node.company;
     if (!nodeTitle) {
       nodeTitle = node.name + ' ' + node.surname;
-
+    }
       var rootRef = this.db.list('address');
       rootRef.set(nodeTitle, {
         "company": node.company,
@@ -68,8 +68,6 @@ export class FirebaseService {
         "phone": node.phone,
         "description": node.description
       })
-    }
-    return rootRef;
   }
 
   removeAddress(id) {
