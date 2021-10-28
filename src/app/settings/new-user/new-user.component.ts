@@ -35,6 +35,7 @@ export class NewUserComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
   }
 
   onSubmit(formDirective: FormGroupDirective) {

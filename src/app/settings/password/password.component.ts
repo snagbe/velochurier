@@ -35,6 +35,7 @@ export class PasswordComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
   }
 
   onSubmit(formDirective: FormGroupDirective) {
