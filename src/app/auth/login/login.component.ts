@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {AppComponent} from "../../app.component";
 import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
@@ -11,24 +11,40 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
   hide = true;
 
   constructor(private authService: AuthService,
               private nav: AppComponent,
               private overlay: OverlayComponent,
-              private router: Router) {
+              private router: Router,
+              private formBuilder: FormBuilder) {
   }
+
+  loginFormGroup = this.formBuilder.group({
+    email: [
+      "",
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ],
+    password: [
+      "",
+      [
+        Validators.required,
+        Validators.minLength(6)
+      ]
+    ]
+  });
 
   ngOnInit(): void {
   }
 
-  onSubmit(loginForm: NgForm) {
-    if (!loginForm.valid) {
+  onSubmit() {
+    if (!this.loginFormGroup.valid) {
       return;
     }
-    this.authService.doLogin(this.email.value, this.password.value)
+    this.authService.doLogin(this.loginFormGroup.controls.email.value, this.loginFormGroup.controls.password.value)
       .then(res => {
         this.router.navigate(['/deliveries']);
       }, err => {
@@ -59,11 +75,12 @@ export class LoginComponent implements OnInit {
       })
   }
 
-  getErrorMessage(element) {
-    if (element.hasError('required')) {
-      return 'Dieses Feld muss ausgefüllt werden';
-    }
-
-    return this.email.hasError('email') ? 'Keine gültige E-Mail Adresse' : '';
+  getErrorMessage(inputField) {
+    return inputField.hasError('required') ?
+      'Dieses Feld muss ausgefüllt werden' :
+        inputField.hasError('minlength') ?
+          'Das Passwort muss mindestens sechs Zeichen beinhalten' :
+          inputField.hasError('email') ?
+            'Keine gültige E-Mail Adresse' : '';
   }
 }
