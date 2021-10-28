@@ -78,10 +78,8 @@ export class CustomerComponent implements OnInit {
     if (resource === 'client') {
       node = this.client;
     }
-
-    this.firebaseService.saveAddress(node);
     this.firebaseService.removeAddress(this.currentId);
-
+    this.firebaseService.saveAddress(node);
 
     this.onBack();
   }
