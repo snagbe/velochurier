@@ -31,6 +31,11 @@ export class CustomerComponent implements OnInit {
   clientPhone: string;
   clientDescription: string;
 
+  //cache Fields
+  cacheClientCompany: string;
+  cacheClientSurname: string;
+  cacheClientName: string;
+
   subscription: Subscription;
   selectedAddress: Address[];
 
@@ -61,8 +66,11 @@ export class CustomerComponent implements OnInit {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Empfänger' === this.selectedAddress[0].type) {
           this.clientCompany = this.selectedAddress[0].company;
+          this.cacheClientCompany = this.selectedAddress[0].company;
           this.clientSurname = this.selectedAddress[0].surname;
+          this.cacheClientSurname = this.selectedAddress[0].surname;
           this.clientName = this.selectedAddress[0].name;
+          this.cacheClientName = this.selectedAddress[0].name;
           this.clientZip = this.selectedAddress[0].zip;
           this.clientCity = this.selectedAddress[0].city;
           this.clientStreet = this.selectedAddress[0].street;
@@ -75,10 +83,16 @@ export class CustomerComponent implements OnInit {
 
   public onSaveAddress(resource: string) {
     let node = this.receiver;
+    let nodeTitle;
     if (resource === 'client') {
       node = this.client;
+      nodeTitle = this.cacheClientCompany;
+      if (!nodeTitle) {
+        nodeTitle = this.cacheClientName + ' ' + this.cacheClientSurname;
+      }
     }
-    this.firebaseService.removeAddress(this.currentId);
+
+    this.firebaseService.removeAddress(nodeTitle);
     this.firebaseService.saveAddress(node);
 
     this.onBack();

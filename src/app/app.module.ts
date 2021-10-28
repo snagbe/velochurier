@@ -49,6 +49,7 @@ import {PasswordComponent} from "./settings/password/password.component";
 import { CustomerComponent } from './customers/customer/customer.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { NewUserComponent } from './settings/new-user/new-user.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -72,39 +73,40 @@ import { NewUserComponent } from './settings/new-user/new-user.component';
     ForgetPasswordComponent,
     NewUserComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
+    imports: [
+        BrowserModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
 
-    // Firebase
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
+        // Firebase
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        AngularFireAuthModule,
+        AngularFireStorageModule,
 
-    // Material Imports
-    MatInputModule,
-    MatBottomSheetModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatOptionModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatDialogModule,
-    MatButtonModule,
+        // Material Imports
+        MatInputModule,
+        MatBottomSheetModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatOptionModule,
+        MatIconModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatDialogModule,
+        MatButtonModule,
 
-    //Google Maps integration
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBCA2oaGS7PBkEV4uelWFKaQV-KdE_3iyw',
-      libraries: ['imagery', 'places', 'libraries', 'drawing'],
-      //region: 'CH',
-      language: 'de'
-    })
-  ],
+        //Google Maps integration
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyBCA2oaGS7PBkEV4uelWFKaQV-KdE_3iyw',
+            libraries: ['imagery', 'places', 'libraries', 'drawing'],
+            //region: 'CH',
+            language: 'de'
+        }),
+        MatSelectModule
+    ],
 
   providers: [
     GlobalComponents,
