@@ -1,9 +1,14 @@
 .container{
   font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
   font-size: 14px;
+  margin-top: 0.8rem;
 }
 
-.addresses{
+.container > h1 {
+  text-align: center;
+}
+
+.addresses {
   display: flex;
   align-items: center;
 
@@ -14,9 +19,13 @@
   padding-bottom: 1rem;
 }
 
-.customer-button{
+.customer-button {
   background-color: transparent;
   border: none;
+}
+
+.customer-button:focus {
+  outline: none;
 }
 
 .customer-journey-img {

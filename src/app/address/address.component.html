@@ -6,11 +6,11 @@
   <div class="input-container">
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Vorname</mat-label>
-      <input matInput ngModel name="name" [(ngModel)]="name">
+      <input matInput ngModel name="surname" [(ngModel)]="surname">
     </mat-form-field>
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput ngModel name="surname" [(ngModel)]="surname">
+      <input matInput ngModel name="name" [(ngModel)]="name">
     </mat-form-field>
   </div>
   <div class="input-container">
@@ -40,4 +40,8 @@
       <input matInput ngModel name="phone" [(ngModel)]="phone" value="">
     </mat-form-field>
   </div>
+  <mat-form-field class="input-100" appearance="outline">
+    <mat-label>Bemerkung</mat-label>
+    <textarea matInput ngModel name="description" [(ngModel)]="description"></textarea>
+  </mat-form-field>
 </form>

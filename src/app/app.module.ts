@@ -43,8 +43,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {DeliveryResolver} from "./deliveries/delivery/delivery-resolver.service";
 import {AppRoutingModule} from "./app-routing.module";
-import { SettingsComponent } from './settings/settings.component';
-import { PasswordComponent } from './settings/password/password.component';
+import {OrderResolver} from "./add-order/order-resolver.service";
+import {SettingsComponent} from "./settings/settings.component";
+import {PasswordComponent} from "./settings/password/password.component";
+import { CustomerComponent } from './customers/customer/customer.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { NewUserComponent } from './settings/new-user/new-user.component';
 
@@ -64,6 +66,8 @@ import { NewUserComponent } from './settings/new-user/new-user.component';
     DialogComponent,
     PageNotFoundComponent,
     SettingsComponent,
+    PasswordComponent,
+    CustomerComponent
     PasswordComponent,
     ForgetPasswordComponent,
     NewUserComponent
@@ -106,6 +110,7 @@ import { NewUserComponent } from './settings/new-user/new-user.component';
     GlobalComponents,
     OverlayComponent,
     DeliveryResolver,
+    OrderResolver,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
     { provide: DateAdapter, useClass: CustomDateAdapter },

@@ -132,7 +132,7 @@ td {
   width: 15rem;
   height: 3.8rem;
   border-radius: 3pt;
-  margin: 0rem 0.5rem 0rem 0.5rem;
+  margin: 0 0.5rem;
 }
 
 .deliver-button:focus {
@@ -147,4 +147,5 @@ td {
 .deliver-button > p {
   color: #FFFF;
   margin: 0rem;
+  line-height: 1.5rem;
 }

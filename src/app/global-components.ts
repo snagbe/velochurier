@@ -1,10 +1,12 @@
 import {Address} from "./address/addresses";
 import {Subject} from "rxjs";
+import {Article} from "./add-order/article";
 
 export class GlobalComponents {
-  public clientAddressChange = new Subject<number>();
+  public addressChange = new Subject<number>();
   private clientAddress: Address[];
-  private isCompEmpty: number;
+  public orderArticleChange = new Subject<number>();
+  private orderArticle: Article[];
 
   setAddress(address: Address) {
     this.clientAddress = [];
@@ -13,5 +15,14 @@ export class GlobalComponents {
 
   getAddress() {
     return this.clientAddress;
+  }
+
+  setArticle(order: Article) {
+    this.orderArticle = [];
+    this.orderArticle.push(order);
+  }
+
+  getArticle() {
+    return this.orderArticle;
   }
 }
