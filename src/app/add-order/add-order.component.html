@@ -1,6 +1,6 @@
 <div>
   <div class="flex-center" style="margin: 10px">
-    <form #orderForm="ngForm" (ngSubmit)="onSubmit()">
+    <form #orderForm="ngForm" #formDirective="ngForm" (ngSubmit)="onSubmit()">
       <h1>{{pageTitle}}</h1>
 
       <h2>Auftraggeber</h2>
@@ -45,9 +45,10 @@
       <div class="input-container">
         <mat-form-field class="input-50" appearance="outline">
           <mat-label>Abholdatum</mat-label>
-          <input matInput [matDatepicker]="picker" ngModel name="pickupDate" [(ngModel)]="currentPicker" required>
+          <input matInput [matDatepicker]="picker" #pickupDate="ngModel" name="pickupDate" [(ngModel)]="currentPicker" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error>{{getErrorMessage(pickupDate)}}</mat-error>
         </mat-form-field>
         <mat-form-field class="input-100" appearance="outline">
           <mat-label>Artikel</mat-label>
@@ -56,6 +57,7 @@
       </div>
       <div class="col-xs-12 flex-center" style="margin-bottom: 120px">
         <button class="btn btn-primary" type="submit" [disabled]="!orderForm.valid">{{pageTitle}}</button>
+        <button class="btn btn-primary" type="button" [disabled]="!orderForm.valid" (click)="testFunc()">Test</button>
       </div>
     </form>
   </div>

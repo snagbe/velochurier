@@ -67,7 +67,7 @@ import { NewUserComponent } from './settings/new-user/new-user.component';
     PageNotFoundComponent,
     SettingsComponent,
     PasswordComponent,
-    CustomerComponent
+    CustomerComponent,
     PasswordComponent,
     ForgetPasswordComponent,
     NewUserComponent
