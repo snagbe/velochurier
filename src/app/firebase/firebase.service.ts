@@ -73,13 +73,15 @@ export class FirebaseService {
     }).then(() => {
       data = {
         title: 'Daten gespeichert',
-        message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.'
+        message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
+        type: 'success'
       }
       this.overlay.openDialog(data);
     }).catch((error) => {
       data = {
         title: 'Fehler',
-        message: 'Die eingegebene Adresse konnte nicht gespeichert werden.'
+        message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
+        type: 'error'
       }
       this.overlay.openDialog(data);
     });

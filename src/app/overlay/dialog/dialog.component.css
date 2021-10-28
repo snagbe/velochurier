@@ -1,3 +1,21 @@
 .mat-dialog-actions {
   justify-content: center;
 }
+
+::ng-deep .error > mat-dialog-container {
+  border: 1rem solid #c9002e;
+}
+
+::ng-deep .error > mat-dialog-container button {
+  background-color: #c9002e;
+  color: #fff;
+}
+
+::ng-deep .success > mat-dialog-container {
+  border: 1rem solid #79b51c;
+}
+
+::ng-deep .success > mat-dialog-container button {
+  background-color: #79b51c;
+  color: #fff;
+}
