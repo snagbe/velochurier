@@ -53,9 +53,9 @@ export class AddOrderComponent implements OnInit {
   getType: any;
   orderType: string;
   currentPicker: Date;
+  cacheCurrentPicker : Date;
   currentArticle: string;
   pageTitle: string;
-
   date: Date;
 
   constructor(private db: AngularFireDatabase,
@@ -78,6 +78,8 @@ export class AddOrderComponent implements OnInit {
 
     if (this.route.snapshot.routeConfig.path === 'order/edit') {
       this.pageTitle = "Auftrag bearbeiten";
+
+
       this.route.data.subscribe(
         (data: Data) => {
           this.currentId = data['order'].id;
@@ -118,14 +120,14 @@ export class AddOrderComponent implements OnInit {
     this.subscription = this.globalComp.orderArticleChange
       .subscribe(() => {
         this.selectedArticle = this.globalComp.getArticle();
-        this.currentPicker = this.selectedArticle[0].date;
+        this.currentPicker = new Date(this.selectedArticle[0].date);
+        this.cacheCurrentPicker = new Date(this.selectedArticle[0].date);
         this.currentArticle = this.selectedArticle[0].article;
       });
   }
 
 
   currentOrderArticle(date, status, type, id) {
-    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/' + status + '/' + selectedDate)
       .on('child_added',
@@ -148,7 +150,6 @@ export class AddOrderComponent implements OnInit {
   }
 
   currentOrder(date, status, type, id) {
-    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/' + status + '/' + selectedDate)
       .on('child_added',
@@ -193,7 +194,8 @@ export class AddOrderComponent implements OnInit {
     if (resource === 'client') {
       node = this.client;
     }
-    this.firebaseService.saveAddress(node)
+    this.firebaseService.removeAddress(this.currentId);
+    this.firebaseService.saveAddress(node);
   }
 
   onSubmit() {
@@ -218,24 +220,28 @@ export class AddOrderComponent implements OnInit {
         const coords: CoordsType = [
           {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
         ];
-        this.saveOrder(coords);
+
+        const client = this.client;
+        const receiver = this.receiver;
+        let nodeTitle = receiver.company;
+        if (!nodeTitle) {
+          nodeTitle = receiver.name + ' ' + receiver.surname;
+        }
+
+        this.removeOrder(client, receiver, nodeTitle);
+        this.saveOrder(coords, client, receiver, nodeTitle);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
 
-  saveOrder(coords) {
-    const client = this.client;
-    const receiver = this.receiver;
-    let nodeTitle = receiver.company;
-    if (!nodeTitle) {
-      nodeTitle = receiver.name + ' ' + receiver.surname;
-    }
-    this.date = this.currentPicker;
-    this.date = new Date(this.date);
-    const orderDate = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
+  removeOrder(client, receiver, nodeTitle) {
+      this.db.object('order/open/' + this.cacheCurrentPicker + '/' + nodeTitle).remove();
+  }
 
+  saveOrder(coords, client, receiver, nodeTitle) {
+    const orderDate = this.currentPicker.getFullYear() + '-' + (this.currentPicker.getMonth() + 1) + '-' + this.currentPicker.getDate();
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
     var rootRef = this.db.list('order/open/' + orderDate);
     rootRef.set(nodeTitle + '/client', {
@@ -264,8 +270,15 @@ export class AddOrderComponent implements OnInit {
       "lng": coords[0].lng
     })
 
+
+    const selectedDate = this.orderForm.value.pickupDate.getFullYear() + '-' + (this.orderForm.value.pickupDate.getMonth() + 1) + '-' + this.orderForm.value.pickupDate.getDate();
+    let article = "";
+    if(this.orderForm.value.article){
+      article = this.orderForm.value.article;
+    }
     rootRef.set(nodeTitle + '/article', {
-      "article": this.orderForm.value.article
+      "date": selectedDate,
+      "article": article
     })
 
     // TODO nur bei success löschen und info einblenden sonst info einblenden

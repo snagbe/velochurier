@@ -19,7 +19,7 @@ export class DeliveryComponent implements OnInit {
   currentID: any;
   currentReceiverLat: number;
   currentReceiverLng: number;
-  currentDate: any;
+  currentDate: Date;
 
   zoom: number;
   clientCount: number
@@ -74,10 +74,8 @@ export class DeliveryComponent implements OnInit {
    * @param deliveryMethod method to send the email
    */
   onMoveToDelivered(deliveryMethod) {
-    this.currentRecord = [];
-    let date = new Date(this.currentDate.value);
     // get the selected Object from 'open' and push the object to the list 'currentRecord'
-    const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    const selectedDate = this.currentDate.getFullYear() + '-' + (this.currentDate.getMonth() + 1) + '-' + this.currentDate.getDate();
     this.db.list('order/open/' + selectedDate).query
       .on('child_added',
         snap => {
