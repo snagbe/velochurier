@@ -172,7 +172,11 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSaveAddress(resource: string) {
-    this.firebaseService.saveAddress(resource)
+    let node = this.receiver;
+    if (resource === 'client') {
+      node = this.client;
+    }
+    this.firebaseService.saveAddress(node)
   }
 
   onSubmit() {

@@ -50,11 +50,8 @@ export class FirebaseService {
         });
   }
 
-  public saveAddress(resource: string) {
-    let node = this.receiver;
-    if (resource === 'client') {
-      node = this.client;
-    }
+  public saveAddress(node) {
+
     let nodeTitle = node.company;
     if (!nodeTitle) {
       nodeTitle = node.name + ' ' + node.surname;
@@ -72,5 +69,11 @@ export class FirebaseService {
         "description": node.description
       })
     }
+    return rootRef;
   }
+
+  removeAddress(id) {
+    this.db.object('address/' + id).remove();
+  }
+
 }
