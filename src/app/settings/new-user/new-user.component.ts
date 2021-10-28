@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {FormBuilder, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
@@ -13,21 +13,40 @@ export class NewUserComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private overlay: OverlayComponent) {
+              private overlay: OverlayComponent,
+              private formBuilder: FormBuilder) {
   }
+
+  formGroup = this.formBuilder.group({
+    email: [
+      "",
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ],
+    password: [
+      "",
+      [
+        Validators.required,
+        Validators.minLength(6)
+      ]
+    ]
+  });
 
   ngOnInit(): void {
   }
 
-  onSubmit(passwordForm: NgForm) {
-    this.authService.createUser(passwordForm.value.email, passwordForm.value.password)
+  onSubmit(formDirective: FormGroupDirective) {
+    this.authService.createUser(this.formGroup.controls.email.value, this.formGroup.controls.password.value)
       .then(() => {
         const data: DialogData = {
           title: 'Neuer Benutzer erstellt',
-          message: 'Der Benutzer ' + passwordForm.value.email + ' wurde erfolgreich erstellt.'
+          message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.'
         }
         this.overlay.openDialog(data);
-        passwordForm.reset();
+        this.formGroup.reset();
+        formDirective.resetForm();
       }).catch((error) => {
       const data: DialogData = {
         title: 'Fehler',
@@ -39,5 +58,14 @@ export class NewUserComponent implements OnInit {
 
   onBack() {
     this.router.navigate(['/settings']);
+  }
+
+  getErrorMessage(inputField) {
+    return inputField.hasError('required') ?
+      'Dieses Feld muss ausgefüllt werden' :
+      inputField.hasError('minlength') ?
+        'Das Passwort muss mindestens sechs Zeichen beinhalten' :
+        inputField.hasError('email') ?
+          'Keine gültige E-Mail Adresse' : '';
   }
 }

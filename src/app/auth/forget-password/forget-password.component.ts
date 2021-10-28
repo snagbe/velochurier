@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
 import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
-import {NgForm} from "@angular/forms";
+import {FormBuilder, FormGroupDirective, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-forget-password',
@@ -13,22 +13,34 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private overlay: OverlayComponent) {
+              private overlay: OverlayComponent,
+              private formBuilder: FormBuilder) {
   }
+
+  formGroup = this.formBuilder.group({
+    email: [
+      "",
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ]
+  });
 
   ngOnInit(): void {
   }
 
-  onSubmit(passwordForm: NgForm) {
-    this.authService.sendPasswordResetMail(passwordForm.value.email)
+  onSubmit(formDirective: FormGroupDirective) {
+    this.authService.sendPasswordResetMail(this.formGroup.controls.email.value)
       .then(() => {
         console.log("sending mail successful");
         const data: DialogData = {
           title: 'Link wurde versendet',
-          message: 'Wir haben dir einen Link, um das Passwort zurückzusetzen, an ' + passwordForm.value.email + ' gesendet.'
+          message: 'Wir haben dir einen Link, um das Passwort zurückzusetzen, an ' + this.formGroup.controls.email.value + ' gesendet.'
         }
         this.overlay.openDialog(data);
-        passwordForm.reset();
+        this.formGroup.reset();
+        formDirective.resetForm();
       })
       .catch((error) => {
         let errorMessage = error.code;
@@ -45,5 +57,12 @@ export class ForgetPasswordComponent implements OnInit {
 
   onBack() {
     this.router.navigate(['/settings']);
+  }
+
+  getErrorMessage(inputField) {
+    return inputField.hasError('required') ?
+      'Dieses Feld muss ausgefüllt werden' :
+        inputField.hasError('email') ?
+          'Keine gültige E-Mail Adresse' : '';
   }
 }
