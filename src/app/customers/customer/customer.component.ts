@@ -16,8 +16,8 @@ import {FirebaseService} from "../../firebase/firebase.service";
 })
 export class CustomerComponent implements OnInit {
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
-  @ViewChild('client') client: AddressComponent;
   @ViewChild('autoClient') autoClient: AutocompleteComponent;
+  @ViewChild('client') client: AddressComponent;
   @ViewChild('receiver') receiver: AddressComponent;
 
   pageTitle: string;
@@ -36,6 +36,8 @@ export class CustomerComponent implements OnInit {
 
   currentId: any;
   currentDate: Date;
+
+  rootRef: any;
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -72,7 +74,14 @@ export class CustomerComponent implements OnInit {
   }
 
   public onSaveAddress(resource: string) {
-    this.firebaseService.saveAddress(resource)
+    let node = this.receiver;
+    if (resource === 'client') {
+      node = this.client;
+    }
+
+    this.firebaseService.saveAddress(node);
+    this.firebaseService.removeAddress(this.currentId);
+
 
     this.onBack();
   }

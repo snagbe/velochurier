@@ -50,15 +50,12 @@ export class FirebaseService {
         });
   }
 
-  public saveAddress(resource: string) {
-    let node = this.receiver;
-    if (resource === 'client') {
-      node = this.client;
-    }
+  public saveAddress(node) {
+
     let nodeTitle = node.company;
     if (!nodeTitle) {
       nodeTitle = node.name + ' ' + node.surname;
-
+    }
       var rootRef = this.db.list('address');
       rootRef.set(nodeTitle, {
         "company": node.company,
@@ -71,6 +68,10 @@ export class FirebaseService {
         "phone": node.phone,
         "description": node.description
       })
-    }
   }
+
+  removeAddress(id) {
+    this.db.object('address/' + id).remove();
+  }
+
 }

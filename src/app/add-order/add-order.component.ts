@@ -125,6 +125,7 @@ export class AddOrderComponent implements OnInit {
 
 
   currentOrderArticle(date, status, type, id) {
+    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/' + status + '/' + selectedDate)
       .on('child_added',
@@ -147,6 +148,7 @@ export class AddOrderComponent implements OnInit {
   }
 
   currentOrder(date, status, type, id) {
+    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/' + status + '/' + selectedDate)
       .on('child_added',
@@ -187,7 +189,11 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSaveAddress(resource: string) {
-    this.firebaseService.saveAddress(resource)
+    let node = this.receiver;
+    if (resource === 'client') {
+      node = this.client;
+    }
+    this.firebaseService.saveAddress(node)
   }
 
   onSubmit() {

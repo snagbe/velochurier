@@ -6,6 +6,9 @@ import {DeliveriesService} from "../deliveries.service";
 import {AuthService} from "../../auth/auth.service";
 import {ActivatedRoute, Router, Data} from "@angular/router";
 
+import {EmailService} from "../../email.service";
+
+
 @Component({
   selector: 'app-delivery',
   templateUrl: './delivery.component.html',
@@ -29,7 +32,8 @@ export class DeliveryComponent implements OnInit {
               private deliveriesService: DeliveriesService,
               private authService: AuthService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private emailService: EmailService) {
   }
 
   ngOnInit(): void {
@@ -42,7 +46,7 @@ export class DeliveryComponent implements OnInit {
         this.currentReceiverLng = +data['delivery'].lng;
         this.currentDate = new Date(data['delivery'].date);
       }
-  );
+    );
     this.deliveriesService.getOrderAddresses(this.currentDate, 'open', 'receiver').subscribe(value => this.receiverAddresses = value);
     this.deliveriesService.getOrderAddresses(this.currentDate, 'open', 'client').subscribe(value => this.clientAddresses = value);
   }
@@ -64,14 +68,16 @@ export class DeliveryComponent implements OnInit {
       window.location.reload();
     });
   }
+
   /**
    * move the selected order in the firebase from open to delivered
    * @param deliveryMethod method to send the email
    */
   onMoveToDelivered(deliveryMethod) {
     this.currentRecord = [];
+    let date = new Date(this.currentDate.value);
     // get the selected Object from 'open' and push the object to the list 'currentRecord'
-    const selectedDate = this.currentDate.value.getFullYear() + '-' + (this.currentDate.value.getMonth() + 1) + '-' + this.currentDate.value.getDate();
+    const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.list('order/open/' + selectedDate).query
       .on('child_added',
         snap => {
@@ -82,22 +88,26 @@ export class DeliveryComponent implements OnInit {
           }
         });
 
-    // remove the selected Object
+    //send email
+/*    const html = '<p>Diese Lieferung wurde nach folgendermassen zugestellt' + deliveryMethod + '</p>';
+    this.emailService.transport('smtp.host.com', 587);
+    this.emailService.sendEmail('support@yourdomain.com', 'nagbe.samuel@gmail.com', 'Test Email Subject', html);*/
+
     if (this.currentRecord) {
       this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
     }
 
-    let article = this.currentRecord[0].article;
-    let client = this.currentRecord[0].client;
-    let receiver = this.currentRecord[0].receiver;
+      let article = this.currentRecord[0].article;
+      let client = this.currentRecord[0].client;
+      let receiver = this.currentRecord[0].receiver;
 
-    // move the list 'currentRecord' to the 'delivered' record
-    this.db.list('order/delivered/' + selectedDate + '/')
-      .set(this.currentID, {
-        "article": article,
-        "client": client,
-        "receiver": receiver
-      })
+      // move the list 'currentRecord' to the 'delivered' record
+      this.db.list('order/delivered/' + selectedDate + '/')
+        .set(this.currentID, {
+          "article": article,
+          "client": client,
+          "receiver": receiver
+        })
     this.closeDeliverSheetMenu();
     this.onBack();
   }

@@ -47,7 +47,8 @@ export class DeliveriesComponent implements OnInit {
   setSort(value: string, valueName: string) {
     this.sortedAddresses = [];
     this.selectedSort = valueName;
-    const selectedDate = this.date.value.getFullYear() + '-' + (this.date.value.getMonth() + 1) + '-' + this.date.value.getDate();
+    let date = new Date(this.date.value);
+    const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/open/' + selectedDate).orderByChild('receiver/' + value)
       .on('child_added',
         snap => {
