@@ -8,8 +8,9 @@ export class Address {
               public zip: number,
               public email: string,
               public phone: string,
+              public description: string,
               public type?: string,
               public lat?: number,
-              public lng?: number) {}
-
+              public lng?: number) {
+  }
 }

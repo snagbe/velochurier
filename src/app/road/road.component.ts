@@ -40,6 +40,7 @@ export class RoadComponent implements OnInit {
 
   public getOrderAddresses(date, status, type) {
     this.addresses = [];
+    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
     return this.db.list('order/' + status + '/' + selectedDate)
       .snapshotChanges()

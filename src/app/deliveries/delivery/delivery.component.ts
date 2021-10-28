@@ -51,10 +51,6 @@ export class DeliveryComponent implements OnInit {
     this.router.navigate(['/deliveries']);
   }
 
-  checkIsEmpty() {
-    console.log('test');
-  }
-
   openDeliverSheetMenu() {
     this.bottomSheet.open(this.DeliverBottomSheet);
   }
@@ -63,10 +59,11 @@ export class DeliveryComponent implements OnInit {
     this.bottomSheet.dismiss();
   }
 
-  openAddOrder(feature, order) {
-    this.router.navigate(['order']);
+  onEditOrder() {
+    this.router.navigate(['order', 'edit', {id: this.currentID, date: this.currentDate}]).then(() => {
+      window.location.reload();
+    });
   }
-
   /**
    * move the selected order in the firebase from open to delivered
    * @param deliveryMethod method to send the email
@@ -88,7 +85,6 @@ export class DeliveryComponent implements OnInit {
     // remove the selected Object
     if (this.currentRecord) {
       this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
-
     }
 
     let article = this.currentRecord[0].article;

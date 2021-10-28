@@ -1,0 +1,27 @@
+.container {
+  font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
+  margin-top: 2rem;
+}
+
+.onBackButton {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 99;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.onBackButton:focus {
+  outline: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

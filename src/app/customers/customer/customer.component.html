@@ -1,0 +1,21 @@
+<div class="container">
+  <button class="onBackButton" (click)="onBack()">
+    <mat-icon>arrow_back_ios</mat-icon>
+  </button>
+  <form #orderForm="ngForm">
+    <h1>{{pageTitle}}</h1>
+    <app-address #client
+                 [company]="clientCompany"
+                 [surname]="clientSurname"
+                 [name]="clientName"
+                 [street]="clientStreet"
+                 [zip]="clientZip"
+                 [city]="clientCity"
+                 [mail]="clientMail"
+                 [phone]="clientPhone">
+    </app-address>
+    <div class="flex-center">
+      <button class="btn btn-success" type="button" (click)="onSaveAddress('client')">Speichern</button>
+    </div>
+  </form>
+</div>
