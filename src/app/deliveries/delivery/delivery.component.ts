@@ -3,7 +3,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../../address/addresses";
 import {DeliveriesService} from "../deliveries.service";
-import {AuthService} from "../../login/auth.service";
+import {AuthService} from "../../auth/auth.service";
 import {ActivatedRoute, Router, Data} from "@angular/router";
 
 import {EmailService} from "../../email.service";

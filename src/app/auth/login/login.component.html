@@ -1,0 +1,27 @@
+<body>
+<form (ngSubmit)="onSubmit()">
+  <h1>Willkommen bei velochurier</h1>
+  <h3>Melden dich bitte mit deiner E-Mail Adresse und deinem Passwort an.</h3>
+  <div class="input-container">
+    <mat-form-field appearance="outline">
+      <mat-label>E-Mail</mat-label>
+      <input matInput [formControl]="loginFormGroup.get('email')" required>
+      <mat-icon matSuffix>mail_outline</mat-icon>
+      <mat-error>{{getErrorMessage(loginFormGroup.get('email'))}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Passwort</mat-label>
+      <input matInput [formControl]="loginFormGroup.get('password')" [type]="hide ? 'password' : 'text'" required>
+      <button class="eye" type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error>{{getErrorMessage(loginFormGroup.get('password'))}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 flex-center" style="padding-bottom: 2rem">
+    <button class="btn btn-success" type="submit" [disabled]="!loginFormGroup.valid">Anmelden</button>
+  </div>
+  <a routerLink="/auth/forgetPassword">Passwort vergessen?</a>
+</form>
+</body>

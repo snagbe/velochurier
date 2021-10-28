@@ -1,0 +1,26 @@
+<body>
+<button class="backButton" (click)="onBack()">
+  <mat-icon>arrow_back_ios</mat-icon>
+</button>
+<form [formGroup]="formGroup" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+  <h3>Neuen Benutzer erstellen</h3>
+  <p>Bitte gib die E-Mail Adresse und das Passwort des neues Benutzers ein. Dieser hat nach dem Anmelden die Möglichkeit, das von dir gesetzte Passwort zu ändern.</p>
+  <div class="input-container">
+    <mat-form-field appearance="outline">
+      <mat-label>E-Mail</mat-label>
+      <input matInput [formControl]="formGroup.get('email')" required>
+      <mat-icon matSuffix>mail_outline</mat-icon>
+      <mat-error>{{getErrorMessage(formGroup.get('email'))}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Passwort</mat-label>
+      <input matInput [formControl]="formGroup.get('password')" required>
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error>{{getErrorMessage(formGroup.get('password'))}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-xs-12 flex-center button-container">
+    <button class="btn btn-success" type="submit" [disabled]="!formGroup.valid">Benutzer erstellen</button>
+  </div>
+</form>
+</body>

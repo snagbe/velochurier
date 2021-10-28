@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Address} from "../address/addresses";
 import {DeliveriesService} from "../deliveries/deliveries.service";
-import {AuthService} from "../login/auth.service";
+import {AuthService} from "../auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({

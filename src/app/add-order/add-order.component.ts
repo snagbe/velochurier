@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {NgForm} from "@angular/forms";
+import {FormBuilder, NgForm, Validators} from "@angular/forms";
 import {GlobalComponents} from "../global-components";
 import {Subscription} from "rxjs";
 import {Address} from "../address/addresses";
 import {AddressComponent} from "../address/address.component";
 import {AutocompleteComponent} from "../autocomplete/autocomplete.component";
 import {MapsAPILoader} from "@agm/core";
-import {AuthService} from "../login/auth.service";
+import {AuthService} from "../auth/auth.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Article} from "./article";
 import {FirebaseService} from "../firebase/firebase.service";
@@ -19,6 +19,7 @@ import {FirebaseService} from "../firebase/firebase.service";
 })
 export class AddOrderComponent implements OnInit {
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
+  @ViewChild('formDirective', {static: false}) formDirective: NgForm;
   @ViewChild('client') client: AddressComponent;
   @ViewChild('autoClient') autoClient: AutocompleteComponent;
   @ViewChild('receiver') receiver: AddressComponent;
@@ -63,8 +64,13 @@ export class AddOrderComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private firebaseService: FirebaseService) {
+              private firebaseService: FirebaseService,
+              private formBuilder: FormBuilder) {
   }
+
+  /*formGroup = this.formBuilder.group({
+    pickupDate: ["", [Validators.required]]
+  });*/
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
@@ -162,7 +168,18 @@ export class AddOrderComponent implements OnInit {
               }
               if (key === id) {
                 // @ts-ignore
-                const address: Address = {type: this.orderType, city: this.getType.city, company: this.getType.company, name: this.getType.name, surname: this.getType.surname, street: this.getType.street, zip: this.getType.zip, email: this.getType.email, phone: this.getType.phone, description: this.getType.description};
+                const address: Address = {
+                  type: this.orderType,
+                  city: this.getType.city,
+                  company: this.getType.company,
+                  name: this.getType.name,
+                  surname: this.getType.surname,
+                  street: this.getType.street,
+                  zip: this.getType.zip,
+                  email: this.getType.email,
+                  phone: this.getType.phone,
+                  description: this.getType.description
+                };
                 this.globalComp.setAddress(address);
                 this.globalComp.addressChange.next();
               }
@@ -257,5 +274,20 @@ export class AddOrderComponent implements OnInit {
     this.receiver.onReset();
     this.autoReceiver.onReset();
     this.orderForm.reset();
+    this.formDirective.resetForm();
+  }
+
+  getErrorMessage(inputField) {
+    return inputField.hasError('required') ?
+      'Dieses Feld muss ausgefüllt werden' : '';
+  }
+
+  testFunc() {
+    this.client.onReset();
+    this.autoClient.onReset();
+    this.receiver.onReset();
+    this.autoReceiver.onReset();
+    this.orderForm.reset();
+    this.formDirective.resetForm();
   }
 }
