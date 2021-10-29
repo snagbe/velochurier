@@ -244,7 +244,7 @@ export class AddOrderComponent implements OnInit {
         const client = this.client;
         const receiver = this.receiver;
 
-        this.removeOrder(client, receiver);
+        this.removeOrder();
         this.saveOrder(coords, client, receiver);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -252,15 +252,17 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
-  removeOrder(client, receiver) {
+  removeOrder() {
     let nodeTitle;
     nodeTitle = this.cacheReceiverCompany;
     if (!nodeTitle) {
       nodeTitle = this.cacheReceiverName + ' ' + this.cacheReceiverSurname;
     }
-    const orderDate = this.cacheCurrentPicker.getFullYear() + '-' + (this.cacheCurrentPicker.getMonth() + 1) + '-' + this.cacheCurrentPicker.getDate();
+    if (this.cacheCurrentPicker) {
+      const orderDate = this.cacheCurrentPicker.getFullYear() + '-' + (this.cacheCurrentPicker.getMonth() + 1) + '-' + this.cacheCurrentPicker.getDate();
 
-    this.db.object('order/open/' + orderDate + '/' + nodeTitle).remove();
+      this.db.object('order/open/' + orderDate + '/' + nodeTitle).remove();
+    }
   }
 
   saveOrder(coords, client, receiver) {
@@ -284,7 +286,7 @@ export class AddOrderComponent implements OnInit {
       "description": client.description
     })
 
-    rootRef.set(nodeTitle + '/receiver', {
+    rootRef.set( '/receiver', {
       "company": receiver.company,
       "surname": receiver.surname,
       "name": receiver.name,
