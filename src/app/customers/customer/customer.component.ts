@@ -53,7 +53,7 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.pageTitle = "Auftraggeber bearbeiten";
+    this.pageTitle = "Kunde bearbeiten";
     this.route.data.subscribe(
       (data: Data) => {
         this.currentId = data['customer'].id;

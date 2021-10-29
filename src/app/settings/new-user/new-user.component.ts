@@ -35,6 +35,7 @@ export class NewUserComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
   }
 
   onSubmit(formDirective: FormGroupDirective) {
@@ -42,7 +43,8 @@ export class NewUserComponent implements OnInit {
       .then(() => {
         const data: DialogData = {
           title: 'Neuer Benutzer erstellt',
-          message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.'
+          message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.',
+          type: 'success'
         }
         this.overlay.openDialog(data);
         this.formGroup.reset();
@@ -50,7 +52,8 @@ export class NewUserComponent implements OnInit {
       }).catch((error) => {
       const data: DialogData = {
         title: 'Fehler',
-        message: 'Der Benutzer konnte nicht erstellt werden.'
+        message: 'Der Benutzer konnte nicht erstellt werden.',
+        type: 'error'
       }
       this.overlay.openDialog(data);
     });

@@ -35,6 +35,7 @@ export class PasswordComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.authService.doAuthCheck();
   }
 
   onSubmit(formDirective: FormGroupDirective) {
@@ -44,7 +45,8 @@ export class PasswordComponent implements OnInit {
           .then(() => {
             const data: DialogData = {
               title: 'Passwort geändert',
-              message: 'Das Passwort wurde erfolgreich geändert.'
+              message: 'Das Passwort wurde erfolgreich geändert.',
+              type: 'success'
             }
             this.overlay.openDialog(data);
             this.formGroup.reset();
@@ -52,14 +54,16 @@ export class PasswordComponent implements OnInit {
           }).catch((error) => {
           const data: DialogData = {
             title: 'Fehler',
-            message: 'Das Passwort konnte nicht geändert werden.'
+            message: 'Das Passwort konnte nicht geändert werden.',
+            type: 'error'
           }
           this.overlay.openDialog(data);
         });
       }).catch((error) => {
       const data: DialogData = {
         title: 'Fehler',
-        message: 'Das eingegebenen Passwort ist nicht korrekt.'
+        message: 'Das eingegebenen Passwort ist nicht korrekt.',
+        type: 'error'
       }
       this.overlay.openDialog(data);
     });

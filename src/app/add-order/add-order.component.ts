@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {FormBuilder, NgForm, Validators} from "@angular/forms";
+import {NgForm} from "@angular/forms";
 import {GlobalComponents} from "../global-components";
 import {Subscription} from "rxjs";
 import {Address} from "../address/addresses";
@@ -11,7 +11,6 @@ import {AuthService} from "../auth/auth.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Article} from "./article";
 import {FirebaseService} from "../firebase/firebase.service";
-import {pairwise, startWith} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-order',
@@ -75,13 +74,8 @@ export class AddOrderComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private firebaseService: FirebaseService,
-              private formBuilder: FormBuilder) {
+              private firebaseService: FirebaseService) {
   }
-
-  /*formGroup = this.formBuilder.group({
-    pickupDate: ["", [Validators.required]]
-  });*/
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
@@ -89,7 +83,6 @@ export class AddOrderComponent implements OnInit {
 
     if (this.route.snapshot.routeConfig.path === 'order/edit') {
       this.pageTitle = "Auftrag bearbeiten";
-
 
       this.route.data.subscribe(
         (data: Data) => {
@@ -328,14 +321,5 @@ export class AddOrderComponent implements OnInit {
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?
       'Dieses Feld muss ausgefüllt werden' : '';
-  }
-
-  testFunc() {
-    this.client.onReset();
-    this.autoClient.onReset();
-    this.receiver.onReset();
-    this.autoReceiver.onReset();
-    this.orderForm.reset();
-    this.formDirective.resetForm();
   }
 }

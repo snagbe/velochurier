@@ -36,7 +36,8 @@ export class ForgetPasswordComponent implements OnInit {
         console.log("sending mail successful");
         const data: DialogData = {
           title: 'Link wurde versendet',
-          message: 'Wir haben dir einen Link, um das Passwort zurückzusetzen, an ' + this.formGroup.controls.email.value + ' gesendet.'
+          message: 'Wir haben dir einen Link, um das Passwort zurückzusetzen, an ' + this.formGroup.controls.email.value + ' gesendet.',
+          type: 'success'
         }
         this.overlay.openDialog(data);
         this.formGroup.reset();
@@ -49,7 +50,8 @@ export class ForgetPasswordComponent implements OnInit {
         }
         const data: DialogData = {
           title: 'Fehler',
-          message: errorMessage
+          message: errorMessage,
+          type: 'error'
         }
         this.overlay.openDialog(data);
       });

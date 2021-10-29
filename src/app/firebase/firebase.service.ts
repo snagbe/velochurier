@@ -3,7 +3,7 @@ import {Injectable, ViewChild} from "@angular/core";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../global-components";
 import {AddressComponent} from "../address/address.component";
-import {Subscription} from "rxjs";
+import {DialogData, OverlayComponent} from "../overlay/overlay.component";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,9 @@ export class FirebaseService {
   clientCompany: string;
   clientName: string;
 
-  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) {
+  constructor(private db: AngularFireDatabase,
+              private globalComp: GlobalComponents,
+              private overlay: OverlayComponent) {
   }
 
   ngOnInit(): void {
@@ -56,18 +58,33 @@ export class FirebaseService {
     if (!nodeTitle) {
       nodeTitle = node.name + ' ' + node.surname;
     }
-      var rootRef = this.db.list('address');
-      rootRef.set(nodeTitle, {
-        "company": node.company,
-        "surname": node.surname,
-        "name": node.name,
-        "street": node.street,
-        "zip": node.zip,
-        "city": node.city,
-        "email": node.mail,
-        "phone": node.phone,
-        "description": node.description
-      })
+    const rootRef = this.db.list('address');
+    let data: DialogData;
+    rootRef.set(nodeTitle, {
+      "company": node.company,
+      "surname": node.surname,
+      "name": node.name,
+      "street": node.street,
+      "zip": node.zip,
+      "city": node.city,
+      "email": node.mail,
+      "phone": node.phone,
+      "description": node.description
+    }).then(() => {
+      data = {
+        title: 'Daten gespeichert',
+        message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
+        type: 'success'
+      }
+      this.overlay.openDialog(data);
+    }).catch((error) => {
+      data = {
+        title: 'Fehler',
+        message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
+        type: 'error'
+      }
+      this.overlay.openDialog(data);
+    });
   }
 
   removeAddress(id) {

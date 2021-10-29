@@ -69,7 +69,8 @@ export class LoginComponent implements OnInit {
         }
         const data: DialogData = {
           title: 'Fehler',
-          message: errorMessage
+          message: errorMessage,
+          type: 'error'
         }
         this.overlay.openDialog(data);
       })
