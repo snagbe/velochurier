@@ -48,25 +48,13 @@ export class AddOrderComponent implements OnInit {
   selectedArticle: Article[];
   geocoder: any;
   geoAddress: any;
-  currentId: any;
   currentDate: Date;
-  getType: any;
-  orderType: string;
   currentPicker: Date;
   currentArticle: string;
   pageTitle: string;
   date: Date;
-
-  // Cache fields
-  cacheClientCompany: String;
-  cacheClientSurname: String;
-  cacheClientName: String;
-
-  cacheReceiverCompany: String;
-  cacheReceiverSurname: String;
-  cacheReceiverName: String;
-
-  cacheCurrentPicker: Date;
+  orderId: string;
+  coords: { lat: number, lng: number };
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -86,13 +74,11 @@ export class AddOrderComponent implements OnInit {
 
       this.route.data.subscribe(
         (data: Data) => {
-          this.currentId = data['order'].id;
-          this.currentDate = new Date(data['order'].date);
+          this.orderId = data['order'].orderId;
         }
       );
-      this.currentOrderArticle(this.currentDate, 'open', 'article', this.currentId);
-      this.currentOrder(this.currentDate, 'open', 'client', this.currentId);
-      this.currentOrder(this.currentDate, 'open', 'receiver', this.currentId);
+
+      this.prefillOrder();
     }
 
     this.subscription = this.globalComp.addressChange
@@ -100,11 +86,8 @@ export class AddOrderComponent implements OnInit {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Auftraggeber' === this.selectedAddress[0].type) {
           this.clientCompany = this.selectedAddress[0].company;
-          this.cacheClientCompany = this.selectedAddress[0].company;
           this.clientSurname = this.selectedAddress[0].surname;
-          this.cacheClientSurname = this.selectedAddress[0].surname;
           this.clientName = this.selectedAddress[0].name;
-          this.cacheClientName = this.selectedAddress[0].name;
           this.clientZip = this.selectedAddress[0].zip;
           this.clientCity = this.selectedAddress[0].city;
           this.clientStreet = this.selectedAddress[0].street;
@@ -113,11 +96,8 @@ export class AddOrderComponent implements OnInit {
           this.clientDescription = this.selectedAddress[0].description;
         } else {
           this.receiverCompany = this.selectedAddress[0].company;
-          this.cacheReceiverCompany = this.selectedAddress[0].company;
           this.receiverSurname = this.selectedAddress[0].surname;
-          this.cacheReceiverSurname = this.selectedAddress[0].surname;
           this.receiverName = this.selectedAddress[0].name;
-          this.cacheReceiverName = this.selectedAddress[0].name;
           this.receiverZip = this.selectedAddress[0].zip;
           this.receiverCity = this.selectedAddress[0].city;
           this.receiverStreet = this.selectedAddress[0].street;
@@ -131,76 +111,30 @@ export class AddOrderComponent implements OnInit {
       .subscribe(() => {
         this.selectedArticle = this.globalComp.getArticle();
         this.currentPicker = new Date(this.selectedArticle[0].date);
-        this.cacheCurrentPicker = new Date(this.selectedArticle[0].date);
         this.currentArticle = this.selectedArticle[0].article;
       });
   }
 
-
-  currentOrderArticle(date, status, type, id) {
-    const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    this.db.database.ref('order/' + status + '/' + selectedDate)
-      .on('child_added',
-        snap => {
-          const key = snap.key;
-          const data = snap.val();
-          if (data) {
-            if (type) {
-              if (type === 'article') {
-                this.getType = data.article;
-                if (key === id) {
-                  const article: Article = {date: this.getType.date, article: this.getType.article};
-                  this.globalComp.setArticle(article);
-                  this.globalComp.orderArticleChange.next();
-                }
-              }
+  prefillOrder() {
+    let orderId = this.orderId;
+        this.db.database.ref('order/open').on('child_added',
+          snap => {
+            const key = snap.key;
+            if (snap.hasChild(orderId)) {
+              const data = snap.val();
+              this.globalComp.setArticle(data[orderId]);
+              this.globalComp.orderArticleChange.next();
+              data[orderId].client.type = 'Auftraggeber';
+              this.globalComp.setAddress(data[orderId].client);
+              this.globalComp.addressChange.next();
+              this.globalComp.setAddress(data[orderId].receiver);
+              this.globalComp.addressChange.next();
             }
-          }
-        });
-  }
-
-  currentOrder(date, status, type, id) {
-    const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-    this.db.database.ref('order/' + status + '/' + selectedDate)
-      .on('child_added',
-        snap => {
-          const key = snap.key;
-          const data = snap.val();
-          if (data) {
-            if (type) {
-              if (type === 'article') {
-                this.getType = data.article;
-              } else if (type === 'receiver') {
-                this.getType = data.receiver;
-                this.orderType = 'Empfänger';
-              } else if (type === 'client') {
-                this.getType = data.client;
-                this.orderType = 'Auftraggeber';
-              }
-              if (key === id) {
-                // @ts-ignore
-                const address: Address = {
-                  type: this.orderType,
-                  city: this.getType.city,
-                  company: this.getType.company,
-                  name: this.getType.name,
-                  surname: this.getType.surname,
-                  street: this.getType.street,
-                  zip: this.getType.zip,
-                  email: this.getType.email,
-                  phone: this.getType.phone,
-                  description: this.getType.description
-                };
-                this.globalComp.setAddress(address);
-                this.globalComp.addressChange.next();
-              }
-            }
-          }
-        });
+          });
   }
 
   onSaveAddress(resource: string) {
-    let node;
+    /*let node;
     let nodeTitle;
     if (resource === 'receiver') {
       node = this.receiver;
@@ -216,16 +150,25 @@ export class AddOrderComponent implements OnInit {
       }
     }
     this.firebaseService.removeAddress(nodeTitle);
-    this.firebaseService.saveAddress(node);
+    this.firebaseService.saveAddress(node);*/
   }
 
   onSubmit() {
     this.mapsApiLoader.load().then(() => {
-      console.log('google script loaded');
       this.geocoder = new google.maps.Geocoder();
-      this.getGeocode('receiver');
+      const coords = this.getGeocode('receiver');
+      this.subscription = this.globalComp.coordsChange
+        .subscribe(() => {
+          if ('order/edit' === this.route.snapshot.routeConfig.path) {
+            this.removeOrder();
+          }
+          this.saveOrder();
+        });
     });
+
+
   }
+
 
   getGeocode(type) {
     if (type === 'receiver') {
@@ -235,17 +178,10 @@ export class AddOrderComponent implements OnInit {
     } else {
       this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
     }
-    type CoordsType = Array<{ lat: number, lng: number }>
     this.geocoder.geocode({'address': this.geoAddress}, (results, status) => {
       if (status === 'OK') {
-        const coords: CoordsType = [
-          {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
-        ];
-        const client = this.client;
-        const receiver = this.receiver;
-
-        this.removeOrder();
-        this.saveOrder(coords, client, receiver);
+        this.coords = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
+        this.globalComp.coordsChange.next();
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
@@ -253,19 +189,23 @@ export class AddOrderComponent implements OnInit {
   }
 
   removeOrder() {
-    let nodeTitle;
-    nodeTitle = this.cacheReceiverCompany;
-    if (!nodeTitle) {
-      nodeTitle = this.cacheReceiverName + ' ' + this.cacheReceiverSurname;
-    }
-    if (this.cacheCurrentPicker) {
-      const orderDate = this.cacheCurrentPicker.getFullYear() + '-' + (this.cacheCurrentPicker.getMonth() + 1) + '-' + this.cacheCurrentPicker.getDate();
+    let orderDate;
+    const orderId = this.orderId;
+    this.db.database.ref('order/open').on('child_added',
+      snap => {
+        const key = snap.key;
+        if (snap.hasChild(orderId)) {
+          const data = snap.val();
+          orderDate = data[orderId].date;
+        }
+      });
 
-      this.db.object('order/open/' + orderDate + '/' + nodeTitle).remove();
-    }
+      this.db.object('order/open/' + orderDate + '/' + orderId).remove();
   }
 
-  saveOrder(coords, client, receiver) {
+  saveOrder() {
+    const client = this.client;
+    const receiver = this.receiver;
     const orderDate = this.currentPicker.getFullYear() + '-' + (this.currentPicker.getMonth() + 1) + '-' + this.currentPicker.getDate();
 
     const selectedDate = this.orderForm.value.pickupDate.getFullYear() + '-' + (this.orderForm.value.pickupDate.getMonth() + 1) + '-' + this.orderForm.value.pickupDate.getDate();
@@ -297,12 +237,12 @@ export class AddOrderComponent implements OnInit {
         "email": receiver.mail,
         "phone": receiver.phone,
         "description": receiver.description,
-        "lat": coords[0].lat,
-        "lng": coords[0].lng
+        "lat": this.coords.lat,
+        "lng": this.coords.lng
       }
     }
-    // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
     this.db.list('order/open/' + orderDate).push(orderData);
+    this.router.navigate(['/order']);
 
     // TODO nur bei success löschen und info einblenden sonst info einblenden
     this.client.onReset();
