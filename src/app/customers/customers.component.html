@@ -3,7 +3,8 @@
   <div class="addresses" *ngFor="let address of addresses">
     <button class="customer-button" (click)="onEditCustomer(address.id)">
       <img class="customer-journey-img" src="assets/customer-journey.png"/>
-    {{address.id}}, {{address.street}}, {{address.zip}} {{address.city}}
+      <p *ngIf="address.company">{{address.company}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
+      <p *ngIf="!address.company">{{address.name}} {{address.surname}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
     </button>
   </div>
   <div class="test" *ngIf="addOrder">
