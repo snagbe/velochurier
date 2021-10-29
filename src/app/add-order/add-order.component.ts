@@ -266,50 +266,43 @@ export class AddOrderComponent implements OnInit {
   }
 
   saveOrder(coords, client, receiver) {
-    let nodeTitle = receiver.company;
-    if (!nodeTitle) {
-      nodeTitle = receiver.name + ' ' + receiver.surname;
-    }
-
     const orderDate = this.currentPicker.getFullYear() + '-' + (this.currentPicker.getMonth() + 1) + '-' + this.currentPicker.getDate();
-    // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
-    var rootRef = this.db.list('order/open/' + orderDate);
-    rootRef.set(nodeTitle + '/client', {
-      "company": client.company,
-      "surname": client.surname,
-      "name": client.name,
-      "street": client.street,
-      "zip": client.zip,
-      "city": client.city,
-      "email": client.mail,
-      "phone": client.phone,
-      "description": client.description
-    })
-
-    rootRef.set( '/receiver', {
-      "company": receiver.company,
-      "surname": receiver.surname,
-      "name": receiver.name,
-      "street": receiver.street,
-      "zip": receiver.zip,
-      "city": receiver.city,
-      "email": receiver.mail,
-      "phone": receiver.phone,
-      "description": receiver.description,
-      "lat": coords[0].lat,
-      "lng": coords[0].lng
-    })
-
 
     const selectedDate = this.orderForm.value.pickupDate.getFullYear() + '-' + (this.orderForm.value.pickupDate.getMonth() + 1) + '-' + this.orderForm.value.pickupDate.getDate();
     let article = "";
     if (this.orderForm.value.article) {
       article = this.orderForm.value.article;
     }
-    rootRef.set(nodeTitle + '/article', {
+    const orderData = {
       "date": selectedDate,
-      "article": article
-    })
+      "article": article,
+      "client": {
+        "company": client.company,
+        "surname": client.surname,
+        "name": client.name,
+        "street": client.street,
+        "zip": client.zip,
+        "city": client.city,
+        "email": client.mail,
+        "phone": client.phone,
+        "description": client.description
+      },
+      "receiver": {
+        "company": receiver.company,
+        "surname": receiver.surname,
+        "name": receiver.name,
+        "street": receiver.street,
+        "zip": receiver.zip,
+        "city": receiver.city,
+        "email": receiver.mail,
+        "phone": receiver.phone,
+        "description": receiver.description,
+        "lat": coords[0].lat,
+        "lng": coords[0].lng
+      }
+    }
+    // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
+    this.db.list('order/open/' + orderDate).push(orderData);
 
     // TODO nur bei success löschen und info einblenden sonst info einblenden
     this.client.onReset();
