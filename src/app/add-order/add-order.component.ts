@@ -26,6 +26,7 @@ export class AddOrderComponent implements OnInit {
   @ViewChild('receiver') receiver: AddressComponent;
   @ViewChild('autoReceiver') autoReceiver: AutocompleteComponent;
 
+  clientId: string;
   clientCompany: string;
   clientSurname: string;
   clientName: string;
@@ -35,6 +36,7 @@ export class AddOrderComponent implements OnInit {
   clientMail: string;
   clientPhone: string;
   clientDescription: string;
+  receiverId: string;
   receiverCompany: string;
   receiverSurname: string;
   receiverName: string;
@@ -87,6 +89,7 @@ export class AddOrderComponent implements OnInit {
       .subscribe(() => {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Auftraggeber' === this.selectedAddress[0].type) {
+          this.clientId = this.selectedAddress[0].id;
           this.clientCompany = this.selectedAddress[0].company;
           this.clientSurname = this.selectedAddress[0].surname;
           this.clientName = this.selectedAddress[0].name;
@@ -97,6 +100,7 @@ export class AddOrderComponent implements OnInit {
           this.clientPhone = this.selectedAddress[0].phone;
           this.clientDescription = this.selectedAddress[0].description;
         } else {
+          this.receiverId = this.selectedAddress[0].id;
           this.receiverCompany = this.selectedAddress[0].company;
           this.receiverSurname = this.selectedAddress[0].surname;
           this.receiverName = this.selectedAddress[0].name;
@@ -136,11 +140,17 @@ export class AddOrderComponent implements OnInit {
 
   onSaveAddress(resource: string) {
     let node;
+    let id;
     if (resource === 'receiver') {
       node = this.receiver;
+      id = this.receiverId;
     } else if (resource === 'client') {
       node = this.client;
+      id = this.clientId
     }
+
+    this.clientId
+    this.firebaseService.removeAddress(id)
     this.firebaseService.saveAddress(node);
   }
 

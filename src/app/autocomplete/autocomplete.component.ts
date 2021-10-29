@@ -40,9 +40,13 @@ export class AutocompleteComponent implements OnInit {
     this.db.database.ref('address').orderByKey()
       .on('child_added',
         snap => {
-          const data = snap.key;
+          const data = snap.val();
           if (data) {
-            this.sortedAddresses.push(data);
+            if (data.company) {
+              this.sortedAddresses.push(data.company);
+            } else {
+              this.sortedAddresses.push(data.name, data.surname);
+            }
           }
         });
 

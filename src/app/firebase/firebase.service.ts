@@ -53,11 +53,19 @@ export class FirebaseService {
   }
 
   removeAddress(id) {
+    let addressId;
+    this.db.database.ref('address/').on('child_added',
+      snap => {
+      const key = snap.key;
+        if (key === id) {
+          addressId = snap.key;
+        }
+      });
     this.db.object('address/' + id).remove();
   }
 
   public saveAddress(node) {
-
+    //Todo: Save is not working jet, node is empty
     let addressData;
     if (node === 'client') {
       addressData = {
@@ -84,34 +92,23 @@ export class FirebaseService {
         "description": node.description
       }
     }
-    this.db.list('address/').push(addressData);
 
-      /*
-    rootRef.set(nodeTitle, {
-      "company": node.company,
-      "surname": node.surname,
-      "name": node.name,
-      "street": node.street,
-      "zip": node.zip,
-      "city": node.city,
-      "email": node.mail,
-      "phone": node.phone,
-      "description": node.description
-    }).then(() => {
-      data = {
-        title: 'Daten gespeichert',
-        message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
-        type: 'success'
-      }
-      this.overlay.openDialog(data);
-    }).catch((error) => {
+    let data: DialogData;
+    this.db.list('address/').push(addressData)
+      .then(() => {
+        data = {
+          title: 'Daten gespeichert',
+          message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
+          type: 'success'
+        }
+        this.overlay.openDialog(data);
+      }).catch((error) => {
       data = {
         title: 'Fehler',
         message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
         type: 'error'
       }
       this.overlay.openDialog(data);
-    });*/
-
+    });
   }
 }
