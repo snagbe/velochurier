@@ -11,6 +11,7 @@ import {AuthService} from "../auth/auth.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Article} from "./article";
 import {FirebaseService} from "../firebase/firebase.service";
+import {DialogData, OverlayComponent} from "../overlay/overlay.component";
 
 @Component({
   selector: 'app-add-order',
@@ -62,14 +63,15 @@ export class AddOrderComponent implements OnInit {
               private authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private firebaseService: FirebaseService) {
+              private firebaseService: FirebaseService,
+              private overlay: OverlayComponent) {
   }
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
     this.pageTitle = "Auftrag erfassen";
 
-    if (this.route.snapshot.routeConfig.path === 'order/edit') {
+    if ('order/edit' === this.route.snapshot.routeConfig.path) {
       this.pageTitle = "Auftrag bearbeiten";
 
       this.route.data.subscribe(
@@ -117,20 +119,19 @@ export class AddOrderComponent implements OnInit {
 
   prefillOrder() {
     let orderId = this.orderId;
-        this.db.database.ref('order/open').on('child_added',
-          snap => {
-            const key = snap.key;
-            if (snap.hasChild(orderId)) {
-              const data = snap.val();
-              this.globalComp.setArticle(data[orderId]);
-              this.globalComp.orderArticleChange.next();
-              data[orderId].client.type = 'Auftraggeber';
-              this.globalComp.setAddress(data[orderId].client);
-              this.globalComp.addressChange.next();
-              this.globalComp.setAddress(data[orderId].receiver);
-              this.globalComp.addressChange.next();
-            }
-          });
+    this.db.database.ref('order/open').on('child_added',
+      snap => {
+        if (snap.hasChild(orderId)) {
+          const data = snap.val();
+          this.globalComp.setArticle(data[orderId]);
+          this.globalComp.orderArticleChange.next();
+          data[orderId].client.type = 'Auftraggeber';
+          this.globalComp.setAddress(data[orderId].client);
+          this.globalComp.addressChange.next();
+          this.globalComp.setAddress(data[orderId].receiver);
+          this.globalComp.addressChange.next();
+        }
+      });
   }
 
   onSaveAddress(resource: string) {
@@ -190,7 +191,7 @@ export class AddOrderComponent implements OnInit {
         }
       });
 
-      this.db.object('order/open/' + orderDate + '/' + orderId).remove();
+    this.db.object('order/open/' + orderDate + '/' + orderId).remove();
   }
 
   saveOrder() {
@@ -231,16 +232,38 @@ export class AddOrderComponent implements OnInit {
         "lng": this.coords.lng
       }
     }
-    this.db.list('order/open/' + orderDate).push(orderData);
-    this.router.navigate(['/order']);
-
-    // TODO nur bei success löschen und info einblenden sonst info einblenden
-    this.client.onReset();
-    this.autoClient.onReset();
-    this.receiver.onReset();
-    this.autoReceiver.onReset();
-    this.orderForm.reset();
-    this.formDirective.resetForm();
+    let data: DialogData;
+    let titleAddition = "erfasset"
+    if ('order/edit' === this.route.snapshot.routeConfig.path) {
+      titleAddition = "bearbeitet";
+      this.router.navigate(['/order']);
+    }
+    this.db.list('order/open/' + orderDate).push(orderData)
+      .then(() => {
+        data = {
+          title: 'Auftrag ' + titleAddition,
+          message: 'Der Auftrag wurde erfolgreich ' + titleAddition + '.',
+          type: 'success'
+        }
+        this.overlay.openDialog(data);
+        if ('order/edit' === this.route.snapshot.routeConfig.path) {
+          this.router.navigate(['/order']);
+        } else {
+          this.client.onReset();
+          this.autoClient.onReset();
+          this.receiver.onReset();
+          this.autoReceiver.onReset();
+          this.orderForm.reset();
+          this.formDirective.resetForm();
+        }
+      }).catch((error) => {
+      data = {
+        title: 'Fehler',
+        message: 'Der Auftrag konnte nicht ' + titleAddition + ' werden.',
+        type: 'error'
+      }
+      this.overlay.openDialog(data);
+    });
   }
 
   getErrorMessage(inputField) {
