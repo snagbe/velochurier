@@ -4,18 +4,18 @@
   </button>
   <form #orderForm="ngForm">
     <h1>{{pageTitle}}</h1>
-    <app-address #client
-                 [company]="clientCompany"
-                 [surname]="clientSurname"
-                 [name]="clientName"
-                 [street]="clientStreet"
-                 [zip]="clientZip"
-                 [city]="clientCity"
-                 [mail]="clientMail"
-                 [phone]="clientPhone">
+    <app-address #address
+                 [company]="company"
+                 [surname]="surname"
+                 [name]="name"
+                 [street]="street"
+                 [zip]="zip"
+                 [city]="city"
+                 [mail]="mail"
+                 [phone]="phone">
     </app-address>
     <div class="flex-center">
-      <button class="btn btn-success" type="button" (click)="onSaveAddress('client')">Speichern</button>
+      <button class="btn btn-success" type="button" (click)="onSaveAddress()">Speichern</button>
     </div>
   </form>
 </div>

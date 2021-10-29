@@ -52,14 +52,41 @@ export class FirebaseService {
         });
   }
 
+  removeAddress(id) {
+    this.db.object('address/' + id).remove();
+  }
+
   public saveAddress(node) {
 
-    let nodeTitle = node.company;
-    if (!nodeTitle) {
-      nodeTitle = node.name + ' ' + node.surname;
+    let addressData;
+    if (node === 'client') {
+      addressData = {
+        "company": node.company,
+        "surname": node.surname,
+        "name": node.name,
+        "street": node.street,
+        "zip": node.zip,
+        "city": node.city,
+        "email": node.mail,
+        "phone": node.phone,
+        "description": node.description
+      }
+    } else {
+      addressData = {
+        "company": node.company,
+        "surname": node.surname,
+        "name": node.name,
+        "street": node.street,
+        "zip": node.zip,
+        "city": node.city,
+        "email": node.mail,
+        "phone": node.phone,
+        "description": node.description
+      }
     }
-    const rootRef = this.db.list('address');
-    let data: DialogData;
+    this.db.list('address/').push(addressData);
+
+      /*
     rootRef.set(nodeTitle, {
       "company": node.company,
       "surname": node.surname,
@@ -84,11 +111,7 @@ export class FirebaseService {
         type: 'error'
       }
       this.overlay.openDialog(data);
-    });
-  }
+    });*/
 
-  removeAddress(id) {
-    this.db.object('address/' + id).remove();
   }
-
 }

@@ -17,18 +17,17 @@ import {FirebaseService} from "../../firebase/firebase.service";
 export class CustomerComponent implements OnInit {
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
   @ViewChild('autoClient') autoClient: AutocompleteComponent;
-  @ViewChild('client') client: AddressComponent;
-  @ViewChild('receiver') receiver: AddressComponent;
+  @ViewChild('address') address: AddressComponent;
 
   pageTitle: string;
-  clientCompany: string;
-  clientSurname: string;
-  clientName: string;
-  clientStreet: string;
-  clientZip: number;
-  clientCity: string;
-  clientMail: string;
-  clientPhone: string;
+  company: string;
+  surname: string;
+  name: string;
+  street: string;
+  zip: number;
+  city: string;
+  mail: string;
+  phone: string;
   clientDescription: string;
 
   //cache Fields
@@ -56,7 +55,7 @@ export class CustomerComponent implements OnInit {
     this.pageTitle = "Kunde bearbeiten";
     this.route.data.subscribe(
       (data: Data) => {
-        this.currentId = data['customer'].id;
+        this.currentId = data['customer'].orderId;
       }
     );
     this.firebaseService.getAddressById(this.currentId);
@@ -65,35 +64,26 @@ export class CustomerComponent implements OnInit {
       .subscribe(() => {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Empfänger' === this.selectedAddress[0].type) {
-          this.clientCompany = this.selectedAddress[0].company;
+          this.company = this.selectedAddress[0].company;
           this.cacheClientCompany = this.selectedAddress[0].company;
-          this.clientSurname = this.selectedAddress[0].surname;
+          this.surname = this.selectedAddress[0].surname;
           this.cacheClientSurname = this.selectedAddress[0].surname;
-          this.clientName = this.selectedAddress[0].name;
+          this.name = this.selectedAddress[0].name;
           this.cacheClientName = this.selectedAddress[0].name;
-          this.clientZip = this.selectedAddress[0].zip;
-          this.clientCity = this.selectedAddress[0].city;
-          this.clientStreet = this.selectedAddress[0].street;
-          this.clientMail = this.selectedAddress[0].email;
-          this.clientPhone = this.selectedAddress[0].phone;
+          this.zip = this.selectedAddress[0].zip;
+          this.city = this.selectedAddress[0].city;
+          this.street = this.selectedAddress[0].street;
+          this.mail = this.selectedAddress[0].email;
+          this.phone = this.selectedAddress[0].phone;
           this.clientDescription = this.selectedAddress[0].description;
         }
       })
   }
 
-  public onSaveAddress(resource: string) {
-    let node = this.receiver;
-    let nodeTitle;
-    if (resource === 'client') {
-      node = this.client;
-      nodeTitle = this.cacheClientCompany;
-      if (!nodeTitle) {
-        nodeTitle = this.cacheClientName + ' ' + this.cacheClientSurname;
-      }
-    }
+  public onSaveAddress() {
 
-    this.firebaseService.removeAddress(nodeTitle);
-    this.firebaseService.saveAddress(node);
+    this.firebaseService.removeAddress(this.currentId);
+    this.firebaseService.saveAddress(this.address);
 
     this.onBack();
   }
