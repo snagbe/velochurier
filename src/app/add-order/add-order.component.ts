@@ -134,23 +134,13 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSaveAddress(resource: string) {
-    /*let node;
-    let nodeTitle;
+    let node;
     if (resource === 'receiver') {
       node = this.receiver;
-      nodeTitle = this.cacheReceiverCompany;
-      if (!nodeTitle) {
-        nodeTitle = this.cacheReceiverName + ' ' + this.cacheReceiverSurname;
-      }
     } else if (resource === 'client') {
       node = this.client;
-      nodeTitle = this.cacheClientCompany;
-      if (!nodeTitle) {
-        nodeTitle = this.cacheClientName + ' ' + this.cacheClientSurname;
-      }
     }
-    this.firebaseService.removeAddress(nodeTitle);
-    this.firebaseService.saveAddress(node);*/
+    this.firebaseService.saveAddress(node);
   }
 
   onSubmit() {
