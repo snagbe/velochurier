@@ -61,7 +61,19 @@ export class AutocompleteComponent implements OnInit {
             const data = snap.val();
             if (data) {
               // @ts-ignore
-              const address:Address = {id: eventTarget.value, company: data.company, name: data.name, surname: data.surname, city: data.city, street: data.street, zip: data.zip, email: data.email, phone: data.phone, description: data.description, type: eventTarget.ariaLabel};
+              const address: Address = {
+                id: eventTarget.value,
+                company: data.company,
+                name: data.name,
+                surname: data.surname,
+                city: data.city,
+                street: data.street,
+                zip: data.zip,
+                email: data.email,
+                phone: data.phone,
+                description: data.description,
+                type: eventTarget.ariaLabel
+              };
               this.globalComp.setAddress(address);
               this.globalComp.addressChange.next();
             }
