@@ -55,8 +55,18 @@ export class AddOrderComponent implements OnInit {
   currentPicker: Date;
   currentArticle: string;
   pageTitle: string;
-
   date: Date;
+
+  // Cache fields
+  cacheClientCompany: String;
+  cacheClientSurname: String;
+  cacheClientName: String;
+
+  cacheReceiverCompany: String;
+  cacheReceiverSurname: String;
+  cacheReceiverName: String;
+
+  cacheCurrentPicker: Date;
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -73,6 +83,7 @@ export class AddOrderComponent implements OnInit {
 
     if (this.route.snapshot.routeConfig.path === 'order/edit') {
       this.pageTitle = "Auftrag bearbeiten";
+
       this.route.data.subscribe(
         (data: Data) => {
           this.currentId = data['order'].id;
@@ -89,8 +100,11 @@ export class AddOrderComponent implements OnInit {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Auftraggeber' === this.selectedAddress[0].type) {
           this.clientCompany = this.selectedAddress[0].company;
+          this.cacheClientCompany = this.selectedAddress[0].company;
           this.clientSurname = this.selectedAddress[0].surname;
+          this.cacheClientSurname = this.selectedAddress[0].surname;
           this.clientName = this.selectedAddress[0].name;
+          this.cacheClientName = this.selectedAddress[0].name;
           this.clientZip = this.selectedAddress[0].zip;
           this.clientCity = this.selectedAddress[0].city;
           this.clientStreet = this.selectedAddress[0].street;
@@ -99,8 +113,11 @@ export class AddOrderComponent implements OnInit {
           this.clientDescription = this.selectedAddress[0].description;
         } else {
           this.receiverCompany = this.selectedAddress[0].company;
+          this.cacheReceiverCompany = this.selectedAddress[0].company;
           this.receiverSurname = this.selectedAddress[0].surname;
+          this.cacheReceiverSurname = this.selectedAddress[0].surname;
           this.receiverName = this.selectedAddress[0].name;
+          this.cacheReceiverName = this.selectedAddress[0].name;
           this.receiverZip = this.selectedAddress[0].zip;
           this.receiverCity = this.selectedAddress[0].city;
           this.receiverStreet = this.selectedAddress[0].street;
@@ -113,14 +130,14 @@ export class AddOrderComponent implements OnInit {
     this.subscription = this.globalComp.orderArticleChange
       .subscribe(() => {
         this.selectedArticle = this.globalComp.getArticle();
-        this.currentPicker = this.selectedArticle[0].date;
+        this.currentPicker = new Date(this.selectedArticle[0].date);
+        this.cacheCurrentPicker = new Date(this.selectedArticle[0].date);
         this.currentArticle = this.selectedArticle[0].article;
       });
   }
 
 
   currentOrderArticle(date, status, type, id) {
-    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/' + status + '/' + selectedDate)
       .on('child_added',
@@ -143,7 +160,6 @@ export class AddOrderComponent implements OnInit {
   }
 
   currentOrder(date, status, type, id) {
-    date = new Date(date);
     const selectedDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
     this.db.database.ref('order/' + status + '/' + selectedDate)
       .on('child_added',
@@ -184,10 +200,22 @@ export class AddOrderComponent implements OnInit {
   }
 
   onSaveAddress(resource: string) {
-    let node = this.receiver;
-    if (resource === 'client') {
+    let node;
+    let nodeTitle;
+    if (resource === 'receiver') {
+      node = this.receiver;
+      nodeTitle = this.cacheReceiverCompany;
+      if (!nodeTitle) {
+        nodeTitle = this.cacheReceiverName + ' ' + this.cacheReceiverSurname;
+      }
+    } else if (resource === 'client') {
       node = this.client;
+      nodeTitle = this.cacheClientCompany;
+      if (!nodeTitle) {
+        nodeTitle = this.cacheClientName + ' ' + this.cacheClientSurname;
+      }
     }
+    this.firebaseService.removeAddress(nodeTitle);
     this.firebaseService.saveAddress(node);
   }
 
@@ -213,24 +241,35 @@ export class AddOrderComponent implements OnInit {
         const coords: CoordsType = [
           {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
         ];
-        this.saveOrder(coords);
+        const client = this.client;
+        const receiver = this.receiver;
+
+        this.removeOrder(client, receiver);
+        this.saveOrder(coords, client, receiver);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
 
-  saveOrder(coords) {
-    const client = this.client;
-    const receiver = this.receiver;
+  removeOrder(client, receiver) {
+    let nodeTitle;
+    nodeTitle = this.cacheReceiverCompany;
+    if (!nodeTitle) {
+      nodeTitle = this.cacheReceiverName + ' ' + this.cacheReceiverSurname;
+    }
+    const orderDate = this.cacheCurrentPicker.getFullYear() + '-' + (this.cacheCurrentPicker.getMonth() + 1) + '-' + this.cacheCurrentPicker.getDate();
+
+    this.db.object('order/open/' + orderDate + '/' + nodeTitle).remove();
+  }
+
+  saveOrder(coords, client, receiver) {
     let nodeTitle = receiver.company;
     if (!nodeTitle) {
       nodeTitle = receiver.name + ' ' + receiver.surname;
     }
-    this.date = this.currentPicker;
-    this.date = new Date(this.date);
-    const orderDate = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
 
+    const orderDate = this.currentPicker.getFullYear() + '-' + (this.currentPicker.getMonth() + 1) + '-' + this.currentPicker.getDate();
     // TODO prüfen ob der Empfänger schon eine Lieferung an diesem Tag hat. Dann nur ergänzen und nicht überschreiben
     var rootRef = this.db.list('order/open/' + orderDate);
     rootRef.set(nodeTitle + '/client', {
@@ -259,8 +298,15 @@ export class AddOrderComponent implements OnInit {
       "lng": coords[0].lng
     })
 
+
+    const selectedDate = this.orderForm.value.pickupDate.getFullYear() + '-' + (this.orderForm.value.pickupDate.getMonth() + 1) + '-' + this.orderForm.value.pickupDate.getDate();
+    let article = "";
+    if (this.orderForm.value.article) {
+      article = this.orderForm.value.article;
+    }
     rootRef.set(nodeTitle + '/article', {
-      "article": this.orderForm.value.article
+      "date": selectedDate,
+      "article": article
     })
 
     // TODO nur bei success löschen und info einblenden sonst info einblenden
