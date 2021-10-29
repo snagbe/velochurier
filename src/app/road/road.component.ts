@@ -59,7 +59,7 @@ export class RoadComponent implements OnInit {
           }
           const key = a.payload.key;
           // @ts-ignore
-          this.addresses.push({id: key, city: this.getType.city, street: this.getType.street, zip: this.getType.zip, lat: this.getType.lat, lng: this.getType.lng});
+          this.addresses.push({id: key, city: this.getType.city, company: this.getType.company, surname: this.getType.surname, name: this.getType.name, street: this.getType.street, zip: this.getType.zip, lat: this.getType.lat, lng: this.getType.lng});
         });
       }));
   }
