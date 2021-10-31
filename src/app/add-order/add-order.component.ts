@@ -142,14 +142,13 @@ export class AddOrderComponent implements OnInit {
     let node;
     let id;
     if (resource === 'receiver') {
-      node = this.receiver;
+      node = this.receiver.formGroup.value;
       id = this.receiverId;
     } else if (resource === 'client') {
-      node = this.client;
+      node = this.client.formGroup.value;
       id = this.clientId
     }
 
-    this.clientId
     this.firebaseService.removeAddress(id)
     this.firebaseService.saveAddress(node);
   }
@@ -157,7 +156,7 @@ export class AddOrderComponent implements OnInit {
   onSubmit() {
     this.mapsApiLoader.load().then(() => {
       this.geocoder = new google.maps.Geocoder();
-      const coords = this.getGeocode('receiver');
+      this.getGeocode('receiver');
       this.subscription = this.globalComp.coordsChange
         .subscribe(() => {
           if ('order/edit' === this.route.snapshot.routeConfig.path) {
@@ -243,16 +242,15 @@ export class AddOrderComponent implements OnInit {
       }
     }
     let data: DialogData;
-    let titleAddition = "erfasset"
+    let orderType = "erfasset"
     if ('order/edit' === this.route.snapshot.routeConfig.path) {
-      titleAddition = "bearbeitet";
-      this.router.navigate(['/order']);
+      orderType = "bearbeitet";
     }
     this.db.list('order/open/' + orderDate).push(orderData)
       .then(() => {
         data = {
-          title: 'Auftrag ' + titleAddition,
-          message: 'Der Auftrag wurde erfolgreich ' + titleAddition + '.',
+          title: 'Auftrag ' + orderType,
+          message: 'Der Auftrag wurde erfolgreich ' + orderType + '.',
           type: 'success'
         }
         this.overlay.openDialog(data);
@@ -269,7 +267,7 @@ export class AddOrderComponent implements OnInit {
       }).catch((error) => {
       data = {
         title: 'Fehler',
-        message: 'Der Auftrag konnte nicht ' + titleAddition + ' werden.',
+        message: 'Der Auftrag konnte nicht ' + orderType + ' werden.',
         type: 'error'
       }
       this.overlay.openDialog(data);

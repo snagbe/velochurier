@@ -65,7 +65,6 @@ export class FirebaseService {
   }
 
   public saveAddress(node) {
-    //Todo: Save is not working jet, node is empty
     let addressData;
     if (node === 'client') {
       addressData = {
@@ -75,7 +74,7 @@ export class FirebaseService {
         "street": node.street,
         "zip": node.zip,
         "city": node.city,
-        "email": node.mail,
+        "email": node.email,
         "phone": node.phone,
         "description": node.description
       }
@@ -87,7 +86,7 @@ export class FirebaseService {
         "street": node.street,
         "zip": node.zip,
         "city": node.city,
-        "email": node.mail,
+        "email": node.email,
         "phone": node.phone,
         "description": node.description
       }
