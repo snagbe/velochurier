@@ -1,10 +1,12 @@
 import {Component, Input, OnInit, ViewChild,} from '@angular/core';
-import {FormControl, NgForm} from '@angular/forms';
+import {FormBuilder, FormControl, NgForm, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../global-components";
 import {Address} from "../address/addresses";
+import {OrderControl} from "./orderControl";
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-autocomplete',
@@ -14,9 +16,9 @@ export class AutocompleteComponent implements OnInit {
   @ViewChild('autocompleteForm', {static: false}) autocompleteForm: NgForm;
   @Input() title: string;
   myControl = new FormControl();
-  options: string[] = [];
-  sortedAddresses: any[] = [];
-  filteredOptions: Observable<string[]>;
+  options: OrderControl[];
+  filteredOptions: Observable<OrderControl[]>;
+  sortedAddresses: OrderControl[];
 
   constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) {
   }
@@ -29,40 +31,42 @@ export class AutocompleteComponent implements OnInit {
     );
   }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string): OrderControl[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   setSort() {
     this.sortedAddresses = [];
-    this.db.database.ref('address').orderByKey()
+    this.db.database.ref('address').orderByChild('displayName')
       .on('child_added',
         snap => {
+          const key = snap.key;
           const data = snap.val();
           if (data) {
             if (data.company) {
-              this.sortedAddresses.push(data.company);
+              this.sortedAddresses.push({id:key, type:this.title, name:data.company});
             } else {
-              this.sortedAddresses.push(data.name, data.surname);
+              const name = data.name + ' ' + data.surname;
+              this.sortedAddresses.push({id:key, type:this.title, name:name});
             }
           }
         });
-
     this.options = this.sortedAddresses;
   }
 
   onAddressSelected(eventTarget) {
-    if (eventTarget.value) {
-      this.db.database.ref('address/' + eventTarget.value)
+    if (eventTarget) {
+      this.db.database.ref('address/' + eventTarget.id)
         .on('value',
           snap => {
+            const key = snap.key;
             const data = snap.val();
             if (data) {
               // @ts-ignore
               const address: Address = {
-                id: eventTarget.value,
+                id: key,
                 company: data.company,
                 name: data.name,
                 surname: data.surname,
@@ -72,7 +76,7 @@ export class AutocompleteComponent implements OnInit {
                 email: data.email,
                 phone: data.phone,
                 description: data.description,
-                type: eventTarget.ariaLabel
+                type: eventTarget.type
               };
               this.globalComp.setAddress(address);
               this.globalComp.addressChange.next();

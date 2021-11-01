@@ -5,12 +5,12 @@
            matInput
            [attr.aria-label]="title"
            [formControl]="myControl"
-           [matAutocomplete]="auto"
-           (blur)="onAddressSelected($event.target)"
-           (keyup.enter)="onAddressSelected($event.target)">
+           [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{option}}
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                  (blur)="onAddressSelected(option)"
+                  (keyup.enter)="onAddressSelected(option)">
+        {{option.name}}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

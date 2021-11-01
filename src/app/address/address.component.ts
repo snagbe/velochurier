@@ -14,7 +14,7 @@ export class AddressComponent implements OnInit {
   @Input() street: string;
   @Input() zip: number;
   @Input() city: string;
-  @Input() mail: string;
+  @Input() email: string;
   @Input() phone: string;
   @Input() description: string;
 
@@ -40,7 +40,7 @@ export class AddressComponent implements OnInit {
     this.street = null;
     this.zip = null;
     this.city = null;
-    this.mail = null;
+    this.email = null;
     this.phone = null;
     this.description = null;
   }

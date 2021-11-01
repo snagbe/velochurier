@@ -142,10 +142,20 @@ export class AddOrderComponent implements OnInit {
     let node;
     let id;
     if (resource === 'receiver') {
-      node = this.receiver.formGroup.value;
+      node = this.receiver;
+      if(this.receiver.zip) {
+        node = this.receiver;
+      }else {
+        node = this.receiver.formGroup.value;
+      }
       id = this.receiverId;
     } else if (resource === 'client') {
-      node = this.client.formGroup.value;
+      //Todo: Bei prefill sind die Daten unter "this.client" bei der Neuerfassung sind sie unter "this.client.formGroup.value" zu finden
+      if(this.client.zip) {
+        node = this.client;
+      }else {
+        node = this.client.formGroup.value;
+      }
       id = this.clientId
     }
 
@@ -223,7 +233,7 @@ export class AddOrderComponent implements OnInit {
         "street": client.street,
         "zip": client.zip,
         "city": client.city,
-        "email": client.mail,
+        "email": client.email,
         "phone": client.phone,
         "description": client.description
       },
@@ -234,7 +244,7 @@ export class AddOrderComponent implements OnInit {
         "street": receiver.street,
         "zip": receiver.zip,
         "city": receiver.city,
-        "email": receiver.mail,
+        "email": receiver.email,
         "phone": receiver.phone,
         "description": receiver.description,
         "lat": this.coords.lat,

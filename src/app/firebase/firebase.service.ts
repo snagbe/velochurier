@@ -56,7 +56,7 @@ export class FirebaseService {
     let addressId;
     this.db.database.ref('address/').on('child_added',
       snap => {
-      const key = snap.key;
+        const key = snap.key;
         if (key === id) {
           addressId = snap.key;
         }
@@ -66,30 +66,25 @@ export class FirebaseService {
 
   public saveAddress(node) {
     let addressData;
-    if (node === 'client') {
-      addressData = {
-        "company": node.company,
-        "surname": node.surname,
-        "name": node.name,
-        "street": node.street,
-        "zip": node.zip,
-        "city": node.city,
-        "email": node.email,
-        "phone": node.phone,
-        "description": node.description
-      }
-    } else {
-      addressData = {
-        "company": node.company,
-        "surname": node.surname,
-        "name": node.name,
-        "street": node.street,
-        "zip": node.zip,
-        "city": node.city,
-        "email": node.email,
-        "phone": node.phone,
-        "description": node.description
-      }
+    let displayName;
+
+    if(node.company){
+      displayName = node.company;
+    }else {
+      displayName = + node.name + ' ' + node.surname;
+    }
+
+    addressData = {
+      "displayName": displayName,
+      "company": node.company,
+      "surname": node.surname,
+      "name": node.name,
+      "street": node.street,
+      "zip": node.zip,
+      "city": node.city,
+      "email": node.email,
+      "phone": node.phone,
+      "description": node.description
     }
 
     let data: DialogData;
