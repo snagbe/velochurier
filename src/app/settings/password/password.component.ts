@@ -18,20 +18,8 @@ export class PasswordComponent implements OnInit {
   }
 
   formGroup = this.formBuilder.group({
-    passwordOld: [
-      "",
-      [
-        Validators.required,
-        Validators.minLength(6)
-      ]
-    ],
-    passwordNew: [
-      "",
-      [
-        Validators.required,
-        Validators.minLength(6)
-      ]
-    ]
+    passwordOld: ["", [Validators.required, Validators.minLength(6)]],
+    passwordNew: ["", [Validators.required, Validators.minLength(6)]]
   });
 
   ngOnInit(): void {

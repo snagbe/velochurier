@@ -49,8 +49,6 @@ export class AddOrderComponent implements OnInit {
   subscription: Subscription;
   selectedAddress: Address[];
   selectedArticle: Article[];
-  geocoder: any;
-  geoAddress: any;
   currentDate: Date;
   currentPicker: Date;
   currentArticle: string;
@@ -155,36 +153,38 @@ export class AddOrderComponent implements OnInit {
 
   onSubmit() {
     this.mapsApiLoader.load().then(() => {
-      this.geocoder = new google.maps.Geocoder();
-      this.getGeocode('receiver');
-      this.subscription = this.globalComp.coordsChange
-        .subscribe(() => {
-          if ('order/edit' === this.route.snapshot.routeConfig.path) {
-            this.removeOrder();
-          }
-          this.saveOrder();
+      this.getGeocode().then(place => {
+        this.coords = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+        if ('order/edit' === this.route.snapshot.routeConfig.path) {
+          this.removeOrder();
+        }
+        this.saveOrder();
+      })
+        .catch(err => {
+          console.log(err);
         });
     });
 
 
   }
 
-
-  getGeocode(type) {
-    if (type === 'receiver') {
-      this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
-    } else if (type === 'client') {
-      this.geoAddress = this.client.street + ' ' + this.client.zip + ' ' + this.client.city;
-    } else {
-      this.geoAddress = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
-    }
-    this.geocoder.geocode({'address': this.geoAddress}, (results, status) => {
-      if (status === 'OK') {
-        this.coords = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}
-        this.globalComp.coordsChange.next();
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
+  getGeocode(): Promise<any> {
+    const geocoder = new google.maps.Geocoder();
+    const address = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    return new Promise((resolve, reject) => {
+      geocoder.geocode(
+        {
+          address: address
+        },
+        (results, status) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            resolve(results[0]);
+          } else {
+            reject(new Error(status));
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        }
+      );
     });
   }
 
@@ -242,7 +242,7 @@ export class AddOrderComponent implements OnInit {
       }
     }
     let data: DialogData;
-    let orderType = "erfasset"
+    let orderType = "erfasst"
     if ('order/edit' === this.route.snapshot.routeConfig.path) {
       orderType = "bearbeitet";
     }
@@ -253,7 +253,6 @@ export class AddOrderComponent implements OnInit {
           message: 'Der Auftrag wurde erfolgreich ' + orderType + '.',
           type: 'success'
         }
-        this.overlay.openDialog(data);
         if ('order/edit' === this.route.snapshot.routeConfig.path) {
           this.router.navigate(['/order']);
         } else {
@@ -264,6 +263,7 @@ export class AddOrderComponent implements OnInit {
           this.orderForm.reset();
           this.formDirective.resetForm();
         }
+        this.overlay.openDialog(data);
       }).catch((error) => {
       data = {
         title: 'Fehler',
