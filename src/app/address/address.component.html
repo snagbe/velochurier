@@ -1,47 +1,50 @@
-<form #addressForm="ngForm">
+<form [formGroup]="formGroup" #formDirective="ngForm">
   <mat-form-field class="input-100" appearance="outline">
     <mat-label>Firma</mat-label>
-    <input matInput ngModel name="company" [(ngModel)]="company">
+    <input matInput [formControl]="formGroup.get('company')" [value]="company">
   </mat-form-field>
   <div class="input-container">
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Vorname</mat-label>
-      <input matInput ngModel name="surname" [(ngModel)]="surname">
+      <input matInput [formControl]="formGroup.get('surname')" [value]="surname">
     </mat-form-field>
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Name</mat-label>
-      <input matInput ngModel name="name" [(ngModel)]="name">
+      <input matInput [formControl]="formGroup.get('name')" [value]="name">
     </mat-form-field>
   </div>
   <div class="input-container">
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Postleitzahl</mat-label>
-      <input matInput ngModel name="zip" [(ngModel)]="zip" required>
+      <input matInput [formControl]="formGroup.get('zip')" [value]="zip" required>
+      <mat-error>{{getErrorMessage(formGroup.get('zip'))}}</mat-error>
     </mat-form-field>
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Ort</mat-label>
-      <input matInput ngModel name="city" [(ngModel)]="city" required>
+      <input matInput [formControl]="formGroup.get('city')" [value]="city" required>
+      <mat-error>{{getErrorMessage(formGroup.get('city'))}}</mat-error>
     </mat-form-field>
   </div>
   <div class="input-container">
     <mat-form-field class="input-50" appearance="outline">
       <mat-label>Strasse</mat-label>
-      <input matInput ngModel name="street" [(ngModel)]="street" required>
+      <input matInput [formControl]="formGroup.get('street')" [value]="street" required>
+      <mat-error>{{getErrorMessage(formGroup.get('street'))}}</mat-error>
     </mat-form-field>
   </div>
   <div class="input-container">
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>E-Mail</mat-label>
-      <input matInput ngModel name="mail" [(ngModel)]="mail">
-      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      <input matInput [formControl]="formGroup.get('email')" [value]="email">
+      <mat-error>{{getErrorMessage(formGroup.get('email'))}}</mat-error>
     </mat-form-field>
     <mat-form-field class="input-100" appearance="outline">
       <mat-label>Telefonnummer</mat-label>
-      <input matInput ngModel name="phone" [(ngModel)]="phone" value="">
+      <input matInput [formControl]="formGroup.get('phone')" [value]="phone" value="">
     </mat-form-field>
   </div>
   <mat-form-field class="input-100" appearance="outline">
     <mat-label>Bemerkung</mat-label>
-    <textarea matInput ngModel name="description" [(ngModel)]="description"></textarea>
+    <textarea matInput [formControl]="formGroup.get('description')" [value]="description"></textarea>
   </mat-form-field>
 </form>

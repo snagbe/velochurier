@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {FormControl, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, NgForm, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-address',
@@ -14,12 +14,24 @@ export class AddressComponent implements OnInit {
   @Input() street: string;
   @Input() zip: number;
   @Input() city: string;
-  @Input() mail: string;
+  @Input() email: string;
   @Input() phone: string;
   @Input() description: string;
 
-  constructor() {
-  }
+  constructor(private formBuilder: FormBuilder) {
+    }
+
+    formGroup = this.formBuilder.group({
+      company: [""],
+      surname: [""],
+      name: [""],
+      zip: ["", [Validators.required]],
+      city: ["", [Validators.required]],
+      street: ["", [Validators.required]],
+      email: ["", [Validators.email]],
+      phone: [""],
+      description: [""]
+    });
 
   ngOnInit(): void {
     this.company = null;
@@ -28,23 +40,20 @@ export class AddressComponent implements OnInit {
     this.street = null;
     this.zip = null;
     this.city = null;
-    this.mail = null;
+    this.email = null;
     this.phone = null;
     this.description = null;
   }
 
-  email = new FormControl('', [Validators.required, Validators.email]);
-
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Dieses Feld muss ausgefüllt werden';
-    }
-
-    return this.email.hasError('email') ? 'Keine gültige E-mAil Adresse' : '';
+  getErrorMessage(inputField) {
+    return inputField.hasError('required') ?
+      'Dieses Feld muss ausgefüllt werden' :
+      inputField.hasError('email') ?
+        'Keine gültige E-Mail Adresse' : '';
   }
 
   onReset() {
-    this.addressForm.reset();
+    this.formGroup.reset();
   }
 
 }

@@ -21,10 +21,6 @@ export class SettingsComponent implements OnInit {
     this.authService.doLogout();
   }
 
-  changePassword() {
-    this.router.navigate(['settings/password']);
-  }
-
   onselected() {
 
   }

@@ -13,7 +13,8 @@
     [latitude]="address.lat"
     [longitude]="address.lng">
     <agm-info-window>
-      <div>{{ address.id }}</div>
+      <div *ngIf="address.company">{{ address.company }}</div>
+      <div *ngIf="!address.company">{{address.name}} {{address.surname}}</div>
       <div>{{ address.street }}</div>
     </agm-info-window>
   </agm-marker>

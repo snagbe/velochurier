@@ -3,8 +3,7 @@ import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 
 interface Order {
-  id: string;
-  date: Date;
+  orderId: string;
 }
 
 @Injectable()
@@ -14,8 +13,7 @@ export class OrderResolver implements Resolve<Order>{
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Order> | Promise<Order> | Order {
     const data: Order = {
-      id: route.params['id'],
-      date: route.params['date'],
+      orderId: route.params['orderId']
     }
     return data;
   }

@@ -64,9 +64,9 @@ export class DeliveryComponent implements OnInit {
   }
 
   onEditOrder() {
-    this.router.navigate(['order', 'edit', {id: this.currentID, date: this.currentDate}]).then(() => {
-      window.location.reload();
-    });
+        this.router.navigate(['order', 'edit', {orderId: this.currentID}]).then(() => {
+          window.location.reload();
+        });
   }
 
   /**

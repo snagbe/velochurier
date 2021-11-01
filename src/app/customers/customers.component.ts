@@ -25,7 +25,7 @@ export class CustomersComponent implements OnInit {
   }
 
   onEditCustomer(id) {
-    this.router.navigate(['customer', {id: id}]).then(() => {
+    this.router.navigate(['customer', {orderId: id}]).then(() => {
       window.location.reload();
     });
   }

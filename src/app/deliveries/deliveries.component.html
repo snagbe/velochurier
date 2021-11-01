@@ -46,7 +46,8 @@
   <div class="addresses" *ngFor="let address of addresses; let i = index">
     <button class="delivery-button" (click)="onDeliveryComponent(address.id, address.lat, address.lng)">
       <img class="box-img" src="assets/box.png"/>
-      {{address.id}}, {{address.street}}, {{address.zip}} {{address.city}}
+      <p *ngIf="address.company">{{address.company}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
+      <p *ngIf="!address.company">{{address.name}} {{address.surname}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
     </button>
   </div>
 </div>
