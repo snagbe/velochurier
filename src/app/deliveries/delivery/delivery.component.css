@@ -138,8 +138,8 @@ td {
   justify-content: center;
   background: #006763;
   width: 15rem;
-  height: 3.8rem;
-  border-radius: 3pt;
+  height: 5rem;
+  border-radius: 7pt;
   margin: 0 0.5rem;
 }
 
@@ -155,5 +155,5 @@ td {
 .deliver-button > p {
   color: #FFFF;
   margin: 0rem;
-  line-height: 1.5rem;
+  font-size: larger;
 }
