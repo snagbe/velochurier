@@ -24,12 +24,18 @@
 }
 
 .customer-button {
+  display: contents;
   background-color: transparent;
   border: none;
 }
 
 .customer-button:focus {
   outline: none;
+}
+
+.customer-button p {
+  display: inline-block;
+  margin-bottom: 0;
 }
 
 .customer-journey-img {

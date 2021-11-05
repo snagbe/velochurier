@@ -34,8 +34,14 @@
 }
 
 .delivery-button {
+  display: contents;
   background-color: transparent;
   border: none;
+}
+
+.delivery-button p {
+  display: inline-block;
+  margin-bottom: 0;
 }
 
 .sort-img {

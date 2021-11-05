@@ -25,15 +25,8 @@
     <div class="client-container" *ngFor="let clientAddress of clientAddresses; let i = index">
       <div class="client" *ngIf="clientAddress.id == currentID">
         <div class="client-details">
-          <div *ngIf="!clientAddress.company">
-            <h2>{{clientAddress.name}} {{clientAddress.surname}}</h2>
-          </div>
-
-          <div *ngIf="clientAddress.company">
-            <h2>{{clientAddress.company}}</h2>
-          </div>
-
-          <p>{{clientAddress.zip}} {{clientAddress.city}}</p>
+          <h2>{{clientAddress.company ? clientAddress.company : clientAddress.name + " " + clientAddress.surname}}</h2>
+          <h3>{{clientAddress.zip}} {{clientAddress.city}}</h3>
         </div>
         <a href="Tel: {{clientAddress.phone}}" class="call-icon-container">
           <mat-icon class="call-icon">call</mat-icon>
@@ -46,23 +39,23 @@
           <mat-icon class="location-icon">location_on</mat-icon>
         </div>
         <div class="receiver-details">
-          <strong *ngIf="receiverAddress.company">{{receiverAddress.company}}</strong>
-          <strong *ngIf="!receiverAddress.company">{{receiverAddress.name}} {{receiverAddress.surname}}</strong>
-          <p>{{receiverAddress.street}}</p>
-          <p>{{receiverAddress.zip}} {{receiverAddress.city}}</p>
+          <h2>{{receiverAddress.company ? receiverAddress.company : receiverAddress.name + " " + receiverAddress.surname}}</h2>
+          <h3>{{receiverAddress.street}}</h3>
+          <h3>{{receiverAddress.zip}} {{receiverAddress.city}}</h3>
         </div>
       </div>
     </div>
     <div class="deliver-container" *ngFor="let receiverAddress of receiverAddresses; let i = index">
       <div class="deliver-button-container" *ngIf="receiverAddress.id == currentID">
         <button class="deliver-button" (click)="openDeliverSheetMenu()">
-        <mat-icon class="deliver-icons">markunread_mailbox</mat-icon>
-        <p>Zustellen</p>
-      </button>
-      <button class="deliver-button" (click)="onEditOrder()">
-      <mat-icon class="deliver-icons">edit</mat-icon>
-      <p>Auftrag bearbeiten</p>
-    </button></div>
+          <mat-icon class="deliver-icons">markunread_mailbox</mat-icon>
+          <p>Zustellen</p>
+        </button>
+        <button class="deliver-button" (click)="onEditOrder()">
+          <mat-icon class="deliver-icons">edit</mat-icon>
+          <p>Auftrag bearbeiten</p>
+        </button>
+      </div>
       <ng-template class="bottom-sheet-container" #deliverBottomSheet>
         <table style="width:100%">
           <tr>

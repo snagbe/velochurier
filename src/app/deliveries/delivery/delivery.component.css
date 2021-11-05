@@ -77,11 +77,17 @@ td {
   flex-direction: column;
 }
 
-.client-details div > h2 {
-  margin: 0rem 0rem 0.1rem 0rem;
+.client-details > h2, .client-details > h3, .receiver-details > h2, .receiver-details > h3 {
+  margin: 0;
+}
+
+.receiver-details:nth-child(2) > h3 {
+  line-height: 2rem;
 }
 
 .call-icon-container {
+  display: flex;
+  align-items: center;
   padding: 0.6rem;
   background-color: #0067632F;
   border-radius: 50%;
@@ -100,15 +106,12 @@ td {
 
 .location-icon-container {
   margin-right: 2rem;
+  padding-top: 1rem;
 }
 
 .location-icon {
   color: #006763;
   transform: scale(1.4);
-}
-
-.receiver-details > p {
-  margin: 0rem 0rem 0.2rem 0rem;
 }
 
 .deliver-container {
@@ -123,6 +126,10 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
 }
 
 .deliver-button {
