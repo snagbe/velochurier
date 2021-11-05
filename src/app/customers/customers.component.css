@@ -5,7 +5,8 @@
 }
 
 .container > h1 {
-  text-align: center;
+  padding: 2rem 0 0 0;
+  text-align: left;
 }
 
 .addresses {
