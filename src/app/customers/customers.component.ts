@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Address} from "../address/addresses";
 import {DeliveriesService} from "../deliveries/deliveries.service";
 import {AuthService} from "../auth/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-customers',
@@ -15,8 +15,7 @@ export class CustomersComponent implements OnInit {
 
   constructor(private deliveriesService: DeliveriesService,
               private authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
