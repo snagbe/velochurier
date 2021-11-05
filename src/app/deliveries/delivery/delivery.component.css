@@ -28,6 +28,7 @@ agm-map {
   border: none;
   width: 100%;
   color: #0A84FF;
+  font-size: 16px;
 }
 
 td {
@@ -36,7 +37,7 @@ td {
 
 .p-sheet-element {
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(194, 199, 194, 0.8) !important;
 
   padding-top: 0.5rem;
