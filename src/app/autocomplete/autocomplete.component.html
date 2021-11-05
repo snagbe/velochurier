@@ -6,7 +6,7 @@
            [attr.aria-label]="title"
            [formControl]="myControl"
            [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
                   (blur)="onAddressSelected(option)"
                   (keyup.enter)="onAddressSelected(option)">

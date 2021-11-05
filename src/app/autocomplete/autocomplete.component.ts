@@ -37,6 +37,10 @@ export class AutocompleteComponent implements OnInit {
     return this.options.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
+  getOptionText(option) {
+    return option.name;
+  }
+
   setSort() {
     this.sortedAddresses = [];
     this.db.database.ref('address').orderByChild('displayName')
