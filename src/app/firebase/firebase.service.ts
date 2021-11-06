@@ -71,7 +71,7 @@ export class FirebaseService {
     if(node.company){
       displayName = node.company;
     }else {
-      displayName = + node.name + ' ' + node.surname;
+      displayName = node.name + ' ' + node.surname;
     }
 
     addressData = {

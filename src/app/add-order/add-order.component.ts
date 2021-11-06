@@ -223,11 +223,26 @@ export class AddOrderComponent implements OnInit {
     if (this.orderForm.value.article) {
       article = this.orderForm.value.article;
     }
+    let clientDisplayName;
+    if(client.company) {
+      clientDisplayName = client.company;
+    } else {
+      clientDisplayName = client.name + ' ' + client.surname;
+    }
+
+    let receiverDisplayName;
+    if(receiver.company) {
+      receiverDisplayName = receiver.company;
+    } else {
+      receiverDisplayName = receiver.name + ' ' + receiver.surname;
+    }
+
     const orderData = {
       "date": selectedDate,
       "article": article,
       "client": {
         "company": client.company,
+        "displayName": clientDisplayName,
         "surname": client.surname,
         "name": client.name,
         "street": client.street,
@@ -239,6 +254,7 @@ export class AddOrderComponent implements OnInit {
       },
       "receiver": {
         "company": receiver.company,
+        "displayName": receiverDisplayName,
         "surname": receiver.surname,
         "name": receiver.name,
         "street": receiver.street,
