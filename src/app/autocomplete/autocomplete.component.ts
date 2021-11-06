@@ -6,7 +6,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../global-components";
 import {Address} from "../address/addresses";
 import {OrderControl} from "./orderControl";
-import { of } from 'rxjs';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-autocomplete',
@@ -38,7 +38,9 @@ export class AutocompleteComponent implements OnInit {
   }
 
   getOptionText(option) {
-    return option.name;
+    if (option) {
+      return option.name;
+    }
   }
 
   setSort() {
@@ -50,10 +52,10 @@ export class AutocompleteComponent implements OnInit {
           const data = snap.val();
           if (data) {
             if (data.company) {
-              this.sortedAddresses.push({id:key, type:this.title, name:data.company});
+              this.sortedAddresses.push({id: key, type: this.title, name: data.company});
             } else {
               const name = data.name + ' ' + data.surname;
-              this.sortedAddresses.push({id:key, type:this.title, name:name});
+              this.sortedAddresses.push({id: key, type: this.title, name: name});
             }
           }
         });
