@@ -27,25 +27,7 @@ export class AddOrderComponent implements OnInit {
   @ViewChild('autoReceiver') autoReceiver: AutocompleteComponent;
 
   clientId: string;
-  clientCompany: string;
-  clientSurname: string;
-  clientName: string;
-  clientStreet: string;
-  clientZip: number;
-  clientCity: string;
-  clientMail: string;
-  clientPhone: string;
-  clientDescription: string;
   receiverId: string;
-  receiverCompany: string;
-  receiverSurname: string;
-  receiverName: string;
-  receiverStreet: string;
-  receiverZip: number;
-  receiverCity: string;
-  receiverMail: string;
-  receiverPhone: string;
-  receiverDescription: string;
   subscription: Subscription;
   selectedAddress: Address[];
   selectedArticle: Article[];
@@ -88,26 +70,26 @@ export class AddOrderComponent implements OnInit {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Auftraggeber' === this.selectedAddress[0].type) {
           this.clientId = this.selectedAddress[0].id;
-          this.clientCompany = this.selectedAddress[0].company;
-          this.clientSurname = this.selectedAddress[0].surname;
-          this.clientName = this.selectedAddress[0].name;
-          this.clientZip = this.selectedAddress[0].zip;
-          this.clientCity = this.selectedAddress[0].city;
-          this.clientStreet = this.selectedAddress[0].street;
-          this.clientMail = this.selectedAddress[0].email;
-          this.clientPhone = this.selectedAddress[0].phone;
-          this.clientDescription = this.selectedAddress[0].description;
+          this.client.formGroup.controls.company.setValue(this.selectedAddress[0].company);
+          this.client.formGroup.controls.surname.setValue(this.selectedAddress[0].surname);
+          this.client.formGroup.controls.name.setValue(this.selectedAddress[0].name);
+          this.client.formGroup.controls.zip.setValue(this.selectedAddress[0].zip);
+          this.client.formGroup.controls.city.setValue(this.selectedAddress[0].city);
+          this.client.formGroup.controls.street.setValue(this.selectedAddress[0].street);
+          this.client.formGroup.controls.email.setValue(this.selectedAddress[0].email);
+          this.client.formGroup.controls.phone.setValue(this.selectedAddress[0].phone);
+          this.client.formGroup.controls.description.setValue(this.selectedAddress[0].description);
         } else {
           this.receiverId = this.selectedAddress[0].id;
-          this.receiverCompany = this.selectedAddress[0].company;
-          this.receiverSurname = this.selectedAddress[0].surname;
-          this.receiverName = this.selectedAddress[0].name;
-          this.receiverZip = this.selectedAddress[0].zip;
-          this.receiverCity = this.selectedAddress[0].city;
-          this.receiverStreet = this.selectedAddress[0].street;
-          this.receiverMail = this.selectedAddress[0].email;
-          this.receiverPhone = this.selectedAddress[0].phone;
-          this.receiverDescription = this.selectedAddress[0].description;
+          this.receiver.formGroup.controls.company.setValue(this.selectedAddress[0].company);
+          this.receiver.formGroup.controls.surname.setValue(this.selectedAddress[0].surname);
+          this.receiver.formGroup.controls.name.setValue(this.selectedAddress[0].name);
+          this.receiver.formGroup.controls.zip.setValue(this.selectedAddress[0].zip);
+          this.receiver.formGroup.controls.city.setValue(this.selectedAddress[0].city);
+          this.receiver.formGroup.controls.street.setValue(this.selectedAddress[0].street);
+          this.receiver.formGroup.controls.email.setValue(this.selectedAddress[0].email);
+          this.receiver.formGroup.controls.phone.setValue(this.selectedAddress[0].phone);
+          this.receiver.formGroup.controls.description.setValue(this.selectedAddress[0].description);
         }
       })
 
@@ -140,20 +122,10 @@ export class AddOrderComponent implements OnInit {
     let node;
     let id;
     if (resource === 'receiver') {
-      node = this.receiver;
-      if(this.receiver.zip) {
-        node = this.receiver;
-      }else {
-        node = this.receiver.formGroup.value;
-      }
+      node = this.receiver.formGroup.value;
       id = this.receiverId;
     } else if (resource === 'client') {
-      //Todo: Bei prefill sind die Daten unter "this.client" bei der Neuerfassung sind sie unter "this.client.formGroup.value" zu finden
-      if(this.client.zip) {
-        node = this.client;
-      }else {
-        node = this.client.formGroup.value;
-      }
+      node = this.client.formGroup.value;
       id = this.clientId
     }
 
@@ -180,7 +152,8 @@ export class AddOrderComponent implements OnInit {
 
   getGeocode(): Promise<any> {
     const geocoder = new google.maps.Geocoder();
-    const address = this.receiver.street + ' ' + this.receiver.zip + ' ' + this.receiver.city;
+    const receiver = this.receiver.formGroup.controls;
+    const address = receiver.street.value + ' ' + receiver.zip.value + ' ' + receiver.city.value;
     return new Promise((resolve, reject) => {
       geocoder.geocode(
         {
@@ -214,8 +187,8 @@ export class AddOrderComponent implements OnInit {
   }
 
   saveOrder() {
-    const client = this.client;
-    const receiver = this.receiver;
+    const client = this.client.formGroup.value;
+    const receiver = this.receiver.formGroup.value;
     const orderDate = this.currentPicker.getFullYear() + '-' + (this.currentPicker.getMonth() + 1) + '-' + this.currentPicker.getDate();
 
     const selectedDate = this.orderForm.value.pickupDate.getFullYear() + '-' + (this.orderForm.value.pickupDate.getMonth() + 1) + '-' + this.orderForm.value.pickupDate.getDate();
@@ -224,14 +197,14 @@ export class AddOrderComponent implements OnInit {
       article = this.orderForm.value.article;
     }
     let clientDisplayName;
-    if(client.company) {
+    if (client.company) {
       clientDisplayName = client.company;
     } else {
       clientDisplayName = client.name + ' ' + client.surname;
     }
 
     let receiverDisplayName;
-    if(receiver.company) {
+    if (receiver.company) {
       receiverDisplayName = receiver.company;
     } else {
       receiverDisplayName = receiver.name + ' ' + receiver.surname;

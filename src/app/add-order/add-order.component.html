@@ -6,17 +6,7 @@
     <app-autocomplete #autoClient
                       [title]="'Auftraggeber'"
     ></app-autocomplete>
-    <app-address #client
-                 [company]="clientCompany"
-                 [surname]="clientSurname"
-                 [name]="clientName"
-                 [street]="clientStreet"
-                 [zip]="clientZip"
-                 [city]="clientCity"
-                 [email]="clientMail"
-                 [phone]="clientPhone"
-                 [description]="clientDescription">
-    </app-address>
+    <app-address #client></app-address>
     <div class="col-xs-12 flex-center">
       <button class="btn btn-success" type="button" (click)="onSaveAddress('client')">Speichern</button>
     </div>
@@ -25,17 +15,7 @@
     <app-autocomplete #autoReceiver
                       [title]="'Empfänger'"
     ></app-autocomplete>
-    <app-address #receiver
-                 [company]="receiverCompany"
-                 [surname]="receiverSurname"
-                 [name]="receiverName"
-                 [street]="receiverStreet"
-                 [zip]="receiverZip"
-                 [city]="receiverCity"
-                 [email]="receiverMail"
-                 [phone]="receiverPhone"
-                 [description]="receiverDescription">
-    </app-address>
+    <app-address #receiver></app-address>
     <div class="col-xs-12 flex-center">
       <button class="btn btn-success" type="button" (click)="onSaveAddress('receiver')">Speichern</button>
     </div>
