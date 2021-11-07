@@ -61,11 +61,8 @@
   padding-bottom: 1rem;
 }
 
-.box-img {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  width: 3.2rem;
-  padding-right: 0.75rem;
+mat-icon {
+  margin-right: 0.75rem;
 }
 
 .addresses p {

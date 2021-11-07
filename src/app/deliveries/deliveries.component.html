@@ -48,7 +48,7 @@
   </mat-form-field>
   <div class="addresses" *ngFor="let address of addresses; let i = index">
     <div class="delivery-button" (click)="onDeliveryComponent(address.id, address.lat, address.lng)">
-      <img class="box-img" src="assets/box.png"/>
+      <mat-icon>assignment</mat-icon>
       <p>{{address.company ? address.company : address.name + " " + address.surname}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
     </div>
   </div>
