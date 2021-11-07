@@ -25,6 +25,20 @@ export class FirebaseService {
   ngOnInit(): void {
   }
 
+  public getAddresses() {
+    let sortedAddresses = [];
+    this.db.database.ref('address').orderByChild('displayName')
+      .on('child_added',
+        snap => {
+          const key = snap.key;
+          const data = snap.val();
+          if (data) {
+            sortedAddresses.push({id: key, city: data.city, street: data.street, zip: data.zip, surname: data.surname, name: data.name, company: data.company, email: data.email, phone: data.phone, description: data.description});
+          }
+        });
+    return  sortedAddresses;
+  }
+
   public getAddressById(id) {
     this.db.database.ref('address')
       .on('child_added',

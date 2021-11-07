@@ -15,20 +15,6 @@ export class DeliveriesService {
   ngOnInit(): void {
   }
 
-  public getAddresses() {
-    return this.db.list('address')
-      .snapshotChanges()
-      .pipe(map(items => {
-        return items.map(a => {
-          const data = a.payload.val();
-          const key = a.payload.key;
-          // @ts-ignore
-          const address: Address = {id: key, city: data.city, street: data.street, zip: data.zip, surname: data.surname, name: data.name, company: data.company, email: data.email, phone: data.phone, description: data.description};
-          return address;
-        });
-      }));
-  }
-
   public getOrderAddresses(date, status, type) {
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
     return this.db.list('order/' + status + '/' + selectedDate)

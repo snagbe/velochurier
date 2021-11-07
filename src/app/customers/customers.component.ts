@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Address} from "../address/addresses";
-import {DeliveriesService} from "../deliveries/deliveries.service";
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
+import {FirebaseService} from "../firebase/firebase.service";
 
 @Component({
   selector: 'app-customers',
@@ -13,14 +13,14 @@ export class CustomersComponent implements OnInit {
   addresses: Address[];
   addOrder: boolean = false;
 
-  constructor(private deliveriesService: DeliveriesService,
+  constructor(private firebaseService: FirebaseService,
               private authService: AuthService,
               private router: Router) {
   }
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
-    this.deliveriesService.getAddresses().subscribe(value => this.addresses = value);
+    this.addresses = this.firebaseService.getAddresses();
   }
 
   onEditCustomer(id) {
