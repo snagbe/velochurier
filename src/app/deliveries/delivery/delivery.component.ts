@@ -70,8 +70,8 @@ export class DeliveryComponent implements OnInit {
   }
 
   /**
-   * move the selected order in the firebase from open to delivered
-   * @param deliveryMethod method to send the email
+   * Move the selected order in the firebase from open to delivered.
+   * @param deliveryMethod The selected delivery method.
    */
   onMoveToDelivered(deliveryMethod) {
     // get the selected Object from 'open' and push the object to the list 'currentRecord'
@@ -95,16 +95,13 @@ export class DeliveryComponent implements OnInit {
       this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
     }
 
-      let article = this.currentRecord[0].article;
-      let client = this.currentRecord[0].client;
-      let receiver = this.currentRecord[0].receiver;
-
       // move the list 'currentRecord' to the 'delivered' record
       this.db.list('order/delivered/' + selectedDate + '/')
         .set(this.currentID, {
-          "article": article,
-          "client": client,
-          "receiver": receiver
+          "article": this.currentRecord[0].article,
+          "client": this.currentRecord[0].client,
+          "receiver": this.currentRecord[0].receiver,
+          "deliveryMethod": deliveryMethod
         })
     this.closeDeliverSheetMenu();
     this.onBack();
