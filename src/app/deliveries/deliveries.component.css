@@ -40,6 +40,10 @@
   border: none;
 }
 
+.delivery-button:hover {
+  cursor: pointer;
+}
+
 .delivery-button p {
   display: inline-block;
   margin-bottom: 0;

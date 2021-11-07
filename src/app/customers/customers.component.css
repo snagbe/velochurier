@@ -34,6 +34,10 @@
   outline: none;
 }
 
+.customer-button:hover {
+  cursor: pointer;
+}
+
 .customer-button p {
   display: inline-block;
   margin-bottom: 0;
