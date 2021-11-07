@@ -8,8 +8,7 @@
            [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getOptionText">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                  (blur)="onAddressSelected(option)"
-                  (keyup.enter)="onAddressSelected(option)">
+                  (onSelectionChange)="onAddressSelected(option)">
         {{option.name}}
       </mat-option>
     </mat-autocomplete>
