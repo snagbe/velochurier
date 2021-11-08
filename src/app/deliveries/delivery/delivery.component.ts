@@ -1,5 +1,6 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {Address} from "../../address/addresses";
 import {DeliveriesService} from "../deliveries.service";
@@ -7,6 +8,7 @@ import {AuthService} from "../../auth/auth.service";
 import {ActivatedRoute, Router, Data} from "@angular/router";
 
 import {EmailService} from "../../email.service";
+import {ConfirmationDialog} from "../../confirmation-dialog/confirmation.dialog";
 
 
 @Component({
@@ -14,7 +16,7 @@ import {EmailService} from "../../email.service";
   templateUrl: './delivery.component.html',
   styleUrls: ['./delivery.component.css']
 })
-export class DeliveryComponent implements OnInit {
+export class DeliveryComponent implements OnInit, AfterViewInit  {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
   currentID: any;
   currentReceiverLat: number;
@@ -27,12 +29,16 @@ export class DeliveryComponent implements OnInit {
   clientAddresses: Address[];
   currentRecord: any[] = [];
 
+
+  dialogRef: MatDialogRef<ConfirmationDialog>;
+
   constructor(private bottomSheet: MatBottomSheet,
               private db: AngularFireDatabase,
               private deliveriesService: DeliveriesService,
               private authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
+              public dialog: MatDialog,
               private emailService: EmailService) {
   }
 
@@ -106,4 +112,28 @@ export class DeliveryComponent implements OnInit {
     this.closeDeliverSheetMenu();
     this.onBack();
   }
+
+  /**
+   * Remove the selected order in the firebase.
+   */
+  onDeleteOrder() {
+    this.dialogRef = this.dialog.open(ConfirmationDialog, {
+      disableClose: false
+    });
+    this.dialogRef.componentInstance.confirmMessage = "Sind Sie sich sicher, dass Sie den Auftrag löschen möchten?"
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        const selectedDate = this.currentDate.getFullYear() + '-' + (this.currentDate.getMonth() + 1) + '-' + this.currentDate.getDate();
+        this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
+
+        this.onBack();
+      }
+      this.dialogRef = null;
+    });
+  }
+
+  ngAfterViewInit(): void {
+  }
+
 }

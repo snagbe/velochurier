@@ -55,6 +55,10 @@
           <mat-icon class="deliver-icons">edit</mat-icon>
           <p>Auftrag bearbeiten</p>
         </button>
+        <button class="deliver-button" (click)="onDeleteOrder()">
+          <mat-icon class="deliver-icons">delete</mat-icon>
+          <p>Auftrag löschen</p>
+        </button>
       </div>
       <ng-template class="bottom-sheet-container" #deliverBottomSheet>
         <table style="width:100%">

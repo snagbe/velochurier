@@ -50,6 +50,7 @@ import { CustomerComponent } from './customers/customer/customer.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { NewUserComponent } from './settings/new-user/new-user.component';
 import {MatSelectModule} from "@angular/material/select";
+import {ConfirmationDialog} from "./confirmation-dialog/confirmation.dialog";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {MatSelectModule} from "@angular/material/select";
     CustomerComponent,
     PasswordComponent,
     ForgetPasswordComponent,
-    NewUserComponent
+    NewUserComponent,
+    ConfirmationDialog
   ],
     imports: [
         BrowserModule,
@@ -118,7 +120,8 @@ import {MatSelectModule} from "@angular/material/select";
     { provide: DateAdapter, useClass: CustomDateAdapter },
     { provide: LOCALE_ID, useValue: 'de' }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmationDialog]
 })
 export class AppModule {
 }
