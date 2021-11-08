@@ -34,7 +34,8 @@ export class PasswordComponent implements OnInit {
             const data: DialogData = {
               title: 'Passwort geändert',
               message: 'Das Passwort wurde erfolgreich geändert.',
-              type: 'success'
+              type: 'success',
+              primaryButton: {name: 'Ok'}
             }
             this.overlay.openDialog(data);
             this.formGroup.reset();
@@ -43,7 +44,8 @@ export class PasswordComponent implements OnInit {
           const data: DialogData = {
             title: 'Fehler',
             message: 'Das Passwort konnte nicht geändert werden.',
-            type: 'error'
+            type: 'error',
+            primaryButton: {name: 'Ok'}
           }
           this.overlay.openDialog(data);
         });
@@ -51,7 +53,8 @@ export class PasswordComponent implements OnInit {
       const data: DialogData = {
         title: 'Fehler',
         message: 'Das eingegebenen Passwort ist nicht korrekt.',
-        type: 'error'
+        type: 'error',
+        primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);
     });

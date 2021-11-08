@@ -13,8 +13,9 @@ export class DialogComponent {
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  onOkClick(): void {
-    this.dialogRef.close();
+  onClick(buttonFunction): void {
+    buttonFunction ? buttonFunction() : "";
+    this.dialogRef.close()
   }
 
 }

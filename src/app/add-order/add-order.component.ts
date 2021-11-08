@@ -250,7 +250,8 @@ export class AddOrderComponent implements OnInit {
         data = {
           title: 'Auftrag ' + orderType,
           message: 'Der Auftrag wurde erfolgreich ' + orderType + '.',
-          type: 'success'
+          type: 'success',
+          primaryButton: {name: 'Ok'}
         }
         if ('order/edit' === this.route.snapshot.routeConfig.path) {
           this.router.navigate(['/order']);
@@ -267,7 +268,8 @@ export class AddOrderComponent implements OnInit {
       data = {
         title: 'Fehler',
         message: 'Der Auftrag konnte nicht ' + orderType + ' werden.',
-        type: 'error'
+        type: 'error',
+        primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);
     });

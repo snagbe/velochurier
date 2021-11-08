@@ -117,14 +117,16 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
         data = {
           title: 'Zustellung',
           message: 'Der Auftrag wurde auf folgende Art: "' + deliveryMethod + '" abgeschlossen.',
-          type: 'success'
+          type: 'success',
+          primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
       }).catch((error) => {
         data = {
           title: 'Fehler',
           message: 'Der Auftrag konnte nicht zugestellt werden.',
-          type: 'error'
+          type: 'error',
+          primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
       });
@@ -144,12 +146,22 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
    * Remove the selected order in the firebase.
    */
   onDeleteOrder() {
-    this.dialogRef = this.dialog.open(ConfirmationDialog, {
-      disableClose: false
-    });
-    this.dialogRef.componentInstance.confirmMessage = "Sind Sie sich sicher, dass Sie den Auftrag löschen möchten?"
+    let data: DialogData = {
+      title: 'Auftrag löschen',
+      message: 'Möchtest du den Auftrag wirklich löschen?',
+      type: 'confirmation',
+      primaryButton: {
+        name: 'Löschen', 'function': function() {
+          this.deleteOrder();
+        }.bind(this)
+      },
+      secondaryButton: {
+        name: 'Abbrechen'
+      }
+    }
+    this.overlay.openDialog(data);
 
-    this.dialogRef.afterClosed().subscribe(result => {
+    /*this.dialogRef.afterClosed().subscribe(result => {
       if(result) {
         const selectedDate = this.currentDate.getFullYear() + '-' + (this.currentDate.getMonth() + 1) + '-' + this.currentDate.getDate();
         this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
@@ -157,7 +169,22 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
         this.onBack();
       }
       this.dialogRef = null;
-    });
+    });*/
+  }
+
+  deleteOrder() {
+    const selectedDate = this.currentDate.getFullYear() + '-' + (this.currentDate.getMonth() + 1) + '-' + this.currentDate.getDate();
+    this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();
+
+    this.onBack();
+    this.closeEditSheetMenu();
+    let data: DialogData = {
+      title: 'Auftrag gelöscht',
+      message: 'Der Auftrag wurde erfolgreich gelöscht.',
+      type: 'success',
+      primaryButton: {name: 'Ok'}
+    }
+    this.overlay.openDialog(data);
   }
 
   ngAfterViewInit(): void {

@@ -6,6 +6,8 @@ export interface DialogData {
   title: string;
   message: string;
   type: string;
+  primaryButton;
+  secondaryButton?;
 }
 
 @Component({
@@ -26,7 +28,7 @@ export class OverlayComponent {
     this.dialog.open(DialogComponent, {
       maxWidth: '50%',
       panelClass: dialogData.type,
-      data: {title: dialogData.title, message: dialogData.message}
+      data: {title: dialogData.title, message: dialogData.message, primaryButton: dialogData.primaryButton, secondaryButton: dialogData.secondaryButton}
     });
   }
 }

@@ -32,7 +32,8 @@ export class NewUserComponent implements OnInit {
         const data: DialogData = {
           title: 'Neuer Benutzer erstellt',
           message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.',
-          type: 'success'
+          type: 'success',
+          primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
         this.formGroup.reset();
@@ -41,7 +42,8 @@ export class NewUserComponent implements OnInit {
       const data: DialogData = {
         title: 'Fehler',
         message: 'Der Benutzer konnte nicht erstellt werden.',
-        type: 'error'
+        type: 'error',
+        primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);
     });

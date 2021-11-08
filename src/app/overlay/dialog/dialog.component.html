@@ -3,6 +3,7 @@
   <p>{{data.message}}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onOkClick()">Ok</button>
+  <button mat-button (click)="onClick(data.primaryButton.function)">{{data.primaryButton.name}}</button>
+  <button mat-button *ngIf="data.secondaryButton" (click)="onClick(data.secondaryButton.function)">{{data.secondaryButton.name}}</button>
 </div>
 
