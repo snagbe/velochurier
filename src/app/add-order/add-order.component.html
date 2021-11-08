@@ -8,7 +8,10 @@
     ></app-autocomplete>
     <app-address #client></app-address>
     <div class="col-xs-12 flex-center">
-      <button class="btn btn-success" type="button" (click)="onSaveAddress('client')">Speichern</button>
+      <button class="order-button" (click)="onSaveAddress('client')">
+        <mat-icon class="order-icons">save</mat-icon>
+        <p>Speichern</p>
+      </button>
     </div>
 
     <h2>Empfänger</h2>
@@ -17,7 +20,10 @@
     ></app-autocomplete>
     <app-address #receiver></app-address>
     <div class="col-xs-12 flex-center">
-      <button class="btn btn-success" type="button" (click)="onSaveAddress('receiver')">Speichern</button>
+      <button class="order-button" (click)="onSaveAddress('receiver')">
+        <mat-icon class="order-icons">save</mat-icon>
+        <p>Speichern</p>
+      </button>
     </div>
 
     <h2>Auftrag</h2>
@@ -36,7 +42,10 @@
       </mat-form-field>
     </div>
     <div class="col-xs-12 flex-center" style="margin-bottom: 120px">
-      <button class="btn btn-primary" type="submit" [disabled]="!orderForm.valid">{{pageTitle}}</button>
+      <button class="order-button" type="submit" [disabled]="!orderForm.valid">
+        <mat-icon class="edit-icons">edit</mat-icon>
+        <p>{{pageTitle}}</p>
+      </button>
     </div>
   </form>
 </div>

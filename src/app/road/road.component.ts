@@ -33,7 +33,7 @@ export class RoadComponent implements OnInit {
     this.authService.doAuthCheck();
     this.lat = 46.85785;
     this.lng = 9.53059;
-    this.zoom = 14.5;
+    this.zoom = 13.5;
 
     this.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe();
   }

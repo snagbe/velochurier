@@ -152,6 +152,11 @@ td {
   margin-right: 1rem;
 }
 
+.edit-icons {
+  color: #FFFF;
+  margin-right: 0;
+ }
+
 .deliver-button > p {
   color: #FFFF;
   margin: 0rem;

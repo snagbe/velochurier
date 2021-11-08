@@ -48,7 +48,7 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
-    this.zoom = 20;
+    this.zoom = 18.5;
     this.route.data.subscribe(
       (data: Data) => {
         this.currentID = data['delivery'].id;
