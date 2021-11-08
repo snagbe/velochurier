@@ -104,7 +104,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     this.dialogRef = this.dialog.open(ConfirmationDialog, {
       disableClose: false
     });
-    this.dialogRef.componentInstance.confirmMessage = "Sind Sie sich sicher, dass Sie den Auftrag löschen möchten?"
+    this.dialogRef.componentInstance.confirmMessage = "Sind Sie sich sicher, dass Sie den Kunden löschen möchten?"
 
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
