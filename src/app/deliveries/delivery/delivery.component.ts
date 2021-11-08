@@ -9,6 +9,7 @@ import {ActivatedRoute, Router, Data} from "@angular/router";
 
 import {EmailService} from "../../email.service";
 import {ConfirmationDialog} from "../../confirmation-dialog/confirmation.dialog";
+import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 
 
 @Component({
@@ -39,6 +40,7 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
               private router: Router,
               private route: ActivatedRoute,
               public dialog: MatDialog,
+              private overlay: OverlayComponent,
               private emailService: EmailService) {
   }
 
@@ -102,13 +104,28 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
     }
 
       // move the list 'currentRecord' to the 'delivered' record
+      let data: DialogData;
       this.db.list('order/delivered/' + selectedDate + '/')
         .set(this.currentID, {
           "article": this.currentRecord[0].article,
           "client": this.currentRecord[0].client,
           "receiver": this.currentRecord[0].receiver,
           "deliveryMethod": deliveryMethod
-        })
+        }).then(() => {
+        data = {
+          title: 'Zustellung',
+          message: 'Der Auftrag wurde auf folgende Art: "' + deliveryMethod + '" abgeschlossen.',
+          type: 'success'
+        }
+        this.overlay.openDialog(data);
+      }).catch((error) => {
+        data = {
+          title: 'Fehler',
+          message: 'Der Auftrag konnte nicht zugestellt werden.',
+          type: 'error'
+        }
+        this.overlay.openDialog(data);
+      });
     this.closeDeliverSheetMenu();
     this.onBack();
   }
