@@ -2,7 +2,7 @@
   <h1>Kunden</h1>
   <div class="addresses" *ngFor="let address of addresses">
     <div class="customer-button" (click)="onEditCustomer(address.id)">
-      <mat-icon>person_pin_circle</mat-icon>
+      <mat-icon>person</mat-icon>
       <p>{{address.company ? address.company : address.name + " " + address.surname}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
     </div>
   </div>
