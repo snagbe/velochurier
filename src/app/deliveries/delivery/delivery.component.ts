@@ -19,6 +19,8 @@ import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 })
 export class DeliveryComponent implements OnInit, AfterViewInit  {
   @ViewChild('deliverBottomSheet') DeliverBottomSheet: TemplateRef<any>;
+  @ViewChild('editBottomSheet') EditBottomSheet: TemplateRef<any>;
+
   currentID: any;
   currentReceiverLat: number;
   currentReceiverLng: number;
@@ -128,6 +130,14 @@ export class DeliveryComponent implements OnInit, AfterViewInit  {
       });
     this.closeDeliverSheetMenu();
     this.onBack();
+  }
+
+  openEditSheetMenu() {
+    this.bottomSheet.open(this.EditBottomSheet);
+  }
+
+  closeEditSheetMenu() {
+    this.bottomSheet.dismiss();
   }
 
   /**
