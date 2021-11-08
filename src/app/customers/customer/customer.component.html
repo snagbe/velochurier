@@ -15,7 +15,15 @@
                  [phone]="phone">
     </app-address>
     <div class="flex-center">
-      <button class="btn btn-success" type="button" (click)="onSaveAddress()">Speichern</button>
+      <button class="btn btn-success" (click)="onSaveAddress()">
+        <mat-icon class="deliver-icons">save</mat-icon>
+        <p>Speichern</p>
+      </button>
+
+      <button class="btn btn-danger" (click)="onDeleteAddress()">
+        <mat-icon class="deliver-icons">delete</mat-icon>
+        <p>Auftrag löschen</p>
+      </button>
     </div>
   </form>
 </div>

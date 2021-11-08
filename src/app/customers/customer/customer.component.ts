@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AddressComponent} from "../../address/address.component";
 import {AutocompleteComponent} from "../../autocomplete/autocomplete.component";
@@ -8,13 +8,15 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../../global-components";
 import {Subscription} from "rxjs";
 import {FirebaseService} from "../../firebase/firebase.service";
+import {ConfirmationDialog} from "../../confirmation-dialog/confirmation.dialog";
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
-export class CustomerComponent implements OnInit {
+export class CustomerComponent implements OnInit, AfterViewInit {
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
   @ViewChild('autoClient') autoClient: AutocompleteComponent;
   @ViewChild('address') address: AddressComponent;
@@ -43,12 +45,15 @@ export class CustomerComponent implements OnInit {
 
   rootRef: any;
 
+  dialogRef: MatDialogRef<ConfirmationDialog>;
+
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
               private router: Router,
               private route: ActivatedRoute,
-              private firebaseService: FirebaseService)
-  { }
+              private firebaseService: FirebaseService,
+              public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
 
@@ -90,5 +95,26 @@ export class CustomerComponent implements OnInit {
 
   public onBack() {
     this.router.navigate(['/customers']);
+  }
+
+  /**
+   * Remove the selected order in the firebase.
+   */
+  onDeleteAddress() {
+    this.dialogRef = this.dialog.open(ConfirmationDialog, {
+      disableClose: false
+    });
+    this.dialogRef.componentInstance.confirmMessage = "Sind Sie sich sicher, dass Sie den Auftrag löschen möchten?"
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.firebaseService.removeAddress(this.currentId);
+        this.onBack();
+      }
+      this.dialogRef = null;
+    });
+  }
+
+  ngAfterViewInit(): void {
   }
 }
