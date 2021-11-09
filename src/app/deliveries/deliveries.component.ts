@@ -61,6 +61,10 @@ export class DeliveriesComponent implements OnInit {
     this.closeSortSheetMenu();
   }
 
+  isValid(addresses) {
+    return addresses === undefined || !addresses.length;
+  }
+
   onDateChanged() {
     this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }

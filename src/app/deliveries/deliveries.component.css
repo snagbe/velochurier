@@ -70,6 +70,19 @@ mat-icon {
   margin-right: 0.75rem;
 }
 
+.no-address {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.no-address > mat-icon {
+  transform: scale(6);
+  margin-bottom: 7rem;
+  color: #3030a6;
+}
+
+
 .addresses p {
   display: initial;
 }

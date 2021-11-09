@@ -49,8 +49,14 @@
   <div class="addresses" *ngFor="let address of addresses; let i = index">
     <div class="delivery-button" (click)="onDeliveryComponent(address.id, address.lat, address.lng)">
       <mat-icon>assignment</mat-icon>
-      <p>{{address.company ? address.company : address.name + " " + address.surname}}, {{address.street}}, {{address.zip}} {{address.city}}</p>
+      <p>{{address.company ? address.company : address.name + " " + address.surname}}, {{address.street}}
+        , {{address.zip}} {{address.city}}</p>
     </div>
   </div>
+</div>
+<div *ngIf="isValid(addresses)" class="no-address">
+  <mat-icon>check_circle_outline</mat-icon>
+  <p>Keine Aufgabe für heute.</p>
+  <p>Geniesse deinen Tag.</p>
 </div>
 <app-navbar></app-navbar>
