@@ -2,20 +2,42 @@
   justify-content: center;
 }
 
+::ng-deep mat-dialog-container button:focus {
+  outline: none;
+}
+
+::ng-deep .mat-dialog-content > p {
+  margin: 1px!important;
+}
+
+::ng-deep .mat-dialog-title {
+  margin-bottom: 8px!important;
+}
+
 ::ng-deep .error > mat-dialog-container {
-  border: 1rem solid #c9002e;
+  background-color: #B91D1D;
+  color: #fff;
 }
 
 ::ng-deep .error > mat-dialog-container button {
-  background-color: #c9002e;
-  color: #fff;
+  border: solid;
+}
+
+::ng-deep .error > mat-dialog-container button:hover {
+  background-color: #fff;
+  color: #B91D1D;
 }
 
 ::ng-deep .success > mat-dialog-container {
-  border: 1rem solid #79b51c;
+  background-color: #79b51c;
+  color: #fff;
 }
 
 ::ng-deep .success > mat-dialog-container button {
-  background-color: #79b51c;
-  color: #fff;
+  border: solid;
+}
+
+::ng-deep .success > mat-dialog-container button:hover {
+  background-color: #fff;
+  color: #79b51c;
 }
