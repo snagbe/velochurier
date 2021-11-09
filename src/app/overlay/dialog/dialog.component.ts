@@ -15,7 +15,7 @@ export class DialogComponent {
 
   onClick(buttonFunction): void {
     buttonFunction ? buttonFunction() : "";
-    this.dialogRef.close()
+    this.dialogRef.close();
   }
 
 }

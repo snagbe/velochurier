@@ -1,22 +1,20 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AddressComponent} from "../../address/address.component";
 import {AutocompleteComponent} from "../../autocomplete/autocomplete.component";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Address} from "../../address/addresses";
-import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../../global-components";
 import {Subscription} from "rxjs";
 import {FirebaseService} from "../../firebase/firebase.service";
-import {ConfirmationDialog} from "../../confirmation-dialog/confirmation.dialog";
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
-export class CustomerComponent implements OnInit, AfterViewInit {
+export class CustomerComponent implements OnInit {
   @ViewChild('orderForm', {static: false}) orderForm: NgForm;
   @ViewChild('autoClient') autoClient: AutocompleteComponent;
   @ViewChild('address') address: AddressComponent;
@@ -45,14 +43,12 @@ export class CustomerComponent implements OnInit, AfterViewInit {
 
   rootRef: any;
 
-  dialogRef: MatDialogRef<ConfirmationDialog>;
 
-  constructor(private db: AngularFireDatabase,
-              private globalComp: GlobalComponents,
+  constructor(private globalComp: GlobalComponents,
               private router: Router,
               private route: ActivatedRoute,
               private firebaseService: FirebaseService,
-              public dialog: MatDialog) {
+              private overlay: OverlayComponent) {
   }
 
   ngOnInit(): void {
@@ -100,21 +96,33 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   /**
    * Remove the selected order in the firebase.
    */
-  onDeleteAddress() {
-    this.dialogRef = this.dialog.open(ConfirmationDialog, {
-      disableClose: false
-    });
-    this.dialogRef.componentInstance.confirmMessage = "Sind Sie sich sicher, dass Sie den Kunden löschen möchten?"
-
-    this.dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.firebaseService.removeAddress(this.currentId);
-        this.onBack();
+  onDeleteCustomer() {
+    const data: DialogData = {
+      title: 'Kunde löschen',
+      message: 'Möchtest du den Kunden wirklich löschen?',
+      type: 'confirmation',
+      primaryButton: {
+        name: 'Löschen', 'function': function() {
+          this.deleteCustomer();
+        }.bind(this)
+      },
+      secondaryButton: {
+        name: 'Abbrechen'
       }
-      this.dialogRef = null;
-    });
+    }
+    this.overlay.openDialog(data);
   }
 
-  ngAfterViewInit(): void {
+  deleteCustomer() {
+    this.overlay.closeDialog();
+    this.firebaseService.removeAddress(this.currentId);
+    this.onBack();
+    const data: DialogData = {
+      title: 'Kunde gelöscht',
+      message: 'Der Kunde wurde erfolgreich gelöscht.',
+      type: 'success',
+      primaryButton: {name: 'Ok'}
+    }
+    this.overlay.openDialog(data);
   }
 }
