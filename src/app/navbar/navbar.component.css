@@ -5,15 +5,21 @@
   width: 100%;
   background-color: white;
 
-  display: flex;
-  justify-content: center;
+  display: flex;  justify-content: center;
   align-items: center;
 }
 
 .side-icon-container, .add-icon-container {
   margin-right: 9pt;
   margin-left: 9pt;
+}
 
+@media only screen
+and (max-device-width : 350px) {
+  .side-icon-container, .add-icon-container {
+    margin-right: 6pt;
+    margin-left: 6pt;
+  }
 }
 
 .side-a {
