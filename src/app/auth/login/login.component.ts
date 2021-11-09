@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {AppComponent} from "../../app.component";
-import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
 import {Router} from "@angular/router";
+import {DialogData, OverlayService} from "../../overlay/overlay.service";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private nav: AppComponent,
-              private overlay: OverlayComponent,
+              private overlay: OverlayService,
               private router: Router,
               private formBuilder: FormBuilder) {
   }

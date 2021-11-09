@@ -8,7 +8,7 @@ import {AuthService} from "../../auth/auth.service";
 import {ActivatedRoute, Router, Data} from "@angular/router";
 
 import {EmailService} from "../../email.service";
-import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
+import {DialogData, OverlayService} from "../../overlay/overlay.service";
 
 
 @Component({
@@ -38,7 +38,7 @@ export class DeliveryComponent implements OnInit  {
               private router: Router,
               private route: ActivatedRoute,
               public dialog: MatDialog,
-              private overlay: OverlayComponent,
+              private overlay: OverlayService,
               private emailService: EmailService) {
   }
 

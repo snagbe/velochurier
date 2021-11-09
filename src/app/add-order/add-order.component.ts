@@ -11,7 +11,7 @@ import {AuthService} from "../auth/auth.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Article} from "./article";
 import {FirebaseService} from "../firebase/firebase.service";
-import {DialogData, OverlayComponent} from "../overlay/overlay.component";
+import {DialogData, OverlayService} from "../overlay/overlay.service";
 
 @Component({
   selector: 'app-add-order',
@@ -46,7 +46,7 @@ export class AddOrderComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private firebaseService: FirebaseService,
-              private overlay: OverlayComponent) {
+              private overlay: OverlayService) {
   }
 
   ngOnInit(): void {

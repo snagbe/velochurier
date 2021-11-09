@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "./dialog/dialog.component";
+import {Injectable} from "@angular/core";
 
 export interface DialogData {
   title: string;
@@ -11,13 +11,10 @@ export interface DialogData {
   secondaryButton?;
 }
 
-@Component({
-  selector: 'app-overlay',
-  templateUrl: './overlay.component.html',
-  styleUrls: ['./overlay.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class OverlayComponent {
-
+export class OverlayService {
   title: string;
   message: string;
   type: string;
@@ -25,7 +22,7 @@ export class OverlayComponent {
   constructor(public dialog: MatDialog) {
   }
 
-  openDialog(dialogData: DialogData): void {
+  public  openDialog(dialogData: DialogData): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: '50%',
       panelClass: dialogData.type,
@@ -41,7 +38,7 @@ export class OverlayComponent {
     }
   }
 
-  closeDialog():void {
+  public closeDialog():void {
     this.dialog.closeAll();
   }
 }

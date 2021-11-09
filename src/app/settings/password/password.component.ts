@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {FormBuilder, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, FormGroupDirective, Validators} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
-import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
+import {DialogData, OverlayService} from "../../overlay/overlay.service";
 
 @Component({
   selector: 'app-password',
@@ -13,7 +13,7 @@ export class PasswordComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private overlay: OverlayComponent,
+              private overlay: OverlayService,
               private formBuilder: FormBuilder) {
   }
 

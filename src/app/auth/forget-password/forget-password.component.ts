@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
-import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
-import {FormBuilder, FormGroupDirective, NgForm, Validators} from "@angular/forms";
+import {FormBuilder, FormGroupDirective, Validators} from "@angular/forms";
+import {DialogData, OverlayService} from "../../overlay/overlay.service";
 
 @Component({
   selector: 'app-forget-password',
@@ -13,7 +13,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private router: Router,
-              private overlay: OverlayComponent,
+              private overlay: OverlayService,
               private formBuilder: FormBuilder) {
   }
 

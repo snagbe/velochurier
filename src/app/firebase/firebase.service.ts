@@ -3,7 +3,7 @@ import {Injectable, ViewChild} from "@angular/core";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../global-components";
 import {AddressComponent} from "../address/address.component";
-import {DialogData, OverlayComponent} from "../overlay/overlay.component";
+import {DialogData, OverlayService} from "../overlay/overlay.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class FirebaseService {
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
-              private overlay: OverlayComponent) {
+              private overlay: OverlayService) {
   }
 
   ngOnInit(): void {

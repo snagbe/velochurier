@@ -1,7 +1,0 @@
-::ng-deep .mat-dialog-actions {
-  margin-top: 2rem;
-}
-
-::ng-deep button:focus {
-  outline: none;
-}

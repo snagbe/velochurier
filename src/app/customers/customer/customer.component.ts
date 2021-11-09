@@ -7,7 +7,7 @@ import {Address} from "../../address/addresses";
 import {GlobalComponents} from "../../global-components";
 import {Subscription} from "rxjs";
 import {FirebaseService} from "../../firebase/firebase.service";
-import {DialogData, OverlayComponent} from "../../overlay/overlay.component";
+import {DialogData, OverlayService} from "../../overlay/overlay.service";
 
 @Component({
   selector: 'app-customer',
@@ -37,18 +37,14 @@ export class CustomerComponent implements OnInit {
 
   subscription: Subscription;
   selectedAddress: Address[];
-
   currentId: any;
-  currentDate: Date;
-
-  rootRef: any;
 
 
   constructor(private globalComp: GlobalComponents,
               private router: Router,
               private route: ActivatedRoute,
               private firebaseService: FirebaseService,
-              private overlay: OverlayComponent) {
+              private overlay: OverlayService) {
   }
 
   ngOnInit(): void {

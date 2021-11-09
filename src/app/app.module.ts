@@ -14,7 +14,6 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GlobalComponents } from "./global-components";
 import { DeliveryComponent } from "./deliveries/delivery/delivery.component";
-import { OverlayComponent } from './overlay/overlay.component';
 import { DialogComponent } from './overlay/dialog/dialog.component';
 import { AddressComponent } from './address/address.component';
 import { RoadComponent } from './road/road.component';
@@ -50,7 +49,6 @@ import { CustomerComponent } from './customers/customer/customer.component';
 import { ForgetPasswordComponent } from './auth/forget-password/forget-password.component';
 import { NewUserComponent } from './settings/new-user/new-user.component';
 import {MatSelectModule} from "@angular/material/select";
-import {ConfirmationDialog} from "./confirmation-dialog/confirmation.dialog";
 
 @NgModule({
   declarations: [
@@ -64,7 +62,6 @@ import {ConfirmationDialog} from "./confirmation-dialog/confirmation.dialog";
     DeliveryComponent,
     AddressComponent,
     LoginComponent,
-    OverlayComponent,
     DialogComponent,
     PageNotFoundComponent,
     SettingsComponent,
@@ -72,8 +69,7 @@ import {ConfirmationDialog} from "./confirmation-dialog/confirmation.dialog";
     CustomerComponent,
     PasswordComponent,
     ForgetPasswordComponent,
-    NewUserComponent,
-    ConfirmationDialog
+    NewUserComponent
   ],
     imports: [
         BrowserModule,
@@ -112,7 +108,6 @@ import {ConfirmationDialog} from "./confirmation-dialog/confirmation.dialog";
 
   providers: [
     GlobalComponents,
-    OverlayComponent,
     DeliveryResolver,
     OrderResolver,
     { provide: MAT_DIALOG_DATA, useValue: {} },
@@ -120,8 +115,7 @@ import {ConfirmationDialog} from "./confirmation-dialog/confirmation.dialog";
     { provide: DateAdapter, useClass: CustomDateAdapter },
     { provide: LOCALE_ID, useValue: 'de' }
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [ConfirmationDialog]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

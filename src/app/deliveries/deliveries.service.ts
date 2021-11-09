@@ -1,8 +1,7 @@
-import { Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {map} from "rxjs/operators";
 import {Address} from "../address/addresses";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {GlobalComponents} from "../global-components";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ import {GlobalComponents} from "../global-components";
 export class DeliveriesService {
   getType: any;
 
-  constructor(private db: AngularFireDatabase, private globalComp: GlobalComponents) { }
+  constructor(private db: AngularFireDatabase) { }
 
   ngOnInit(): void {
   }

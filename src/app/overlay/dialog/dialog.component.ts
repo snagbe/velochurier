@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {DialogData} from "../overlay.component";
+import {DialogData} from "../overlay.service";
 
 @Component({
   selector: 'app-dialog',
