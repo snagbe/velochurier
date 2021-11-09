@@ -101,6 +101,7 @@ export class CustomerComponent implements OnInit {
       title: 'Kunde löschen',
       message: 'Möchtest du den Kunden wirklich löschen?',
       type: 'confirmation',
+      timeout: null,
       primaryButton: {
         name: 'Löschen', 'function': function() {
           this.deleteCustomer();
@@ -121,6 +122,7 @@ export class CustomerComponent implements OnInit {
       title: 'Kunde gelöscht',
       message: 'Der Kunde wurde erfolgreich gelöscht.',
       type: 'success',
+      timeout: 3000,
       primaryButton: {name: 'Ok'}
     }
     this.overlay.openDialog(data);

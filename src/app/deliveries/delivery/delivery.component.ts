@@ -114,6 +114,7 @@ export class DeliveryComponent implements OnInit  {
           title: 'Zustellung',
           message: 'Der Auftrag wurde auf folgende Art: "' + deliveryMethod + '" abgeschlossen.',
           type: 'success',
+          timeout: 3000,
           primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
@@ -122,6 +123,7 @@ export class DeliveryComponent implements OnInit  {
           title: 'Fehler',
           message: 'Der Auftrag konnte nicht zugestellt werden.',
           type: 'error',
+          timeout: null,
           primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
@@ -146,6 +148,7 @@ export class DeliveryComponent implements OnInit  {
       title: 'Auftrag löschen',
       message: 'Möchtest du den Auftrag wirklich löschen?',
       type: 'confirmation',
+      timeout: null,
       primaryButton: {
         name: 'Löschen', 'function': function() {
           this.deleteOrder();
@@ -168,6 +171,7 @@ export class DeliveryComponent implements OnInit  {
       title: 'Auftrag gelöscht',
       message: 'Der Auftrag wurde erfolgreich gelöscht.',
       type: 'success',
+      timeout: 3000,
       primaryButton: {name: 'Ok'}
     }
     this.overlay.openDialog(data);

@@ -251,6 +251,7 @@ export class AddOrderComponent implements OnInit {
           title: 'Auftrag ' + orderType,
           message: 'Der Auftrag wurde erfolgreich ' + orderType + '.',
           type: 'success',
+          timeout: 3000,
           primaryButton: {name: 'Ok'}
         }
         if ('order/edit' === this.route.snapshot.routeConfig.path) {
@@ -269,6 +270,7 @@ export class AddOrderComponent implements OnInit {
         title: 'Fehler',
         message: 'Der Auftrag konnte nicht ' + orderType + ' werden.',
         type: 'error',
+        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);

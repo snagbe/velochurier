@@ -108,6 +108,7 @@ export class FirebaseService {
           title: 'Daten gespeichert',
           message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
           type: 'success',
+          timeout: 3000,
           primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
@@ -116,6 +117,7 @@ export class FirebaseService {
         title: 'Fehler',
         message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
         type: 'error',
+        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);

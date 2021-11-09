@@ -33,6 +33,7 @@ export class NewUserComponent implements OnInit {
           title: 'Neuer Benutzer erstellt',
           message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.',
           type: 'success',
+          timeout: 3000,
           primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
@@ -43,6 +44,7 @@ export class NewUserComponent implements OnInit {
         title: 'Fehler',
         message: 'Der Benutzer konnte nicht erstellt werden.',
         type: 'error',
+        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);

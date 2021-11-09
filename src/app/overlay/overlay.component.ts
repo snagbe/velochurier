@@ -6,6 +6,7 @@ export interface DialogData {
   title: string;
   message: string;
   type: string;
+  timeout: number
   primaryButton;
   secondaryButton?;
 }
@@ -25,10 +26,22 @@ export class OverlayComponent {
   }
 
   openDialog(dialogData: DialogData): void {
-    this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: '50%',
       panelClass: dialogData.type,
       data: {title: dialogData.title, message: dialogData.message, primaryButton: dialogData.primaryButton, secondaryButton: dialogData.secondaryButton}
     });
+
+    if (dialogData.timeout) {
+      dialogRef.afterOpened().subscribe(_ => {
+        setTimeout(() => {
+          dialogRef.close();
+        }, dialogData.timeout)
+      })
+    }
+  }
+
+  closeDialog():void {
+    this.dialog.closeAll();
   }
 }
