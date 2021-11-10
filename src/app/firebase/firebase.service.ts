@@ -72,10 +72,10 @@ export class FirebaseService {
       snap => {
         const key = snap.key;
         if (key === id) {
-          addressId = snap.key;
+          addressId = key;
+          this.db.object('address/' + addressId).remove();
         }
       });
-    this.db.object('address/' + id).remove();
   }
 
   public saveAddress(node) {
