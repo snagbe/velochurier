@@ -61,13 +61,19 @@ p {
 
 .add-icon-background {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   background-color: #233871;
   border-radius: 3pt;
   width: 40pt;
   height: 30pt;
+}
+
+.add-a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-icon {
