@@ -270,7 +270,6 @@ export class AddOrderComponent implements OnInit {
         title: 'Fehler',
         message: 'Der Auftrag konnte nicht ' + orderType + ' werden.',
         type: 'error',
-        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);

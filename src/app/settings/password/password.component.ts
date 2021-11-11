@@ -46,7 +46,6 @@ export class PasswordComponent implements OnInit {
             title: 'Fehler',
             message: 'Das Passwort konnte nicht geändert werden.',
             type: 'error',
-            timeout: null,
             primaryButton: {name: 'Ok'}
           }
           this.overlay.openDialog(data);
@@ -56,7 +55,6 @@ export class PasswordComponent implements OnInit {
         title: 'Fehler',
         message: 'Das eingegebenen Passwort ist nicht korrekt.',
         type: 'error',
-        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);
