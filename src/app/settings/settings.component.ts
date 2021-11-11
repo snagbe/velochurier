@@ -43,7 +43,6 @@ export class SettingsComponent implements OnInit {
             title: 'Keine Berechtigung',
             message: 'Du bist nicht berechtigt diesen Inhalt zu sehen.',
             type: 'error',
-            timeout: 3000,
             primaryButton: {name: 'Ok'}
           }
           this.overlay.openDialog(data);
@@ -72,7 +71,6 @@ export class SettingsComponent implements OnInit {
       title: 'Keine Berechtigung',
       message: 'Du bist nicht berechtigt diesen Inhalt zu sehen.',
       type: 'error',
-      timeout: 3000,
       primaryButton: {name: 'Ok'}
     }
     this.overlay.openDialog(data);
