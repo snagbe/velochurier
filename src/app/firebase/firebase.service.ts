@@ -16,6 +16,7 @@ export class FirebaseService {
 
   clientCompany: string;
   clientName: string;
+  savedKey: string;
 
   constructor(private db: AngularFireDatabase,
               private globalComp: GlobalComponents,
@@ -33,10 +34,21 @@ export class FirebaseService {
           const key = snap.key;
           const data = snap.val();
           if (data) {
-            sortedAddresses.push({id: key, city: data.city, street: data.street, zip: data.zip, surname: data.surname, name: data.name, company: data.company, email: data.email, phone: data.phone, description: data.description});
+            sortedAddresses.push({
+              id: key,
+              city: data.city,
+              street: data.street,
+              zip: data.zip,
+              surname: data.surname,
+              name: data.name,
+              company: data.company,
+              email: data.email,
+              phone: data.phone,
+              description: data.description
+            });
           }
         });
-    return  sortedAddresses;
+    return sortedAddresses;
   }
 
   public getAddressById(id) {
@@ -78,13 +90,13 @@ export class FirebaseService {
       });
   }
 
-  public saveAddress(node) {
+  public async saveAddress(node) {
     let addressData;
     let displayName;
 
-    if(node.company){
+    if (node.company) {
       displayName = node.company;
-    }else {
+    } else {
       displayName = node.name + ' ' + node.surname;
     }
 
@@ -102,8 +114,8 @@ export class FirebaseService {
     }
 
     let data: DialogData;
-    this.db.list('address/').push(addressData)
-      .then(() => {
+    return await this.db.list('address').push(addressData)
+      .then((ref => {
         data = {
           title: 'Daten gespeichert',
           message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
@@ -112,7 +124,9 @@ export class FirebaseService {
           primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);
-      }).catch((error) => {
+        this.savedKey = ref.key;
+        return this.savedKey;
+      })).catch((error) => {
       data = {
         title: 'Fehler',
         message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
@@ -121,6 +135,7 @@ export class FirebaseService {
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);
+      return '';
     });
   }
 }

@@ -118,19 +118,25 @@ export class AddOrderComponent implements OnInit {
       });
   }
 
-  onSaveAddress(resource: string) {
+  async onSaveAddress(resource: string) {
     let node;
     let id;
+
     if (resource === 'receiver') {
       node = this.receiver.formGroup.value;
       id = this.receiverId;
     } else if (resource === 'client') {
       node = this.client.formGroup.value;
-      id = this.clientId
+      id = this.clientId;
     }
 
     this.firebaseService.removeAddress(id)
-    this.firebaseService.saveAddress(node);
+    id = await this.firebaseService.saveAddress(node);
+    if (resource === 'receiver') {
+      this.receiverId = id;
+    } else if (resource === 'client') {
+      this.clientId = id;
+    }
   }
 
   onSubmit() {
