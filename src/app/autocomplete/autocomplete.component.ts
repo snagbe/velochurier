@@ -31,9 +31,9 @@ export class AutocompleteComponent implements OnInit {
     );
   }
 
-  private _filter(value: OrderControl): OrderControl[] {
-    const filterValue = value ? value.name? value.name: value : "";
-    return this.options.filter(option => option.name.includes(<string>filterValue));
+  private _filter(value): OrderControl[] {
+    const filterValue = value ? value.name? value.name.toLowerCase(): value.toLowerCase() : "";
+    return this.options.filter(option => option.name.toLowerCase().includes(<string>filterValue));
   }
 
   getOptionText(option) {
