@@ -2,8 +2,11 @@
 <div mat-dialog-content>
   <p>{{data.message}}</p>
 </div>
+<mat-form-field appearance="outline" *ngIf="data.inputVisible" >
+  <textarea matInput [(ngModel)]="data.inputValue" required></textarea>
+</mat-form-field>
 <div mat-dialog-actions>
-  <button mat-button (click)="onClick(data.primaryButton.function)">{{data.primaryButton.name}}</button>
-  <button mat-button *ngIf="data.secondaryButton" (click)="onClick(data.secondaryButton.function)">{{data.secondaryButton.name}}</button>
+  <button mat-button [mat-dialog-close]="data.primaryButton.function">{{data.primaryButton.name}}</button>
+  <button mat-button *ngIf="data.secondaryButton" [mat-dialog-close]="data.secondaryButton.function">{{data.secondaryButton.name}}</button>
 </div>
 

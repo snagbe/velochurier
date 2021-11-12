@@ -41,3 +41,11 @@
   background-color: #fff;
   color: #79b51c;
 }
+
+mat-form-field, textarea{
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}

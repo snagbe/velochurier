@@ -9,6 +9,8 @@ export interface DialogData {
   timeout?: number;
   primaryButton: { name, function? };
   secondaryButton?: { name, function? };
+  inputVisible?: boolean;
+  inputValue?: string;
 }
 
 @Injectable({
@@ -18,6 +20,7 @@ export class OverlayService {
   title: string;
   message: string;
   type: string;
+  input: string;
 
   constructor(public dialog: MatDialog) {
   }
@@ -30,7 +33,8 @@ export class OverlayService {
         title: dialogData.title,
         message: dialogData.message,
         primaryButton: dialogData.primaryButton,
-        secondaryButton: dialogData.secondaryButton
+        secondaryButton: dialogData.secondaryButton,
+        inputVisible: dialogData.inputVisible
       }
     });
 
@@ -41,6 +45,11 @@ export class OverlayService {
         }, dialogData.timeout)
       })
     }
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.input = dialogRef.componentInstance.data.inputValue;
+      typeof result === 'function' ? result() : "";
+    });
   }
 
   public closeDialog(): void {
