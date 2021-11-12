@@ -24,7 +24,7 @@ export class AutocompleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setSort()
+    this.setSort();
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))

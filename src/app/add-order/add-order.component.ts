@@ -137,6 +137,8 @@ export class AddOrderComponent implements OnInit {
     } else if (resource === 'client') {
       this.clientId = id;
     }
+    window.location.reload();
+    //this.autocompleteComponent.ngOnInit();
   }
 
   onSubmit() {
