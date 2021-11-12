@@ -145,10 +145,10 @@ export class AddOrderComponent implements OnInit {
     this.mapsApiLoader.load().then(() => {
       this.getGeocode().then(place => {
         this.coords = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+        this.saveOrder();
         if ('order/edit' === this.route.snapshot.routeConfig.path) {
           this.removeOrder();
         }
-        this.saveOrder();
       })
         .catch(err => {
           console.log(err);

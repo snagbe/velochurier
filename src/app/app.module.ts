@@ -110,6 +110,7 @@ import {MatSelectModule} from "@angular/material/select";
     GlobalComponents,
     DeliveryResolver,
     OrderResolver,
+    AutocompleteComponent,
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
     { provide: DateAdapter, useClass: CustomDateAdapter },
