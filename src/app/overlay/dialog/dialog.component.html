@@ -3,10 +3,11 @@
   <p>{{data.message}}</p>
 </div>
 <mat-form-field appearance="outline" *ngIf="data.inputVisible" >
-  <textarea matInput [(ngModel)]="data.inputValue" required></textarea>
+  <textarea matInput #input="ngModel" [(ngModel)]="data.inputValue" required></textarea>
+  <mat-error>{{getErrorMessage(input)}}</mat-error>
 </mat-form-field>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.primaryButton.function">{{data.primaryButton.name}}</button>
+  <button mat-button [disabled]="data.inputVisible && !data.inputValue" [mat-dialog-close]="data.primaryButton.function">{{data.primaryButton.name}}</button>
   <button mat-button *ngIf="data.secondaryButton" [mat-dialog-close]="data.secondaryButton.function">{{data.secondaryButton.name}}</button>
 </div>
 
