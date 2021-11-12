@@ -131,7 +131,6 @@ export class FirebaseService {
         title: 'Fehler',
         message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
         type: 'error',
-        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);

@@ -6,9 +6,11 @@ export interface DialogData {
   title: string;
   message: string;
   type: string;
-  timeout: number
-  primaryButton;
-  secondaryButton?;
+  timeout?: number;
+  primaryButton: { name, function? };
+  secondaryButton?: { name, function? };
+  inputVisible?: boolean;
+  inputValue?: string;
 }
 
 @Injectable({
@@ -18,15 +20,22 @@ export class OverlayService {
   title: string;
   message: string;
   type: string;
+  input: string;
 
   constructor(public dialog: MatDialog) {
   }
 
-  public  openDialog(dialogData: DialogData): void {
+  public openDialog(dialogData: DialogData): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      maxWidth: '50%',
+      maxWidth: '80%',
       panelClass: dialogData.type,
-      data: {title: dialogData.title, message: dialogData.message, primaryButton: dialogData.primaryButton, secondaryButton: dialogData.secondaryButton}
+      data: {
+        title: dialogData.title,
+        message: dialogData.message,
+        primaryButton: dialogData.primaryButton,
+        secondaryButton: dialogData.secondaryButton,
+        inputVisible: dialogData.inputVisible
+      }
     });
 
     if (dialogData.timeout) {
@@ -36,9 +45,14 @@ export class OverlayService {
         }, dialogData.timeout)
       })
     }
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.input = dialogRef.componentInstance.data.inputValue;
+      typeof result === 'function' ? result() : "";
+    });
   }
 
-  public closeDialog():void {
+  public closeDialog(): void {
     this.dialog.closeAll();
   }
 }

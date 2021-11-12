@@ -89,7 +89,12 @@
             </tr>
             <tr>
               <td>
-                <button class="bottom-sheet-element" (click)="onMoveToDelivered('Nachbar')">Nachbar</button>
+                <button class="bottom-sheet-element" (click)="getDeliveryInfo($event.target.innerText)">Nachbar</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button class="bottom-sheet-element" (click)="getDeliveryInfo($event.target.innerText)">Andere Zustellart</button>
               </td>
             </tr>
             <tr>

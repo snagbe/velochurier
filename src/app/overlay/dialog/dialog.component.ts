@@ -13,9 +13,9 @@ export class DialogComponent {
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  onClick(buttonFunction): void {
-    buttonFunction ? buttonFunction() : "";
-    this.dialogRef.close();
+  getErrorMessage(inputField) {
+    return inputField.hasError('required') ?
+      'Dieses Feld muss ausgefüllt werden' : '';
   }
 
 }

@@ -48,7 +48,6 @@ export class ForgetPasswordComponent implements OnInit {
           title: 'Fehler',
           message: errorMessage,
           type: 'error',
-          timeout: null,
           primaryButton: {name: 'Ok'}
         }
         this.overlay.openDialog(data);

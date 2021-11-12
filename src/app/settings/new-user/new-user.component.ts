@@ -44,7 +44,6 @@ export class NewUserComponent implements OnInit {
         title: 'Fehler',
         message: 'Der Benutzer konnte nicht erstellt werden.',
         type: 'error',
-        timeout: null,
         primaryButton: {name: 'Ok'}
       }
       this.overlay.openDialog(data);

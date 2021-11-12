@@ -97,9 +97,8 @@ export class CustomerComponent implements OnInit {
       title: 'Kunde löschen',
       message: 'Möchtest du den Kunden wirklich löschen?',
       type: 'confirmation',
-      timeout: null,
       primaryButton: {
-        name: 'Löschen', 'function': function() {
+        name: 'Löschen', function: function () {
           this.deleteCustomer();
         }.bind(this)
       },
