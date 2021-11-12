@@ -1,5 +1,6 @@
 export class Address {
   constructor(public id: string,
+              public displayName: string,
               public company: string,
               public name: string,
               public surname: string,
