@@ -1,4 +1,6 @@
 export interface Admin {
-  username: string;
+  id: string;
   uid: string;
+  username: string;
+  admin: boolean;
 }

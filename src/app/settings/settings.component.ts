@@ -57,8 +57,9 @@ export class SettingsComponent implements OnInit {
     this.adminUsers = [];
     this.db.database.ref('admin').on('child_added',
         snap => {
+          const key = snap.key;
           const data = snap.val();
-          this.adminUsers.push({username: data.username, uid: data.uid});
+          this.adminUsers.push({id: key, uid: data.uid, username: data.username, admin: data.admin});
         });
   }
 

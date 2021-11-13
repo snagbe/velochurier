@@ -147,11 +147,27 @@ export class FirebaseService {
           const data = snap.val();
           if (data) {
             sortedUsers.push({
+              id: key,
               uid: data.uid,
-              username: data.username
+              username: data.username,
+              admin: data.admin
             });
           }
         });
     return sortedUsers;
+  }
+
+  checkAdmin(uid) {
+    let isAdmin: boolean = false
+    this.db.database.ref('admin/' + uid)
+      .on('value',
+        snap => {
+          const key = snap.key;
+          const data = snap.val();
+          if (data.admin) {
+            isAdmin = data.admin;
+          }
+        });
+    return isAdmin;
   }
 }

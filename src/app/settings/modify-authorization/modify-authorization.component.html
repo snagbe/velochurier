@@ -6,10 +6,13 @@
 <div class="container">
   <img src="../../../assets/logo.png"/>
   <h3>Berechtigungen verwalten</h3>
-  <div class="addresses" *ngFor="let user of users">
-    <div class="user-button" (click)="onEditAuthorization(user.uid)">
+  <div class="users" *ngFor="let user of users">
+    <div class="user-button" (click)="onEditAuthorization(user)">
       <mat-icon>person</mat-icon>
-      <p>{{user.username}}</p>
+      <div>
+        <p>{{user.username}}</p>
+        <p>Berechtigung: {{user.admin ? "Admin" : "Keine Berechtigung"}}</p>
+      </div>
     </div>
   </div>
 </div>

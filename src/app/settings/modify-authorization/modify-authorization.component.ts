@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
 import {Admin} from "../user";
 import {FirebaseService} from "../../firebase/firebase.service";
+import {DialogData, OverlayService} from "../../overlay/overlay.service";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Component({
   selector: 'app-modify-authorization',
@@ -13,8 +15,10 @@ export class ModifyAuthorizationComponent implements OnInit {
   users: Admin[];
 
   constructor(private authService: AuthService,
+              private db: AngularFireDatabase,
               private firebaseService: FirebaseService,
-              private router: Router) {
+              private router: Router,
+              private overlay: OverlayService) {
   }
 
   ngOnInit(): void {
@@ -22,10 +26,23 @@ export class ModifyAuthorizationComponent implements OnInit {
     this.users = this.firebaseService.getAllUsers();
   }
 
-  onEditAuthorization(id) {
-    this.router.navigate(['customer', {orderId: id}]).then(() => {
-      window.location.reload();
-    });
+  onEditAuthorization(user) {
+    const isAdmin = this.firebaseService.checkAdmin(user.id);
+    const authCase = isAdmin ? 'entziehen' : 'erteilen';
+    const data: DialogData = {
+      title: "Berechtigung " + authCase,
+      message: "Möchtest du dem Benutzer '" + user.username + "' die Admin Berechtigung wirklich " + authCase + "?",
+      type: 'confirmation',
+      primaryButton: {
+        name: 'Berechtigung ' + authCase, function: function () {
+          this.db.database.ref('admin/' + user.id + '/admin').set(!isAdmin);
+        }.bind(this)
+      },
+      secondaryButton: {
+        name: 'Abbrechen'
+      }
+    }
+    this.overlay.openDialog(data);
   }
 
   onBack() {

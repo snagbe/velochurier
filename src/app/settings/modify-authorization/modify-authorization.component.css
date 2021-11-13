@@ -45,7 +45,7 @@ img {
   width: 15rem;
 }
 
-.addresses {
+.users {
   display: flex;
   align-items: center;
   border-bottom: 1.5px solid #9891917C;
@@ -54,7 +54,7 @@ img {
   padding-bottom: 1rem;
 }
 
-.addresses p {
+.users p {
   display: initial;
 }
 
@@ -72,9 +72,17 @@ img {
   cursor: pointer;
 }
 
+.user-button div {
+  display: grid;
+}
+
 .user-button p {
   display: inline-block;
   margin-bottom: 0;
+}
+
+.user-button p:nth-of-type(2) {
+  color: gray;
 }
 
 mat-icon {
