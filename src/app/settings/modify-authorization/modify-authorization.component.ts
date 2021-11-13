@@ -23,11 +23,12 @@ export class ModifyAuthorizationComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
+    this.authService.doAdminCheck();
     this.users = this.firebaseService.getAllUsers();
   }
 
   onEditAuthorization(user) {
-    const isAdmin = this.firebaseService.checkAdmin(user.id);
+    const isAdmin = this.firebaseService.checkAdminWithUid(user.id);
     const authCase = isAdmin ? 'entziehen' : 'erteilen';
     const data: DialogData = {
       title: "Berechtigung " + authCase,
@@ -36,6 +37,7 @@ export class ModifyAuthorizationComponent implements OnInit {
       primaryButton: {
         name: 'Berechtigung ' + authCase, function: function () {
           this.db.database.ref('admin/' + user.id + '/admin').set(!isAdmin);
+          this.users.find(x => x.id == user.id).admin = !isAdmin;
         }.bind(this)
       },
       secondaryButton: {

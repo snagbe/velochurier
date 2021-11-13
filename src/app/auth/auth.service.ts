@@ -9,6 +9,7 @@ import {
   EmailAuthProvider,
   createUserWithEmailAndPassword
 } from "@angular/fire/auth";
+import {FirebaseService} from "../firebase/firebase.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
+    private firebaseService: FirebaseService,
     private router: Router) {
   }
 
@@ -48,6 +50,17 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (!user || !user.uid) {
         this.router.navigate(['/auth']);
+      }
+    });
+  }
+
+  /**
+   * Checks if an user has the admin authorization.
+   */
+  doAdminCheck() {
+    this.afAuth.authState.subscribe(user => {
+      if (!this.firebaseService.checkAdmin()) {
+        this.router.navigate(['/settings']);
       }
     });
   }

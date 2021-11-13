@@ -8,7 +8,6 @@ export class GlobalComponents {
   private clientAddress: Address[];
   public orderArticleChange = new Subject<number>();
   private orderArticle: Article[];
-  public determinedAdmin = new Subject<number>();
 
   setAddress(address: Address) {
     this.clientAddress = [];

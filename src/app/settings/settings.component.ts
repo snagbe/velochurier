@@ -1,12 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {GlobalComponents} from "../global-components";
-import {Subscription} from "rxjs";
-import {Admin} from "./user";
-import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {DialogData, OverlayService} from "../overlay/overlay.service";
+import {FirebaseService} from "../firebase/firebase.service";
 
 @Component({
   selector: 'app-settings',
@@ -15,28 +11,18 @@ import {DialogData, OverlayService} from "../overlay/overlay.service";
 })
 export class SettingsComponent implements OnInit {
 
-  private isValid = false;
-  private subscription: Subscription;
-  private adminUsers: Admin[];
-
   constructor(private authService: AuthService,
               private router: Router,
-              private afAuth: AngularFireAuth,
-              private globalComp: GlobalComponents,
-              private overlay: OverlayService,
-              private db: AngularFireDatabase) {
+              private firebaseService: FirebaseService,
+              private overlay: OverlayService) {
   }
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
-    this.getAdminUsers();
   }
 
   onAdminNavigation(newPage: String) {
-    this.isAdmin()
-    this.subscription = this.globalComp.determinedAdmin
-      .subscribe(() => {
-        if (this.isValid) {
+        if (this.firebaseService.checkAdmin()) {
           this.router.navigate(['/settings/' + newPage]);
         }else {
           const data: DialogData = {
@@ -47,20 +33,6 @@ export class SettingsComponent implements OnInit {
           }
           this.overlay.openDialog(data);
         }
-      })
-  }
-
-  /**
-   * Write the admin users in the array adminUsers"
-   */
-  getAdminUsers() {
-    this.adminUsers = [];
-    this.db.database.ref('admin').on('child_added',
-        snap => {
-          const key = snap.key;
-          const data = snap.val();
-          this.adminUsers.push({id: key, uid: data.uid, username: data.username, admin: data.admin});
-        });
   }
 
   doLogout() {
@@ -75,25 +47,5 @@ export class SettingsComponent implements OnInit {
       primaryButton: {name: 'Ok'}
     }
     this.overlay.openDialog(data);
-  }
-
-  /**
-   * Check the permission of the current User
-   */
-  isAdmin() {
-    let valid = false;
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        for(let i = 0; i < this.adminUsers.length; i++) {
-          valid = this.adminUsers[i].uid === user.uid
-          if(valid === true) {
-            this.isValid = valid;
-          }
-        }
-      } else {
-        this.isValid = false;
-      }
-      this.globalComp.determinedAdmin.next();
-    });
   }
 }

@@ -24,6 +24,7 @@ export class NewUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
+    this.authService.doAdminCheck();
   }
 
   onSubmit(formDirective: FormGroupDirective) {

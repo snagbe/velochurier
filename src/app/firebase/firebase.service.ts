@@ -4,6 +4,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
 import {GlobalComponents} from "../global-components";
 import {AddressComponent} from "../address/address.component";
 import {DialogData, OverlayService} from "../overlay/overlay.service";
+import {getAuth} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -127,15 +128,15 @@ export class FirebaseService {
         this.savedKey = ref.key;
         return this.savedKey;
       })).catch((error) => {
-      data = {
-        title: 'Fehler',
-        message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
-        type: 'error',
-        primaryButton: {name: 'Ok'}
-      }
-      this.overlay.openDialog(data);
-      return '';
-    });
+        data = {
+          title: 'Fehler',
+          message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
+          type: 'error',
+          primaryButton: {name: 'Ok'}
+        }
+        this.overlay.openDialog(data);
+        return '';
+      });
   }
 
   getAllUsers() {
@@ -157,12 +158,27 @@ export class FirebaseService {
     return sortedUsers;
   }
 
-  checkAdmin(uid) {
+  checkAdmin() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const uid = user.uid;
+    let isAdmin: boolean = false
+    this.db.database.ref('admin')
+      .on('child_added',
+        snap => {
+          const data = snap.val();
+          if (data.uid === uid && data.admin) {
+            isAdmin = data.admin;
+          }
+        });
+    return isAdmin;
+  }
+
+  checkAdminWithUid(uid) {
     let isAdmin: boolean = false
     this.db.database.ref('admin/' + uid)
       .on('value',
         snap => {
-          const key = snap.key;
           const data = snap.val();
           if (data.admin) {
             isAdmin = data.admin;
