@@ -19,26 +19,10 @@ export class CustomerComponent implements OnInit {
   @ViewChild('autoClient') autoClient: AutocompleteComponent;
   @ViewChild('address') address: AddressComponent;
 
-  pageTitle: string;
-  company: string;
-  surname: string;
-  name: string;
-  street: string;
-  zip: number;
-  city: string;
-  mail: string;
-  phone: string;
-  clientDescription: string;
-
-  //cache Fields
-  cacheClientCompany: string;
-  cacheClientSurname: string;
-  cacheClientName: string;
-
   subscription: Subscription;
   selectedAddress: Address[];
   currentId: any;
-
+  pageTitle: string;
 
   constructor(private globalComp: GlobalComponents,
               private router: Router,
@@ -61,18 +45,15 @@ export class CustomerComponent implements OnInit {
       .subscribe(() => {
         this.selectedAddress = this.globalComp.getAddress();
         if ('Empfänger' === this.selectedAddress[0].type) {
-          this.company = this.selectedAddress[0].company;
-          this.cacheClientCompany = this.selectedAddress[0].company;
-          this.surname = this.selectedAddress[0].surname;
-          this.cacheClientSurname = this.selectedAddress[0].surname;
-          this.name = this.selectedAddress[0].name;
-          this.cacheClientName = this.selectedAddress[0].name;
-          this.zip = this.selectedAddress[0].zip;
-          this.city = this.selectedAddress[0].city;
-          this.street = this.selectedAddress[0].street;
-          this.mail = this.selectedAddress[0].email;
-          this.phone = this.selectedAddress[0].phone;
-          this.clientDescription = this.selectedAddress[0].description;
+          this.address.formGroup.controls.company.setValue(this.selectedAddress[0].company);
+          this.address.formGroup.controls.surname.setValue(this.selectedAddress[0].surname);
+          this.address.formGroup.controls.name.setValue(this.selectedAddress[0].name);
+          this.address.formGroup.controls.zip.setValue(this.selectedAddress[0].zip);
+          this.address.formGroup.controls.city.setValue(this.selectedAddress[0].city);
+          this.address.formGroup.controls.street.setValue(this.selectedAddress[0].street);
+          this.address.formGroup.controls.mail.setValue(this.selectedAddress[0].email);
+          this.address.formGroup.controls.phone.setValue(this.selectedAddress[0].phone);
+          this.address.formGroup.controls.description.setValue(this.selectedAddress[0].description);
         }
       })
   }
@@ -80,7 +61,7 @@ export class CustomerComponent implements OnInit {
   public onSaveAddress() {
 
     this.firebaseService.removeAddress(this.currentId);
-    this.firebaseService.saveAddress(this.address);
+    this.firebaseService.saveAddress(this.address.formGroup.value);
 
     this.onBack();
   }

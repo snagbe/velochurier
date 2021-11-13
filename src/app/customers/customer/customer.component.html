@@ -5,15 +5,7 @@
   </button>
   <form #orderForm="ngForm">
     <h1>{{pageTitle}}</h1>
-    <app-address #address
-                 [company]="company"
-                 [surname]="surname"
-                 [name]="name"
-                 [street]="street"
-                 [zip]="zip"
-                 [city]="city"
-                 [email]="mail"
-                 [phone]="phone">
+    <app-address #address>
     </app-address>
     <div class="flex-center">
       <button class="custom-button" (click)="onSaveAddress()">
