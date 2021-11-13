@@ -23,21 +23,21 @@
   display: initial;
 }
 
-.user-button {
+.customer-button {
   display: contents;
   background-color: transparent;
   border: none;
 }
 
-.user-button:focus {
+.customer-button:focus {
   outline: none;
 }
 
-.user-button:hover {
+.customer-button:hover {
   cursor: pointer;
 }
 
-.user-button p {
+.customer-button p {
   display: inline-block;
   margin-bottom: 0;
 }
