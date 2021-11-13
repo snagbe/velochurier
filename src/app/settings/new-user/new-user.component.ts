@@ -3,6 +3,7 @@ import {FormBuilder, FormGroupDirective, Validators} from "@angular/forms";
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
 import {DialogData, OverlayService} from "../../overlay/overlay.service";
+import {AngularFireDatabase} from "@angular/fire/compat/database";
 
 @Component({
   selector: 'app-new-user',
@@ -11,7 +12,8 @@ import {DialogData, OverlayService} from "../../overlay/overlay.service";
 })
 export class NewUserComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(private db: AngularFireDatabase,
+              private authService: AuthService,
               private router: Router,
               private overlay: OverlayService,
               private formBuilder: FormBuilder) {
@@ -29,17 +31,25 @@ export class NewUserComponent implements OnInit {
 
   onSubmit(formDirective: FormGroupDirective) {
     this.authService.createUser(this.formGroup.controls.email.value, this.formGroup.controls.password.value)
-      .then(() => {
-        const data: DialogData = {
-          title: 'Neuer Benutzer erstellt',
-          message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.',
-          type: 'success',
-          timeout: 3000,
-          primaryButton: {name: 'Ok'}
+      .then(userData => {
+        const user = {
+          admin: false,
+          uid: userData.user.uid,
+          username: userData.user.email
         }
-        this.overlay.openDialog(data);
-        this.formGroup.reset();
-        formDirective.resetForm();
+        this.db.list('user').push(user)
+          .then(() => {
+            const data: DialogData = {
+              title: 'Neuer Benutzer erstellt',
+              message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.',
+              type: 'success',
+              timeout: 3000,
+              primaryButton: {name: 'Ok'}
+            }
+            this.overlay.openDialog(data);
+            this.formGroup.reset();
+            formDirective.resetForm();
+          })
       }).catch((error) => {
       const data: DialogData = {
         title: 'Fehler',

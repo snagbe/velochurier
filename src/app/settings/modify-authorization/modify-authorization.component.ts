@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
-import {Admin} from "../user";
+import {User} from "../user";
 import {FirebaseService} from "../../firebase/firebase.service";
 import {DialogData, OverlayService} from "../../overlay/overlay.service";
 import {AngularFireDatabase} from "@angular/fire/compat/database";
@@ -12,7 +12,7 @@ import {AngularFireDatabase} from "@angular/fire/compat/database";
   styleUrls: ['./modify-authorization.component.css']
 })
 export class ModifyAuthorizationComponent implements OnInit {
-  users: Admin[];
+  users: User[];
 
   constructor(private authService: AuthService,
               private db: AngularFireDatabase,
@@ -36,7 +36,7 @@ export class ModifyAuthorizationComponent implements OnInit {
       type: 'confirmation',
       primaryButton: {
         name: 'Berechtigung ' + authCase, function: function () {
-          this.db.database.ref('admin/' + user.id + '/admin').set(!isAdmin);
+          this.db.database.ref('user/' + user.id + '/admin').set(!isAdmin);
           this.users.find(x => x.id == user.id).admin = !isAdmin;
         }.bind(this)
       },

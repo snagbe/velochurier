@@ -116,7 +116,7 @@ export class FirebaseService {
 
     let data: DialogData;
     return await this.db.list('address').push(addressData)
-      .then((ref => {
+      .then(ref => {
         data = {
           title: 'Daten gespeichert',
           message: 'Die eingegebene Adresse wurde erfolgreich gespeichert.',
@@ -127,7 +127,7 @@ export class FirebaseService {
         this.overlay.openDialog(data);
         this.savedKey = ref.key;
         return this.savedKey;
-      })).catch((error) => {
+      }).catch((error) => {
         data = {
           title: 'Fehler',
           message: 'Die eingegebene Adresse konnte nicht gespeichert werden.',
@@ -141,7 +141,7 @@ export class FirebaseService {
 
   getAllUsers() {
     let sortedUsers = [];
-    this.db.database.ref('admin').orderByChild('username')
+    this.db.database.ref('user').orderByChild('username')
       .on('child_added',
         snap => {
           const key = snap.key;
@@ -163,7 +163,7 @@ export class FirebaseService {
     const user = auth.currentUser;
     const uid = user.uid;
     let isAdmin: boolean = false
-    this.db.database.ref('admin')
+    this.db.database.ref('user')
       .on('child_added',
         snap => {
           const data = snap.val();
@@ -176,7 +176,7 @@ export class FirebaseService {
 
   checkAdminWithUid(uid) {
     let isAdmin: boolean = false
-    this.db.database.ref('admin/' + uid)
+    this.db.database.ref('user/' + uid)
       .on('value',
         snap => {
           const data = snap.val();
