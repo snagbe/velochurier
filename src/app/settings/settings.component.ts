@@ -32,12 +32,12 @@ export class SettingsComponent implements OnInit {
     this.getAdminUsers();
   }
 
-  onAddUser() {
+  onAdminNavigation(newPage: String) {
     this.isAdmin()
     this.subscription = this.globalComp.determinedAdmin
       .subscribe(() => {
         if (this.isValid) {
-          this.router.navigate(['/settings/newUser']);
+          this.router.navigate(['/settings/' + newPage]);
         }else {
           const data: DialogData = {
             title: 'Keine Berechtigung',

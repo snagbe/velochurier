@@ -13,9 +13,7 @@
 .addresses {
   display: flex;
   align-items: center;
-
   border-bottom: 1.5px solid #9891917C;
-
   padding-left: 0.5rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -25,21 +23,21 @@
   display: initial;
 }
 
-.customer-button {
+.user-button {
   display: contents;
   background-color: transparent;
   border: none;
 }
 
-.customer-button:focus {
+.user-button:focus {
   outline: none;
 }
 
-.customer-button:hover {
+.user-button:hover {
   cursor: pointer;
 }
 
-.customer-button p {
+.user-button p {
   display: inline-block;
   margin-bottom: 0;
 }

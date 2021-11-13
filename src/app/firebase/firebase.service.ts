@@ -137,4 +137,21 @@ export class FirebaseService {
       return '';
     });
   }
+
+  getAllUsers() {
+    let sortedUsers = [];
+    this.db.database.ref('admin').orderByChild('username')
+      .on('child_added',
+        snap => {
+          const key = snap.key;
+          const data = snap.val();
+          if (data) {
+            sortedUsers.push({
+              uid: data.uid,
+              username: data.username
+            });
+          }
+        });
+    return sortedUsers;
+  }
 }

@@ -1,0 +1,16 @@
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<body>
+<button class="backButton" (click)="onBack()">
+  <mat-icon>arrow_back_ios</mat-icon>
+</button>
+<div class="container">
+  <img src="../../../assets/logo.png"/>
+  <h3>Berechtigungen verwalten</h3>
+  <div class="addresses" *ngFor="let user of users">
+    <div class="user-button" (click)="onEditAuthorization(user.uid)">
+      <mat-icon>person</mat-icon>
+      <p>{{user.username}}</p>
+    </div>
+  </div>
+</div>
+</body>
