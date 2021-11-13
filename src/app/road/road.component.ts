@@ -31,8 +31,8 @@ export class RoadComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.doAuthCheck();
-    this.lat = 46.85785;
-    this.lng = 9.53059;
+    this.lat = 46.853409;
+    this.lng = 9.519430;
     this.zoom = 13.5;
 
     this.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe();
