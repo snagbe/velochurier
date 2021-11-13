@@ -9,6 +9,12 @@
   <p>Bitte gib die E-Mail Adresse und das Passwort des neues Benutzers ein. Dieser hat nach dem Anmelden die Möglichkeit, das von dir gesetzte Passwort zu ändern.</p>
   <div class="input-container">
     <mat-form-field appearance="outline">
+      <mat-label>Benutzername</mat-label>
+      <input matInput [formControl]="formGroup.get('username')" required>
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error>{{getErrorMessage(formGroup.get('username'))}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>E-Mail</mat-label>
       <input matInput [formControl]="formGroup.get('email')" required>
       <mat-icon matSuffix>mail_outline</mat-icon>

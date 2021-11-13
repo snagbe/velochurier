@@ -151,6 +151,7 @@ export class FirebaseService {
               id: key,
               uid: data.uid,
               username: data.username,
+              email: data.email,
               admin: data.admin
             });
           }

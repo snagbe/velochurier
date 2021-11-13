@@ -20,6 +20,7 @@ export class NewUserComponent implements OnInit {
   }
 
   formGroup = this.formBuilder.group({
+    username: ["", [Validators.required]],
     email: ["", [Validators.required, Validators.email]],
     password: ["", [Validators.required, Validators.minLength(6)]]
   });
@@ -35,13 +36,14 @@ export class NewUserComponent implements OnInit {
         const user = {
           admin: false,
           uid: userData.user.uid,
-          username: userData.user.email
+          username: this.formGroup.value.username,
+          email: userData.user.email
         }
         this.db.list('user').push(user)
           .then(() => {
             const data: DialogData = {
               title: 'Neuer Benutzer erstellt',
-              message: 'Der Benutzer ' + this.formGroup.controls.email.value + ' wurde erfolgreich erstellt.',
+              message: 'Der Benutzer ' + this.formGroup.value.username + ' wurde erfolgreich erstellt.',
               type: 'success',
               timeout: 3000,
               primaryButton: {name: 'Ok'}
