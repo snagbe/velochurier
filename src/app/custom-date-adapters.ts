@@ -12,7 +12,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
   }
 
   /**
-   * Sets the first day of the week to Monday
+   * Sets the first day of the week, as is normally the case at the current location
    */
   getFirstDayOfWeek() {
     return getLocaleFirstDayOfWeek(this.locale);
