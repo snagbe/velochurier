@@ -68,6 +68,10 @@ export class AutocompleteComponent implements OnInit {
     this.options = this.sortedAddresses;
   }
 
+  /**
+   * sets the customer information of the selected customer to prepare the prefill
+   * @param eventTarget the selected customer
+   */
   onAddressSelected(eventTarget) {
     if (eventTarget) {
       this.db.database.ref('address/' + eventTarget.id)
@@ -97,6 +101,9 @@ export class AutocompleteComponent implements OnInit {
     }
   }
 
+  /**
+   * resets the fields in the formGroup
+   */
   onReset() {
     this.myControl.reset('');
   }

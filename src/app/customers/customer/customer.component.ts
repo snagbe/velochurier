@@ -58,6 +58,9 @@ export class CustomerComponent implements OnInit {
       })
   }
 
+  /**
+   * Triggers the saving process of a customer
+   */
   public onSaveAddress() {
 
     this.firebaseService.removeAddress(this.currentId);
@@ -66,12 +69,15 @@ export class CustomerComponent implements OnInit {
     this.onBack();
   }
 
-  public onBack() {
+  /**
+   * allows you to return to the previous component "customers"
+   */
+  onBack() {
     this.router.navigate(['/customers']);
   }
 
   /**
-   * Remove the selected order in the firebase.
+   * asks if you want to delete the selected order§
    */
   onDeleteCustomer() {
     const data: DialogData = {
@@ -90,6 +96,9 @@ export class CustomerComponent implements OnInit {
     this.overlay.openDialog(data);
   }
 
+  /**
+   * Removes the selected order in the firebase
+   */
   deleteCustomer() {
     this.overlay.closeDialog();
     this.firebaseService.removeAddress(this.currentId);

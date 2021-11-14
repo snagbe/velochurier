@@ -27,6 +27,9 @@ export class FirebaseService {
   ngOnInit(): void {
   }
 
+  /**
+   * retrieves the addresses sorted by the display name
+   */
   public getAddresses() {
     let sortedAddresses = [];
     this.db.database.ref('address').orderByChild('displayName')
@@ -52,6 +55,10 @@ export class FirebaseService {
     return sortedAddresses;
   }
 
+  /**
+   * retrieves the costumer based on the selected id
+   * @param id the uid of the selected address
+   */
   public getAddressById(id) {
     this.db.database.ref('address')
       .on('child_added',
@@ -79,6 +86,10 @@ export class FirebaseService {
         });
   }
 
+  /**
+   * Deletes the customer based on the selected ID
+   * @param id the uid of the selected address
+   */
   removeAddress(id) {
     let addressId;
     this.db.database.ref('address/').on('child_added',
@@ -91,6 +102,10 @@ export class FirebaseService {
       });
   }
 
+  /**
+   * Stores the customer
+   * @param node the array of selected fields
+   */
   public async saveAddress(node) {
     let addressData;
     let displayName;
@@ -139,6 +154,9 @@ export class FirebaseService {
       });
   }
 
+  /**
+   * Retrieve all users
+   */
   getAllUsers() {
     let sortedUsers = [];
     this.db.database.ref('user').orderByChild('username')
@@ -159,6 +177,9 @@ export class FirebaseService {
     return sortedUsers;
   }
 
+  /**
+   * Retrieve the user
+   */
   getUser() {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -176,6 +197,9 @@ export class FirebaseService {
     return userData;
   }
 
+  /**
+   * Check administrative rights
+   */
   checkAdmin() {
     let isAdmin: boolean = false;
     const user = this.getUser();
@@ -185,6 +209,10 @@ export class FirebaseService {
     return isAdmin;
   }
 
+  /**
+   * Check admin rights
+   * @param uid the uid of the current user
+   */
   checkAdminWithUid(uid) {
     let isAdmin: boolean = false
     this.db.database.ref('user/' + uid)

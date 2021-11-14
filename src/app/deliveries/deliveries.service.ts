@@ -14,6 +14,12 @@ export class DeliveriesService {
   ngOnInit(): void {
   }
 
+  /**
+   * receives the orders
+   * @param date the selected date
+   * @param status the selected based on the database status (open/delivered)
+   * @param type the type of the order address
+   */
   public getOrderAddresses(date, status, type) {
     const selectedDate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
     return this.db.list('order/' + status + '/' + selectedDate)

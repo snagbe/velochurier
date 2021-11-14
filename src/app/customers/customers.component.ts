@@ -23,6 +23,10 @@ export class CustomersComponent implements OnInit {
     this.addresses = this.firebaseService.getAddresses();
   }
 
+  /**
+   * Navigates to the customer component with the order id passed to it
+   * @param id the uid of the order
+   */
   onEditCustomer(id) {
     this.router.navigate(['customer', {orderId: id}]).then(() => {
       window.location.reload();

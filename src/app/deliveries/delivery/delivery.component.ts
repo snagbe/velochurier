@@ -57,24 +57,40 @@ export class DeliveryComponent implements OnInit {
     this.deliveriesService.getOrderAddresses(this.currentDate, 'open', 'client').subscribe(value => this.clientAddresses = value);
   }
 
+  /**
+   * allows you to return to the previous component deliveries
+   */
   onBack() {
     this.router.navigate(['/deliveries']);
   }
 
+  /**
+   * opens the form that displays the delivery options
+   */
   openDeliverSheetMenu() {
     this.bottomSheet.open(this.DeliverBottomSheet);
   }
 
+  /**
+   * closes the form that displays the delivery options
+   */
   closeDeliverSheetMenu() {
     this.bottomSheet.dismiss();
   }
 
+  /**
+   * Navigates to the order component with the order id passed to it
+   */
   onEditOrder() {
     this.router.navigate(['order', 'edit', {orderId: this.currentID}]).then(() => {
       window.location.reload();
     });
   }
 
+  /**
+   * opens a dialog that displays the delivery confirmation
+   * @param deliveryMethod the selected delivery method
+   */
   getDeliveryInfo(deliveryMethod) {
     const data: DialogData = {
       title: "Zustellung '" + deliveryMethod + "'",
@@ -94,7 +110,7 @@ export class DeliveryComponent implements OnInit {
   }
 
   /**
-   * Move the selected order in the firebase from open to delivered.
+   * Moves the selected order in the firebase from open to delivered
    * @param deliveryMethod The selected delivery method.
    * @param deliveryInfo The additional delivery info.
    */
@@ -150,16 +166,22 @@ export class DeliveryComponent implements OnInit {
     this.onBack();
   }
 
+  /**
+   * opens the form that displays the edit order options
+   */
   openEditSheetMenu() {
     this.bottomSheet.open(this.EditBottomSheet);
   }
 
+  /**
+   * closes the form that displays the edit order options
+   */
   closeEditSheetMenu() {
     this.bottomSheet.dismiss();
   }
 
   /**
-   * Remove the selected order in the firebase.
+   * asks if you want to delete the selected order
    */
   onDeleteOrder() {
     const data: DialogData = {
@@ -178,6 +200,9 @@ export class DeliveryComponent implements OnInit {
     this.overlay.openDialog(data);
   }
 
+  /**
+   * Removes the selected order in the firebase
+   */
   deleteOrder() {
     const selectedDate = this.currentDate.getFullYear() + '-' + (this.currentDate.getMonth() + 1) + '-' + this.currentDate.getDate();
     this.db.object('order/open/' + selectedDate + '/' + this.currentID).remove();

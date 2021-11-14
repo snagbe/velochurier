@@ -59,7 +59,7 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   /**
-   * allows you to return to the previous component
+   * allows you to return to the previous component "settings"
    */
   onBack() {
     this.router.navigate(['/settings']);

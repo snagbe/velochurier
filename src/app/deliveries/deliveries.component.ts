@@ -36,14 +36,25 @@ export class DeliveriesComponent implements OnInit {
     this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 
+  /**
+   * opens the form that displays the sorting options
+   */
   openSortSheetMenu() {
     this.bottomSheet.open(this.SortBottomSheet);
   }
 
+  /**
+   * closes the form that displays the sorting options
+   */
   closeSortSheetMenu() {
     this.bottomSheet.dismiss();
   }
 
+  /**
+   * sets the sorting like the selected option
+   * @param value the database entry
+   * @param valueName the display name
+   */
   setSort(value: string, valueName: string) {
     this.sortedAddresses = [];
     this.selectedSort = valueName;
@@ -55,20 +66,31 @@ export class DeliveriesComponent implements OnInit {
           const data = snap.val();
           this.sortedAddresses.push(data.receiver);
         });
-
     this.addresses = this.sortedAddresses;
-
     this.closeSortSheetMenu();
   }
 
+  /**
+   * checks if there are deliveries for the selected date
+   * @param addresses the list of deliveries
+   */
   isValid(addresses) {
     return addresses === undefined || !addresses.length;
   }
 
+  /**
+   * calls up the outstanding deliveries based on the selected date
+   */
   onDateChanged() {
     this.deliveriesService.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe(value => this.addresses = value);
   }
 
+  /**
+   * Navigates to the delivery component
+   * @param id delivery id
+   * @param lat delivery Latitude
+   * @param lng delivery longitude
+   */
   onDeliveryComponent(id: any, lat: number, lng: number) {
     this.router.navigate(['/delivery', {id: id, lat: lat, lng: lng, date: this.date.value}]);
   }

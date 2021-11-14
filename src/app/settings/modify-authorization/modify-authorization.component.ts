@@ -47,6 +47,9 @@ export class ModifyAuthorizationComponent implements OnInit {
     this.overlay.openDialog(data);
   }
 
+  /**
+   * allows you to return to the previous component "settings"
+   */
   onBack() {
     this.router.navigate(['/settings']);
   }
