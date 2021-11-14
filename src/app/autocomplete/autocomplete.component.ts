@@ -62,12 +62,7 @@ export class AutocompleteComponent implements OnInit {
           const key = snap.key;
           const data = snap.val();
           if (data) {
-            if (data.company) {
-              this.sortedAddresses.push({id: key, type: this.title, name: data.company});
-            } else {
-              const name = data.name + ' ' + data.surname;
-              this.sortedAddresses.push({id: key, type: this.title, name: name});
-            }
+            this.sortedAddresses.push({id: key, type: this.title, name: data.displayName});
           }
         });
     this.options = this.sortedAddresses;
