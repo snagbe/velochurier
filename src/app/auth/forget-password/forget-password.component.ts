@@ -58,6 +58,11 @@ export class ForgetPasswordComponent implements OnInit {
     this.router.navigate(['/settings']);
   }
 
+  /**
+   * warns the user in case of an empty mandatory field
+   *
+   * @param inputField
+   */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?
       'Dieses Feld muss ausgefüllt werden' :

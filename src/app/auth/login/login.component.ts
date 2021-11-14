@@ -77,6 +77,11 @@ export class LoginComponent implements OnInit {
       })
   }
 
+  /**
+   * warns the user in case of an empty mandatory field
+   *
+   * @param inputField
+   */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?
       'Dieses Feld muss ausgefüllt werden' :
