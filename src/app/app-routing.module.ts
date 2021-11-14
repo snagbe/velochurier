@@ -15,6 +15,7 @@ import {PasswordComponent} from "./settings/password/password.component";
 import {ForgetPasswordComponent} from "./auth/forget-password/forget-password.component";
 import {NewUserComponent} from "./settings/new-user/new-user.component";
 import {ModifyAuthorizationComponent} from "./settings/modify-authorization/modify-authorization.component";
+import {ProfileComponent} from "./settings/profile/profile.component";
 
 const appRoutes: Routes = [
   {path: 'auth', component: LoginComponent},
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   {path: 'settings/password', component: PasswordComponent},
   {path: 'settings/newUser', component: NewUserComponent},
   {path: 'settings/modifyAuthorization', component: ModifyAuthorizationComponent},
+  {path: 'settings/profile', component: ProfileComponent},
   {path: '', redirectTo: '/deliveries', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];

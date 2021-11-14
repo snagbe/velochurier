@@ -1,0 +1,101 @@
+body {
+  background-color: #001f2f
+}
+
+.container{
+  font-family: "SFCompactText-Medium", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin-top: 0.8rem;
+  width: 33rem;
+  max-width: 71rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1rem solid #79b51c;
+  background-color: #fff;
+  padding: 6rem 3rem 3rem;
+  display: grid;
+  justify-content: center;
+}
+
+.backButton {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 99;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.backButton:focus {
+  outline: none;
+}
+
+.backButton > mat-icon {
+  color: #fff;
+}
+
+img {
+  position: fixed;
+  top: 1rem;
+  left: 2rem;
+  width: 15rem;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.profile-container p {
+  display: initial;
+}
+
+.user-button {
+  display: contents;
+  background-color: transparent;
+  border: none;
+}
+
+.user-button:focus {
+  outline: none;
+}
+
+.user-button:hover {
+  cursor: pointer;
+}
+
+.user-button div {
+  display: grid;
+}
+
+.user-button p {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.user-button p:nth-of-type(3) {
+  color: gray;
+}
+
+mat-icon {
+  margin-right: 0.75rem;
+}
+
+.button-container {
+  text-align: center;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+  .container {
+    max-width: 85%;
+    padding: 6rem 2rem 2rem 2rem;
+  }
+}

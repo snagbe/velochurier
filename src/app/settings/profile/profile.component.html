@@ -1,0 +1,22 @@
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<body>
+<button class="backButton" (click)="onBack()">
+  <mat-icon>arrow_back_ios</mat-icon>
+</button>
+<div class="container">
+  <img src="../../../assets/logo.png"/>
+  <div class="profile-container">
+    <div class="user-button" (click)="onEditProfile(user)">
+      <mat-icon>person</mat-icon>
+      <div>
+        <p>{{user.username}}</p>
+        <p>{{user.email}}</p>
+        <p>Berechtigung: {{user.admin ? "Admin" : "Keine Berechtigung"}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 button-container">
+    <button class="btn btn-danger" type="submit">Benutzerkonto löschen</button>
+  </div>
+</div>
+</body>

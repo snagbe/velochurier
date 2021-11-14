@@ -39,13 +39,4 @@ export class SettingsComponent implements OnInit {
     this.authService.doLogout();
   }
 
-  onselected() {
-    const data: DialogData = {
-      title: 'Keine Berechtigung',
-      message: 'Du bist nicht berechtigt diesen Inhalt zu sehen.',
-      type: 'error',
-      primaryButton: {name: 'Ok'}
-    }
-    this.overlay.openDialog(data);
-  }
 }

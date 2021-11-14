@@ -50,6 +50,7 @@ import { ForgetPasswordComponent } from './auth/forget-password/forget-password.
 import { NewUserComponent } from './settings/new-user/new-user.component';
 import {MatSelectModule} from "@angular/material/select";
 import { ModifyAuthorizationComponent } from './settings/modify-authorization/modify-authorization.component';
+import { ProfileComponent } from './settings/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ModifyAuthorizationComponent } from './settings/modify-authorization/mo
     PasswordComponent,
     ForgetPasswordComponent,
     NewUserComponent,
-    ModifyAuthorizationComponent
+    ModifyAuthorizationComponent,
+    ProfileComponent
   ],
     imports: [
         BrowserModule,

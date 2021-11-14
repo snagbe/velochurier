@@ -159,19 +159,29 @@ export class FirebaseService {
     return sortedUsers;
   }
 
-  checkAdmin() {
+  getUser() {
     const auth = getAuth();
     const user = auth.currentUser;
     const uid = user.uid;
-    let isAdmin: boolean = false
+    let userData;
+
     this.db.database.ref('user')
       .on('child_added',
         snap => {
           const data = snap.val();
-          if (data.uid === uid && data.admin) {
-            isAdmin = data.admin;
+          if (data.uid === uid) {
+            userData = data;
           }
         });
+    return userData;
+  }
+
+  checkAdmin() {
+    let isAdmin: boolean = false;
+    const user = this.getUser();
+    if (user.admin) {
+      isAdmin = user.admin;
+    }
     return isAdmin;
   }
 
