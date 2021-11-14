@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   /**
-   * Logges the user in.
+   * Logs in the user
    *
    * @param email The entered email address
    * @param password The entered password
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   /**
-   * Logges the current user out.
+   * Logs out the current user user
    */
   doLogout() {
     this.afAuth.signOut();
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   /**
-   * Checks if an user is logged in.
+   * Checks if an user is logged in
    */
   doAuthCheck() {
     this.afAuth.authState.subscribe(user => {
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   /**
-   * Checks if an user has the admin authorization.
+   * Checks if an user has the admin authorization
    */
   doAdminCheck() {
     this.afAuth.authState.subscribe(user => {
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   /**
-   * Changes the password of the logged in user.
+   * Changes the password of the logged in user
    *
    * @param newPwd The new password
    */
@@ -77,7 +77,7 @@ export class AuthService {
   }
 
   /**
-   * reeauthenticate the current logged in user.
+   * Reauthorization of the currently logged in user
    *
    * @param pwd The entered password
    */
@@ -89,7 +89,7 @@ export class AuthService {
   }
 
   /**
-   * Sends an email with a link to reset the current password.
+   * Sends an email with a link to reset the current password
    *
    * @param email The users email address
    */
@@ -99,7 +99,7 @@ export class AuthService {
   }
 
   /**
-   * Creates a new user.
+   * Creates a new user
    *
    * @param email The email address from the new user
    * @param pwd The password from the new user

@@ -16,7 +16,7 @@ export class DialogComponent {
   /**
    * warns the user in case of an empty mandatory field
    *
-   * @param inputField
+   * @param inputField the blank field
    */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?

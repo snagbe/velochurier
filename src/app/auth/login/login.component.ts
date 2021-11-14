@@ -40,6 +40,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Logs you in to the application on the home page
+   */
   onSubmit() {
     if (!this.loginFormGroup.valid) {
       return;
@@ -80,7 +83,7 @@ export class LoginComponent implements OnInit {
   /**
    * warns the user in case of an empty mandatory field
    *
-   * @param inputField
+   * @param inputField the blank field
    */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?

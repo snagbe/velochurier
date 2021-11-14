@@ -24,6 +24,10 @@ export class ForgetPasswordComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * sends an e-mail when the user wants to reset his password
+   * @param formDirective the name of the form tag
+   */
   onSubmit(formDirective: FormGroupDirective) {
     this.authService.sendPasswordResetMail(this.formGroup.controls.email.value)
       .then(() => {
@@ -54,6 +58,9 @@ export class ForgetPasswordComponent implements OnInit {
       });
   }
 
+  /**
+   * allows you to return to the previous component
+   */
   onBack() {
     this.router.navigate(['/settings']);
   }
@@ -61,7 +68,7 @@ export class ForgetPasswordComponent implements OnInit {
   /**
    * warns the user in case of an empty mandatory field
    *
-   * @param inputField
+   * @param inputField the blank field
    */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?

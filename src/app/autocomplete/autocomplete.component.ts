@@ -31,17 +31,29 @@ export class AutocompleteComponent implements OnInit {
     );
   }
 
+  /**
+   * filters the customer list based on the typed input
+   * @param value the typing value
+   * @private
+   */
   private _filter(value): OrderControl[] {
     const filterValue = value ? value.name? value.name.toLowerCase(): value.toLowerCase() : "";
     return this.options.filter(option => option.name.toLowerCase().includes(<string>filterValue));
   }
 
+  /**
+   * returns the value selected in autocomplete to the field
+   * @param option the entered array
+   */
   getOptionText(option) {
     if (option) {
       return option.name;
     }
   }
 
+  /**
+   * puts all customers into the "options" array
+   */
   setSort() {
     this.sortedAddresses = [];
     this.db.database.ref('address').orderByChild('displayName')

@@ -48,7 +48,7 @@ export class AddressComponent implements OnInit {
   /**
    * warns the user in case of an empty mandatory field
    *
-   * @param inputField
+   * @param inputField the blank field
    */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?
@@ -57,6 +57,9 @@ export class AddressComponent implements OnInit {
         'Keine gültige E-Mail Adresse' : '';
   }
 
+  /**
+   * resets the fields in the formGroup
+   */
   onReset() {
     this.formGroup.reset();
   }
