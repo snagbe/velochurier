@@ -101,6 +101,9 @@ export class AddOrderComponent implements OnInit {
       });
   }
 
+  /**
+   * pre-fills the treatment of the customer and the recipient when processing the delivery via the delivery component
+   */
   prefillOrder() {
     let orderId = this.orderId;
     this.db.database.ref('order/open').on('child_added',
@@ -118,6 +121,9 @@ export class AddOrderComponent implements OnInit {
       });
   }
 
+  /**
+   * saves / updates addresses of the receiver and client
+   */
   async onSaveAddress(resource: string) {
     let node;
     let id;
@@ -139,6 +145,9 @@ export class AddOrderComponent implements OnInit {
     }
   }
 
+  /**
+   * saves / updates order
+   */
   onSubmit() {
     this.mapsApiLoader.load().then(() => {
       this.getGeocode().then(place => {
@@ -156,6 +165,9 @@ export class AddOrderComponent implements OnInit {
 
   }
 
+  /**
+   * sets the coordinates of the receiver via the address
+   */
   getGeocode(): Promise<any> {
     const geocoder = new google.maps.Geocoder();
     const receiver = this.receiver.formGroup.controls;
@@ -177,6 +189,9 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
+  /**
+   * removes order
+   */
   removeOrder() {
     let orderDate;
     const orderId = this.orderId;
@@ -192,6 +207,9 @@ export class AddOrderComponent implements OnInit {
     this.db.object('order/open/' + orderDate + '/' + orderId).remove();
   }
 
+  /**
+   * stores order
+   */
   saveOrder() {
     const client = this.client.formGroup.value;
     const receiver = this.receiver.formGroup.value;
@@ -282,6 +300,11 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
+  /**
+   * warns the user in case of empty mandatory fields
+   *
+   * @param inputField
+   */
   getErrorMessage(inputField) {
     return inputField.hasError('required') ?
       'Dieses Feld muss ausgefüllt werden' : '';
