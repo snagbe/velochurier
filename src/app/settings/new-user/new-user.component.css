@@ -19,7 +19,7 @@ h3 {
 
 .input-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 0.75rem;
 }
@@ -64,5 +64,9 @@ and (max-device-width : 480px) {
   form {
     max-width: 85%;
     padding: 5rem 2rem 2rem 2rem;
+  }
+
+  .input-container {
+    justify-content: space-around;
   }
 }
