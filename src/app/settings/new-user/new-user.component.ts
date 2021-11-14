@@ -30,6 +30,10 @@ export class NewUserComponent implements OnInit {
     this.authService.doAdminCheck();
   }
 
+  /**
+   * creates a new user
+   * @param formDirective the name of the form tag
+   */
   onSubmit(formDirective: FormGroupDirective) {
     this.authService.createUser(this.formGroup.controls.email.value, this.formGroup.controls.password.value)
       .then(userData => {
@@ -72,7 +76,6 @@ export class NewUserComponent implements OnInit {
 
   /**
    * warns the user in case of an empty mandatory field
-   *
    * @param inputField the blank field
    */
   getErrorMessage(inputField) {

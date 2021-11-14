@@ -25,6 +25,10 @@ export class OverlayService {
   constructor(public dialog: MatDialog) {
   }
 
+  /**
+   * sets up a dynamically structured dialog
+   * @param dialogData
+   */
   public openDialog(dialogData: DialogData): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       maxWidth: '80%',
@@ -52,6 +56,9 @@ export class OverlayService {
     });
   }
 
+  /**
+   * Closes the dialog window
+   */
   public closeDialog(): void {
     this.dialog.closeAll();
   }

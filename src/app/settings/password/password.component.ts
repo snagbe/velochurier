@@ -26,6 +26,10 @@ export class PasswordComponent implements OnInit {
     this.authService.doAuthCheck();
   }
 
+  /**
+   * checks the old password and stores a new one
+   * @param formDirective the name of the form tag
+   */
   onSubmit(formDirective: FormGroupDirective) {
     this.authService.reauthenticate(this.formGroup.controls.passwordOld.value)
       .then(() => {
@@ -70,7 +74,6 @@ export class PasswordComponent implements OnInit {
 
   /**
    * warns the user in case of an empty mandatory field
-   *
    * @param inputField the blank field
    */
   getErrorMessage(inputField) {

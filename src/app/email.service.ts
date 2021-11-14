@@ -7,6 +7,11 @@ export class EmailService {
   nodemailer: any;
   transporter: any;
 
+  /**
+   * receives permission for the transport
+   * @param host the email web hosting
+   * @param port the email port
+   */
   public transport(host, port) {
     //this.nodemailer  = require('nodemailer');
     this.transporter = this.nodemailer.createTransport({
@@ -18,6 +23,14 @@ export class EmailService {
       }
     });
   }
+
+  /**
+   * sends an email
+   * @param from the sender email address
+   * @param to the recipient email address
+   * @param subject the subject of the email
+   * @param html the HTML page of the email
+   */
   async sendEmail(from, to, subject, html) {
     await this.transporter.sendMail({
       from: from,

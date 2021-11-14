@@ -21,6 +21,10 @@ export class SettingsComponent implements OnInit {
     this.authService.doAuthCheck();
   }
 
+  /**
+   * checks the authorization of the current user
+   * @param newPage the page to be navigated
+   */
   onAdminNavigation(newPage: String) {
         if (this.firebaseService.checkAdmin()) {
           this.router.navigate(['/settings/' + newPage]);
@@ -35,6 +39,9 @@ export class SettingsComponent implements OnInit {
         }
   }
 
+  /**
+   * Logs out the user
+   */
   doLogout() {
     this.authService.doLogout();
   }

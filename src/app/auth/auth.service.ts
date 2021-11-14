@@ -27,7 +27,6 @@ export class AuthService {
 
   /**
    * Logs in the user
-   *
    * @param email The entered email address
    * @param password The entered password
    */
@@ -67,7 +66,6 @@ export class AuthService {
 
   /**
    * Changes the password of the logged in user
-   *
    * @param newPwd The new password
    */
   changePassword(newPwd: string) {
@@ -78,7 +76,6 @@ export class AuthService {
 
   /**
    * Reauthorization of the currently logged in user
-   *
    * @param pwd The entered password
    */
   reauthenticate(pwd: string) {
@@ -90,7 +87,6 @@ export class AuthService {
 
   /**
    * Sends an email with a link to reset the current password
-   *
    * @param email The users email address
    */
   sendPasswordResetMail(email) {
@@ -100,7 +96,6 @@ export class AuthService {
 
   /**
    * Creates a new user
-   *
    * @param email The email address from the new user
    * @param pwd The password from the new user
    */

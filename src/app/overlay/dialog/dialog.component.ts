@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {DialogData} from "../overlay.service";
 
 @Component({
@@ -10,12 +10,10 @@ import {DialogData} from "../overlay.service";
 export class DialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   /**
    * warns the user in case of an empty mandatory field
-   *
    * @param inputField the blank field
    */
   getErrorMessage(inputField) {

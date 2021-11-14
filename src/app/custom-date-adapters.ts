@@ -11,6 +11,9 @@ export class CustomDateAdapter extends NativeDateAdapter {
     super(locale, platformId);
   }
 
+  /**
+   *
+   */
   getFirstDayOfWeek() {
     return getLocaleFirstDayOfWeek(this.locale);
   }

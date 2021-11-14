@@ -27,6 +27,10 @@ export class ModifyAuthorizationComponent implements OnInit {
     this.users = this.firebaseService.getAllUsers();
   }
 
+  /**
+   * edits the user permissions
+   * @param user the selected user
+   */
   onEditAuthorization(user) {
     const isAdmin = this.firebaseService.checkAdminWithUid(user.id);
     const authCase = isAdmin ? 'entziehen' : 'erteilen';

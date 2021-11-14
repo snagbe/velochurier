@@ -36,6 +36,10 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * changes the permissions of the selected user
+   * @param user
+   */
   onEditProfile(user) {
     const isAdmin = this.firebaseService.checkAdminWithUid(user.id);
     const authCase = isAdmin ? 'entziehen' : 'erteilen';

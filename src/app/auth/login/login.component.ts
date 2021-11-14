@@ -82,7 +82,6 @@ export class LoginComponent implements OnInit {
 
   /**
    * warns the user in case of an empty mandatory field
-   *
    * @param inputField the blank field
    */
   getErrorMessage(inputField) {

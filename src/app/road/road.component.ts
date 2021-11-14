@@ -38,6 +38,12 @@ export class RoadComponent implements OnInit {
     this.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe();
   }
 
+  /**
+   * receives the orders
+   * @param date the selected date
+   * @param status the selected based on the database status (open/delivered)
+   * @param type the type of the order address
+   */
   public getOrderAddresses(date, status, type) {
     this.addresses = [];
     date = new Date(date);
@@ -64,6 +70,9 @@ export class RoadComponent implements OnInit {
       }));
   }
 
+  /**
+   * calls up the outstanding deliveries based on the selected date
+   */
   onDateChanged() {
     this.getOrderAddresses(this.date.value, 'open', 'receiver').subscribe();
   }
