@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "address": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "order": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    "user": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}
