@@ -1,13 +1,13 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyBCA2oaGS7PBkEV4uelWFKaQV-KdE_3iyw",
-    authDomain: "velochurier-f8254.firebaseapp.com",
-    databaseURL: "https://velochurier-f8254-default-rtdb.firebaseio.com",
-    projectId: "velochurier-f8254",
-    storageBucket: "velochurier-f8254.appspot.com",
-    messagingSenderId: "327813077860",
-    appId: "1:327813077860:web:b0562f920fe4cd99dbf871",
-    measurementId: "G-F48H5VLWC8"
+    apiKey: "AIzaSyB_8mBAZ8graOyVXCaXJACG5qmYwiurwcY",
+    authDomain: "velochurier-79526.firebaseapp.com",
+    databaseURL: "https://velochurier-79526-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "velochurier-79526",
+    storageBucket: "velochurier-79526.appspot.com",
+    messagingSenderId: "937248427134",
+    appId: "1:937248427134:web:5731b43f81ff99a6c6dc2f",
+    measurementId: "G-0XZJJ0JHMM"
   },
 };

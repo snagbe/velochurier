@@ -1,9 +1,9 @@
 {
   "targets": {
-    "velochurier-f8254": {
+    "velochurier-79526": {
       "hosting": {
         "velochurier": [
-          "velochurier-f8254"
+          "velochurier-79526"
         ]
       }
     }
